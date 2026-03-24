@@ -392,7 +392,10 @@
       <div class="section-num">03 — Engagement</div>
       <h2 class="section-title">Summed likes &amp; views</h2>
     </div>
-    <button class="btn-reset" id="c2-reset">Reset</button>
+    <div class="section-actions">
+      <button class="btn-reset" id="c2-stack-toggle">Candidate split off</button>
+      <button class="btn-reset" id="c2-reset">Reset</button>
+    </div>
   </div>
   <p class="section-sub">Aggregate total engagement by party or individual candidate (candidates only — party accounts excluded).</p>
 
@@ -862,19 +865,35 @@ updateC1();
 // ═══════════════════════════════════════════════════
 // CHART 2 — Summed engagement
 // ═══════════════════════════════════════════════════
-let c2Grp="party", c2Met="views", c2Win="3", c2Top=10, c2=null;
+let c2Grp="party", c2Met="views", c2Win="3", c2Top=10, c2Split=false, c2=null;
 
 const picker2 = makePicker("c2-search","c2-list","c2-tags", candCandidates, updateC2);
+const c2StackBtn = document.getElementById("c2-stack-toggle");
+
+function updateC2StackBtn() {
+  if (!c2StackBtn) return;
+  const enabled = c2Grp === "party" && c2Split;
+  c2StackBtn.textContent = `Candidate split ${enabled ? "on" : "off"}`;
+  c2StackBtn.classList.toggle("btn-toggle-active", enabled);
+  c2StackBtn.style.opacity = c2Grp === "party" ? "1" : "0.5";
+}
 
 bindSeg("grp-tog", v => {
   c2Grp=v;
   document.getElementById("c2-cand-group").style.display = v==="candidate"?"flex":"none";
+  updateC2StackBtn();
   updateC2();
 });
 bindSeg("met-tog", v => { c2Met=v; updateC2(); });
 bindSeg("win-tog", v => { c2Win=v; updateC2(); });
 document.getElementById("topn-sel").addEventListener("change", e=>{ c2Top=parseInt(e.target.value); updateC2(); });
 document.getElementById("c2-reset").addEventListener("click", () => { picker2.reset(); updateC2(); });
+c2StackBtn.addEventListener("click", () => {
+  if (c2Grp !== "party") return;
+  c2Split = !c2Split;
+  updateC2StackBtn();
+  updateC2();
+});
 
 function updateC2() {
   const cutoff = new Date(maxDate);
@@ -901,28 +920,95 @@ function updateC2() {
 
   const labels = sorted.map(([k])=>k);
   const vals   = sorted.map(([,v])=>v);
+  const shortLabels = labels.map(l=>c2Grp==="party"?shortParty(l):l);
   const colors = labels.map(l=>{
     if(c2Grp==="party") return PARTY_COLORS[l]||"#aaa";
     const p=DATA.find(r=>r.candidate===l)?.party;
     return PARTY_COLORS[p]||"#aaa";
   });
 
+  let datasets;
+  if (c2Grp === "party" && c2Split) {
+    const shownParties = new Set(labels);
+    const contributorMap = {};
+    filtered2.forEach(r => {
+      if (!shownParties.has(r.party)) return;
+      const party = r.party;
+      const contributor = r.account_type === "kandidat" ? r.candidate : "Party account(s)";
+      if (!contributor) return;
+      if (!contributorMap[contributor]) contributorMap[contributor] = {};
+      contributorMap[contributor][party] = (contributorMap[contributor][party] || 0) + (c2Met === "views" ? r.views : r.likes);
+    });
+
+    const contributorEntries = Object.entries(contributorMap)
+      .map(([name, byParty]) => [name, Object.values(byParty).reduce((a,b)=>a+b,0), byParty])
+      .sort((a,b)=>b[1]-a[1]);
+
+    datasets = contributorEntries.map(([name, total, byParty]) => {
+      const partyName = name === "Party account(s)" ? null : (DATA.find(r=>r.candidate===name)?.party || null);
+      const baseColor = partyName ? (PARTY_COLORS[partyName] || "#777") : "#444";
+      return {
+        label: name,
+        data: labels.map(p => byParty[p] || 0),
+        backgroundColor: baseColor + "cc",
+        borderColor: baseColor,
+        borderWidth: 1,
+        borderRadius: 2,
+        stack: "party-breakdown"
+      };
+    });
+  } else {
+    datasets = [{
+      label:c2Met==="views"?"Total Views":"Total Likes",
+      data:vals,
+      backgroundColor:colors.map(c=>c+"cc"),
+      borderColor:colors,
+      borderWidth:1,
+      borderRadius:2
+    }];
+  }
+
   if(c2) c2.destroy();
   c2 = new Chart(document.getElementById("chart2"),{
     type:"bar",
-    data:{ labels:labels.map(l=>c2Grp==="party"?shortParty(l):l),
-      datasets:[{label:c2Met==="views"?"Total Views":"Total Likes",
-        data:vals, backgroundColor:colors.map(c=>c+"cc"), borderColor:colors, borderWidth:1, borderRadius:2}]},
+    data:{ labels:shortLabels, datasets },
     options:{
       indexAxis:"y", responsive:true,
-      plugins:{legend:{display:false},tooltip:{...tipStyle(),callbacks:{label:ctx=>` ${fmtN(ctx.raw)} ${c2Met}`}}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          ...tipStyle(),
+          callbacks:{
+            title(items){
+              const idx = items?.[0]?.dataIndex ?? 0;
+              return labels[idx] || "";
+            },
+            label(ctx){
+              if (!(c2Grp === "party" && c2Split)) return ` ${fmtFull(ctx.raw)} ${c2Met}`;
+              const party = labels[ctx.dataIndex];
+              const total = totals[party] || 0;
+              const value = Number(ctx.raw || 0);
+              if (!value) return null;
+              const pct = total ? (value / total) * 100 : 0;
+              return ` ${ctx.dataset.label}: ${fmtFull(value)} ${c2Met} (${fmtDec(pct, 1)}% of party total)`;
+            },
+            footer(items){
+              if (!(c2Grp === "party" && c2Split)) return "";
+              const idx = items?.[0]?.dataIndex ?? 0;
+              const party = labels[idx];
+              return `Total: ${fmtFull(totals[party] || 0)} ${c2Met}`;
+            }
+          }
+        }
+      },
       scales:{
-        x:{grid:{color:"#f0f0f0"},ticks:{font:{family:"DM Sans, Arial, Helvetica, sans-serif",size:10},color:"#999",callback:v=>fmtN(v)}},
-        y:{grid:{display:false},ticks:{font:{family:"DM Sans, Arial, Helvetica, sans-serif",size:11},color:"#0a0a0a"}}
+        x:{stacked:c2Grp === "party" && c2Split,grid:{color:"#f0f0f0"},ticks:{font:{family:"DM Sans, Arial, Helvetica, sans-serif",size:10},color:"#999",callback:v=>fmtN(v)}},
+        y:{stacked:c2Grp === "party" && c2Split,grid:{display:false},ticks:{font:{family:"DM Sans, Arial, Helvetica, sans-serif",size:11},color:"#0a0a0a"}}
       }
     }
   });
 }
+updateC2StackBtn();
 updateC2();
 
 // ═══════════════════════════════════════════════════
