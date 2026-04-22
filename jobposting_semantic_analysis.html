@@ -20,25 +20,15 @@
 }
 body { font-family: "DM Sans", Arial, sans-serif; background: var(--gray); color: var(--black); }
 .page-shell { width: 100%; max-width: 1440px; margin: 0 auto; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.03); }
-nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(20px,4vw,48px); height: 56px; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); gap: 20px; }
-.nav-logo { font-size: 0.9rem; font-weight: 700; color: var(--black); white-space: nowrap; }
-.nav-links { display: flex; gap: 6px; flex-wrap: wrap; }
-.nav-link { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mid); padding: 5px 10px; cursor: pointer; text-decoration: none; transition: color .15s; border-radius: 6px; }
-.nav-link:hover { color: var(--black); background: var(--gray); }
-.nav-badges { display: flex; gap: 8px; }
-.nav-badge { display: flex; align-items: center; gap: 5px; font-size: 0.72rem; font-weight: 500; }
-.badge-dot { width: 8px; height: 8px; border-radius: 50%; }
+nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(20px, 4vw, 48px); height: 56px; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-size: 0.95rem; font-weight: 700; text-decoration: none; color: #0a0a0a; }
+.nav-back { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: #0a0a0a; }
+.nav-back:hover { opacity: 0.55; }
 
 .page-header { padding: 52px clamp(20px,4vw,48px) 40px; border-bottom: 1px solid var(--border); max-width: 1200px; margin: 0 auto; }
 .page-kicker { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 10px; }
 .page-title { font-size: clamp(1.9rem,4vw,3rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 14px; }
 .page-desc { font-size: 0.9rem; font-weight: 300; color: #444; line-height: 1.8; max-width: 760px; }
-
-.highlight-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-.highlight-cell { background: var(--gray); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px 8px; min-height: 0; }
-.highlight-label { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); margin-bottom: 2px; }
-.highlight-value { font-size: 0.74rem; font-weight: 600; line-height: 1.25; letter-spacing: 0; color: var(--black); }
-.highlight-sub { display: none; }
 
 .section { padding: 52px clamp(20px,4vw,48px); border-bottom: 1px solid var(--border); max-width: 1200px; margin: 0 auto; }
 .section-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; gap: 20px; flex-wrap: wrap; }
@@ -58,6 +48,9 @@ select.std-sel:focus { border-color: var(--black); }
 #semanticGapChart, #clicheGapChart { height: 360px !important; max-height: 360px !important; }
 .chart-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
 .chart-note { font-size: 0.8rem; color: #666; margin-bottom: 18px; line-height: 1.6; }
+.chart-inline-control { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.chart-inline-control .ctrl-label { margin: 0; }
+.chart-inline-control select.std-sel { min-width: 240px; }
 
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .three-col { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
@@ -87,7 +80,14 @@ tr:last-child td { border-bottom: none; }
 td.student-val { color: var(--st); font-weight: 500; }
 td.ns-val { color: var(--ns); font-weight: 500; }
 
-footer { padding: 28px clamp(20px,4vw,48px); max-width: 1200px; margin: 0 auto; font-size: 0.75rem; color: var(--mid); line-height: 1.7; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px clamp(20px, 4vw, 48px);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.75rem; color: var(--mid);
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
 @media (max-width: 960px) {
   .highlight-grid { grid-template-columns: 1fr 1fr; }
@@ -96,34 +96,28 @@ footer { padding: 28px clamp(20px,4vw,48px); max-width: 1200px; margin: 0 auto; 
   .word-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
 }
 @media (max-width: 560px) {
-  .highlight-grid { grid-template-columns: 1fr; }
   nav { gap: 10px; }
-  .nav-badges { display: none; }
   select.std-sel { min-width: 100%; }
+  .chart-inline-control {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .chart-inline-control select.std-sel { min-width: 100%; }
 }
 </style>
 </head>
 <body>
 <div class="page-shell">
 <nav>
-  <a class="nav-logo" href="dashboards.html" style="text-decoration:none;">Danish Job Postings</a>
-  <div class="nav-links">
-    <a class="nav-link" href="dashboards.html">All dashboards</a>
-    <a class="nav-link" onclick="document.getElementById('sec-semantics').scrollIntoView({behavior:'smooth'})">Semantics</a>
-    <a class="nav-link" onclick="document.getElementById('sec-cliches').scrollIntoView({behavior:'smooth'})">Clichés</a>
-    <a class="nav-link" onclick="document.getElementById('sec-benefits').scrollIntoView({behavior:'smooth'})">Benefits vs Requirements</a>
-  </div>
-  <div class="nav-badges">
-    <div class="nav-badge"><div class="badge-dot" style="background:var(--st)"></div>Student</div>
-    <div class="nav-badge"><div class="badge-dot" style="background:var(--ns)"></div>Non-student</div>
-  </div>
+  <a class="nav-logo" href="index.html">Kasper Spindler</a>
+  <a class="nav-back" href="index.html">← Back</a>
 </nav>
 
 <div class="page-header">
   <div class="page-kicker">Dashboard 02 · Danish job posting language</div>
   <h1 class="page-title">Student vs Non-student<br>Job Postings</h1>
-  <p class="page-desc">This dashboard compares student-targeted job postings with the rest of the Danish labour market. The first figure maps the main semantic gaps between the two groups, the second isolates cliché-heavy recruiting language, and the third compares benefits and requirements intensity across the full market.</p>
-  <div class="highlight-grid" id="highlightGrid"></div>
+  <p class="page-desc">This dashboard compares student-targeted job postings with the rest of the Danish labour market. The dataset was webscraped from Jobnet and Jobindex, cleaned, and then analysed using DanNet together with manually crafted word groupings to map semantic differences, cliché language, and benefits-versus-requirements framing.</p>
 </div>
 
 <section class="section" id="sec-semantics">
@@ -135,16 +129,13 @@ footer { padding: 28px clamp(20px,4vw,48px); max-width: 1200px; margin: 0 auto; 
   </div>
   <p class="section-sub">Switch between the full market and individual sectors to see where the language gap is strongest. Each bubble represents one semantic field: its horizontal position shows whether it leans toward student or non-student postings, its vertical position shows how common that field is overall, and its size reflects the size of the difference.</p>
 
-  <div class="controls">
-    <div class="ctrl-group">
-      <div class="ctrl-label">Sector</div>
-      <select class="std-sel" id="semanticSectorSelect"></select>
-    </div>
-  </div>
-
   <div class="chart-wrap tall">
     <div class="chart-title" id="semanticChartTitle">Semantic fields with the largest student–non-student gaps — All sectors</div>
     <div class="chart-note">Right of zero means a field is more common in student postings; left of zero means it is more common in non-student postings. Higher bubbles are more prevalent overall, and larger bubbles indicate larger gaps.</div>
+    <div class="chart-inline-control">
+      <div class="ctrl-label">Sector</div>
+      <select class="std-sel" id="semanticSectorSelect"></select>
+    </div>
     <canvas id="semanticGapChart"></canvas>
   </div>
 </section>
@@ -193,8 +184,8 @@ footer { padding: 28px clamp(20px,4vw,48px); max-width: 1200px; margin: 0 auto; 
 </section>
 
 <footer>
-  <span>Interface text is in English. Underlying terms come from Danish job-posting data and a DANNET-based semantic layer. <a href="dashboards_linked.html" style="color:inherit;text-decoration:underline;">Back to dashboards</a></span>
-  <span id="footerStats"></span>
+  <span>Data: Jobpostings from Jobnet&amp;Jobindex, March 29th</span>
+  <span>Kasper Spindler · Copenhagen University</span>
 </footer>
 </div>
 
@@ -225,20 +216,7 @@ function sectorName(code) {
 }
 
 function renderHighlights() {
-  const headerHighlights = [
-    { label: 'Dataset', value: `${fmt0.format(DATA.overall.total_docs)} total postings` },
-    { label: 'Comparison', value: `${fmt0.format(DATA.overall.student_docs)} student vs ${fmt0.format(DATA.overall.nonstudent_docs)} non-student` },
-    { label: 'Semantic analysis', value: 'All-sector gap comparison' },
-    { label: 'DANNET WordNet', value: 'Danish semantic field mapping' },
-    { label: 'Measures', value: 'Clichés · benefits · requirements' },
-  ];
-  document.getElementById('highlightGrid').innerHTML = headerHighlights.map(d => `
-    <div class="highlight-cell">
-      <div class="highlight-label">${d.label}</div>
-      <div class="highlight-value">${d.value}</div>
-    </div>
-  `).join('');
-  document.getElementById('footerStats').textContent = `${fmt0.format(DATA.overall.total_docs)} postings · sector-switching semantic map · DANNET semantic layer`;
+  return;
 }
 
 function buildSectorSelectors() {
