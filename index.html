@@ -26,12 +26,11 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 560px;
+    max-width: 620px;
     width: 100%;
     gap: 0;
   }
 
-  /* NAME */
   h1 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(2.8rem, 8vw, 4.5rem);
@@ -41,7 +40,6 @@
     margin-bottom: 18px;
   }
 
-  /* TAGS */
   .tags {
     display: flex;
     gap: 8px;
@@ -59,7 +57,6 @@
     border: 1px solid #ddd;
   }
 
-  /* DIVIDER */
   .divider {
     width: 40px;
     height: 1px;
@@ -67,7 +64,6 @@
     margin: 0 auto 28px;
   }
 
-  /* BIO */
   .bio {
     font-size: 0.97rem;
     font-weight: 300;
@@ -76,23 +72,38 @@
     margin-bottom: 40px;
   }
 
-  /* CTA */
-  .btn-primary {
+  .actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 52px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
     display: inline-block;
-    background: #0a0a0a;
-    color: #fff;
     text-decoration: none;
     font-size: 0.82rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 14px 36px;
-    transition: opacity 0.2s;
-    margin-bottom: 52px;
+    padding: 14px 32px;
+    transition: opacity 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
   }
-  .btn-primary:hover { opacity: 0.7; }
+  .btn-primary {
+    background: #0a0a0a;
+    color: #fff;
+    border: 1px solid #0a0a0a;
+  }
+  .btn-secondary {
+    background: #fff;
+    color: #0a0a0a;
+    border: 1px solid #ddd;
+  }
+  .btn-primary:hover,
+  .btn-secondary:hover { opacity: 0.7; }
 
-  /* SOCIAL ICONS */
   .socials {
     display: flex;
     gap: 28px;
@@ -129,10 +140,12 @@
     4th semester undergraduate Economics student at Copenhagen University — exploring Economic Research, Data Science, and Coding. I upload projects that try to answer the questions that keep me up at night.
   </p>
 
-  <a class="btn-primary" href="dashboards.html">Explore Dashboards</a>
+  <div class="actions">
+    <a class="btn-primary" href="dashboards.html">Dashboards</a>
+    <a class="btn-secondary" href="research.html">Research</a>
+  </div>
 
   <div class="socials">
-    <!-- GitHub -->
     <a class="social-link" href="https://github.com/KGSpindler" target="_blank" aria-label="GitHub">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577
@@ -146,7 +159,6 @@
           C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
       </svg>
     </a>
-    <!-- Instagram -->
     <a class="social-link" href="https://www.instagram.com/kasperspindler/" target="_blank" aria-label="Instagram">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069
@@ -163,7 +175,6 @@
           -1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
       </svg>
     </a>
-    <!-- LinkedIn -->
     <a class="social-link" href="https://www.linkedin.com/in/kaspergarmspindler" target="_blank" aria-label="LinkedIn">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136
