@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Do Higher Gasoline Prices Reduce Road Traffic in Copenhagen?</title>
+  <meta name="description" content="Empirical analysis of whether higher gasoline prices are linked to reduced road traffic in Copenhagen using fixed traffic counters and robustness checks." />
+  <meta name="keywords" content="gasoline prices, road traffic, Copenhagen, elasticity, empirical analysis, economics, Kasper Spindler" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$','$'],['\\(','\\)']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg:    #f6f4ef;
+      --page:  #fdfcf9;
+      --ink:   #1a1916;
+      --muted: #6e6b64;
+      --faint: #b8b3a8;
+      --rule:  #dbd6cd;
+      --soft:  #f0ece4;
+      --white: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "EB Garamond", Georgia, serif;
+      line-height: 1.72;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(253,252,249,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+      font-family: "DM Sans", sans-serif;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 72px; height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand { font-size: 0.82rem; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .nav-links  { display: flex; gap: 24px; }
+    .nav-links a {
+      font-size: 0.76rem; font-weight: 500;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-back {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-back:hover { opacity: 0.55; }
+
+    .page {
+      max-width: 900px; margin: 0 auto;
+      background: var(--page);
+      min-height: 100vh;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 2px 24px rgba(0,0,0,0.04);
+    }
+    .article { padding: 0 72px 88px; }
+
+    .paper-header {
+      padding: 56px 0 36px;
+      border-bottom: 2px solid var(--ink);
+    }
+    h1 {
+      font-family: "EB Garamond", Georgia, serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+      font-weight: 500; line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 18px; max-width: 660px;
+    }
+    .paper-meta {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.82rem; color: var(--muted);
+      display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+    }
+    .author { font-weight: 600; color: var(--ink); text-decoration: none; }
+    .author:hover { opacity: 0.7; }
+    .paper-meta-sep { color: var(--faint); }
+
+    .section { margin-top: 44px; }
+
+    h2 {
+      font-family: "EB Garamond", Georgia, serif;
+      font-size: 1.3rem; font-weight: 600;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 18px;
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .section-num {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    p { font-size: 1.06rem; margin-bottom: 16px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* table */
+    .table-container { margin-top: 28px; overflow-x: auto; }
+    .table-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+    .paper-table {
+      width: 100%; border-collapse: collapse;
+      font-family: "DM Sans", sans-serif; font-size: 0.83rem;
+    }
+    .paper-table thead tr { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); }
+    .paper-table thead th {
+      padding: 10px 12px; text-align: right;
+      font-weight: 600; font-size: 0.75rem;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--muted); white-space: nowrap;
+    }
+    .paper-table thead th:first-child { text-align: left; }
+    .paper-table tbody td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--rule); }
+    .paper-table tbody td:first-child { text-align: left; }
+    .paper-table tbody tr.preferred td { font-weight: 600; }
+    .paper-table tbody tr:last-child td { border-bottom: none; }
+    .paper-table tfoot tr { border-top: 2px solid var(--ink); }
+    .paper-table tfoot td { padding: 10px 12px; font-size: 0.76rem; color: var(--muted); font-style: italic; }
+
+    /* equation */
+    .equation-wrap { margin: 22px 0 18px; overflow-x: auto; font-size: 1rem; }
+
+    /* figures */
+    figure.paper-figure { margin-top: 40px; }
+    .fig-header { margin-bottom: 10px; }
+    .fig-label {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 3px;
+    }
+    .fig-title {
+      font-family: "EB Garamond", Georgia, serif;
+      font-size: 1.08rem; font-weight: 600;
+    }
+    .chart-frame {
+      border: 1px solid var(--rule);
+      background: var(--white);
+      padding: 20px 20px 16px;
+    }
+    canvas { width: 100% !important; height: 300px !important; }
+    #siteMap { width: 100%; height: 420px; }
+
+    .page-footer {
+      border-top: 1px solid var(--rule);
+      padding: 24px 72px;
+      margin-top: 44px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .page-footer a { color: var(--ink); text-decoration: underline; }
+    .page-footer a:hover { opacity: 0.7; }
+
+    @media (max-width: 760px) {
+      .article { padding: 0 22px 64px; }
+      .nav-inner { padding: 0 22px; }
+      .page-footer { padding: 20px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html">Kasper Spindler</a>
+      <div class="nav-links">
+        <a class="nav-back" href="index.html">← Back</a>
+        <a href="library_distance_analysis.html">Library Study</a>
+        <a href="#results">Results</a>
+        <a href="#method">Method</a>
+        <a href="#robustness">Robustness</a>
+        <a href="#figures">Figures</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page">
+    <main class="article">
+
+      <header class="paper-header">
+        <h1>Do Higher Gasoline Prices Reduce Road Traffic in Copenhagen?</h1>
+        <div class="paper-meta">
+          <a class="author" href="../index.html">Kasper Spindler</a>
+          <span class="paper-meta-sep">|</span>
+          <span>University of Copenhagen</span>
+          <span class="paper-meta-sep">|</span>
+          <span>2026</span>
+        </div>
+      </header>
+
+      <!-- RESULTS -->
+      <section class="section" id="results">
+        <h2><span class="section-num">1</span> Results</h2>
+        <p>This analysis examines whether oil-fuel price fluctuations are associated with lower road traffic in Copenhagen, by using traffic counting station data from 2011 to 2013. In a model with road fixed effects, weekday controls, local rainfall, and a smooth time trend, the estimated elasticity of traffic with respect to the real gasoline price is about &minus;0.559. This implies that a 1% increase in the real gasoline price decreases the traffic amount by about 0.56%. Alternative specifications with lagged and further smoothed fuel prices suggest that the negative relationship remains present in several robustness checks, although its size depends on how fuel prices are timed and smoothed. The model is therefore somewhat specification sensitive, but the relatively large estimates may in part reflect Copenhagen's strong substitution opportunities, including cycling and public transport.</p>
+
+        <div class="table-container" id="table1">
+          <div class="table-title">Table 1 &mdash; Regression estimates across model specifications</div>
+          <table class="paper-table">
+            <thead>
+              <tr>
+                <th>Specification</th>
+                <th>Elasticity</th>
+                <th>Std. error</th>
+                <th>p-value</th>
+                <th>R<sup>2</sup></th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr class="preferred">
+                <td>Preferred: real gasoline price, quadratic trend</td>
+                <td>&minus;0.559</td><td>0.119</td><td>&lt;0.001</td><td>0.976</td>
+              </tr>
+              <tr>
+                <td>Alternative price measure: nominal gasoline, quadratic trend</td>
+                <td>&minus;0.403</td><td>0.110</td><td>&lt;0.001</td><td>0.976</td>
+              </tr>
+              <tr>
+                <td>Alternative fuel type: nominal diesel, quadratic trend</td>
+                <td>&minus;0.173</td><td>0.114</td><td>0.128</td><td>0.976</td>
+              </tr>
+            </tbody>
+
+            <tfoot>
+              <tr>
+                <td colspan="5">All specifications include road fixed effects, weekday fixed effects, and daily rainfall. Bold row indicates the preferred specification. Standard errors are clustered at the road level. The estimation sample contains 53,467 road-day observations from 2011 to 2013.</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <!-- METHOD -->
+      <section class="section" id="method">
+        <h2><span class="section-num">2</span> Method</h2>
+        <p>The historical traffic counts from Copenhagen's fixed counting points in 2011 to 2013 are matched to the historical weather data from the nearest DMI weather station, before removing holidays and holiday-adjacent days. Real-prices for fuel are constructed using Statistics Denmark's CPI (PRIS1) and OK's fuel pricedata. The main model is:</p>
+
+        <div class="equation-wrap">
+          \[
+            \log(\text{Traffic}_{it})
+            =
+            \alpha_i
+            +
+            \delta_{d(t)}
+            +
+            \beta \log(RGP_t)
+            +
+            \gamma \,\text{Rain}_{it}
+            +
+            \theta_1 t
+            +
+            \theta_2 t^2
+            +
+            \varepsilon_{it}
+          \]
+        </div>
+
+        <p>where $\text{Traffic}_{it}$ is the daily traffic count at road counting station $i$ on day $t$, $\alpha_i$ are road fixed effects capturing time-invariant differences across road counting stations, and $\delta_{d(t)}$ are weekday fixed effects capturing systematic differences between Mondays, Tuesdays, &hellip;, Sundays. $RGP_t$ is the real gasoline price on day $t$, $\text{Rain}_{it}$ is daily rainfall at the weather station matched to road station $i$, and $t$ and $t^2$ are linear and quadratic time trends allowing for non-linear development over time. The coefficient $\beta$ is the elasticity of traffic with respect to the real gasoline price, and $\varepsilon_{it}$ is the error term. Additional robustness checks use lagged and moving-average fuel prices, as well as alternative time controls and a city-day specification.</p>
+      </section>
+
+
+      <!-- ROBUSTNESS -->
+      <section class="section" id="robustness">
+        <h2><span class="section-num">3</span> Robustness checks</h2>
+        <p>The main result also looks fairly stable when the model is changed in a few simple ways. The negative relationship is still present when the gasoline price is shifted by one day, when prices are averaged over the previous week, and when traffic is aggregated to the city level instead of individual counting sites. At the same time, the size of the estimate becomes smaller in some alternative versions, which suggests that the exact magnitude should be interpreted with some caution even though the overall pattern remains negative in the most relevant checks.</p>
+
+        <div class="table-container" id="table2">
+          <div class="table-title">Table 2 &mdash; Robustness checks</div>
+          <table class="paper-table">
+            <thead>
+              <tr>
+                <th>Specification</th>
+                <th>Elasticity</th>
+                <th>Std. error</th>
+                <th>p-value</th>
+                <th>R<sup>2</sup></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="preferred">
+                <td>Real gasoline, main trend model</td>
+                <td>&minus;0.559</td><td>0.119</td><td>&lt;0.001</td><td>0.976</td>
+              </tr>
+              <tr>
+                <td>Real gasoline, lag 1</td>
+                <td>&minus;0.290</td><td>0.122</td><td>0.018</td><td>0.977</td>
+              </tr>
+              <tr>
+                <td>Real gasoline, lag 7</td>
+                <td>&minus;0.119</td><td>0.129</td><td>0.359</td><td>0.977</td>
+              </tr>
+              <tr>
+                <td>Real gasoline, MA7</td>
+                <td>&minus;0.256</td><td>0.129</td><td>0.047</td><td>0.977</td>
+              </tr>
+              <tr>
+                <td>Real gasoline, MA14</td>
+                <td>&minus;0.153</td><td>0.137</td><td>0.263</td><td>0.978</td>
+              </tr>
+              <tr>
+                <td>Real gasoline, MA30</td>
+                <td>0.120</td><td>0.152</td><td>0.433</td><td>0.978</td>
+              </tr>
+              <tr>
+                <td>Real gasoline, month fixed effects</td>
+                <td>&minus;0.112</td><td>0.177</td><td>0.526</td><td>0.978</td>
+              </tr>
+              <tr>
+                <td>City-day real gasoline, trend</td>
+                <td>&minus;0.703</td><td>0.234</td><td>0.003</td><td>0.623</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="5">Lag 1 and lag 7 shift the real gasoline price by one and seven days, respectively. MA7, MA14, and MA30 denote 7-, 14-, and 30-day moving averages. The city-day specification aggregates traffic to the daily city level. The first row repeats the main specification for comparison. Lag 1 and lag 7 shift the gasoline price by one and seven days, respectively. MA7, MA14, and MA30 denote 7-, 14-, and 30-day moving averages. The city-day specification aggregates traffic to the daily city level.</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <!-- FIGURES -->
+      <section class="section" id="figures">
+        <h2><span class="section-num">4</span> Figures</h2>
+
+        <figure class="paper-figure">
+          <div class="fig-header">
+            <div class="fig-label">Figure 1</div>
+            <div class="fig-title">Weekly total traffic and real gasoline price, 2011–2014</div>
+            <div class="fig-text">The figure is shown for the full 2011–2014 period. The regression models are instead restricted to 2011–2013, because traffic measurement rules and coverage changed from 2014 onward, lowering the recorded traffic counts and making them less comparable to the earlier years.</div>
+          </div>
+          <div class="chart-frame"><canvas id="trafficGasChart"></canvas></div>
+        </figure>
+
+        <figure class="paper-figure">
+          <div class="fig-header">
+            <div class="fig-label">Figure 2</div>
+            <div class="fig-title">Average traffic by weekday</div>
+          </div>
+          <div class="chart-frame"><canvas id="weekdayChart"></canvas></div>
+        </figure>
+
+        <figure class="paper-figure">
+          <div class="fig-header">
+            <div class="fig-label">Figure 3</div>
+            <div class="fig-title">Average traffic by rain intensity</div>
+          </div>
+          <div class="chart-frame"><canvas id="rainChart"></canvas></div>
+        </figure>
+
+        <figure class="paper-figure">
+          <div class="fig-header">
+            <div class="fig-label">Figure 4</div>
+            <div class="fig-title">Spatial distribution of traffic counting sites</div>
+          </div>
+          <div class="chart-frame" style="padding:0;overflow:hidden;">
+            <div id="siteMap"></div>
+          </div>
+        </figure>
+
+      </section>
+    </main>
+    <footer class="page-footer">
+      Code and data: <a href="https://github.com/KGSpindler/TrafficOilprice/tree/main">github.com/KGSpindler/TrafficOilprice</a> | Data sources: <a href="https://www.opendata.dk/city-of-copenhagen/faste-trafiktaellinger">Traffic</a>, <a href="https://www.ok.dk/privat/produkter/fyringsolie/prisudvikling">Fuel prices</a>, <a href="https://www.dmi.dk/friedata/dokumentation/apis">Weather</a>, <a href="https://date.nager.at/Api">Holiday calendar</a>, <a href="https://www.statbank.dk/20072">CPI</a>
+    </footer>
+  </div>
+
+  <script>
+    const weekData = [{"date_str":"2011-01-10","daily_traffic":4521782,"real_price":11.88},{"date_str":"2011-01-17","daily_traffic":4718416,"real_price":11.79},{"date_str":"2011-01-24","daily_traffic":4517210,"real_price":11.61},{"date_str":"2011-01-31","daily_traffic":4631617,"real_price":11.56},{"date_str":"2011-02-07","daily_traffic":4483269,"real_price":11.56},{"date_str":"2011-02-14","daily_traffic":4321481,"real_price":11.68},{"date_str":"2011-02-21","daily_traffic":4368061,"real_price":11.88},{"date_str":"2011-02-28","daily_traffic":3779752,"real_price":12.03},{"date_str":"2011-03-07","daily_traffic":3565176,"real_price":12.13},{"date_str":"2011-03-14","daily_traffic":3616320,"real_price":11.98},{"date_str":"2011-03-21","daily_traffic":3664650,"real_price":12.0},{"date_str":"2011-03-28","daily_traffic":3803764,"real_price":12.14},{"date_str":"2011-04-04","daily_traffic":3733930,"real_price":12.26},{"date_str":"2011-04-11","daily_traffic":3286816,"real_price":12.32},{"date_str":"2011-04-18","daily_traffic":2859756,"real_price":12.34},{"date_str":"2011-04-25","daily_traffic":3427560,"real_price":12.43},{"date_str":"2011-05-09","daily_traffic":3734281,"real_price":12.32},{"date_str":"2011-05-16","daily_traffic":4308204,"real_price":12.11},{"date_str":"2011-05-23","daily_traffic":4633115,"real_price":12.14},{"date_str":"2011-05-30","daily_traffic":4261111,"real_price":12.23},{"date_str":"2011-06-06","daily_traffic":4531331,"real_price":12.1},{"date_str":"2011-06-13","daily_traffic":3929690,"real_price":12.17},{"date_str":"2011-06-20","daily_traffic":3468534,"real_price":12.0},{"date_str":"2011-06-27","daily_traffic":4110349,"real_price":11.86},{"date_str":"2011-07-04","daily_traffic":4168911,"real_price":12.05},{"date_str":"2011-07-11","daily_traffic":3863213,"real_price":12.34},{"date_str":"2011-07-18","daily_traffic":3617800,"real_price":12.37},{"date_str":"2011-07-25","daily_traffic":3654189,"real_price":12.3},{"date_str":"2011-08-01","daily_traffic":4052905,"real_price":12.24},{"date_str":"2011-08-08","daily_traffic":3792789,"real_price":11.98},{"date_str":"2011-08-15","daily_traffic":4149390,"real_price":11.98},{"date_str":"2011-08-22","daily_traffic":4590661,"real_price":11.99},{"date_str":"2011-08-29","daily_traffic":3920235,"real_price":12.19},{"date_str":"2011-09-05","daily_traffic":3851443,"real_price":12.34},{"date_str":"2011-09-12","daily_traffic":3991083,"real_price":12.19},{"date_str":"2011-09-19","daily_traffic":3933635,"real_price":12.1},{"date_str":"2011-09-26","daily_traffic":4591639,"real_price":11.89},{"date_str":"2011-10-03","daily_traffic":4318553,"real_price":11.85},{"date_str":"2011-10-10","daily_traffic":4293192,"real_price":12.05},{"date_str":"2011-10-17","daily_traffic":4048478,"real_price":11.95},{"date_str":"2011-10-24","daily_traffic":4135844,"real_price":11.84},{"date_str":"2011-10-31","daily_traffic":3993813,"real_price":11.82},{"date_str":"2011-11-07","daily_traffic":4637988,"real_price":11.92},{"date_str":"2011-11-14","daily_traffic":4293915,"real_price":11.74},{"date_str":"2011-11-21","daily_traffic":4825726,"real_price":11.66},{"date_str":"2011-11-28","daily_traffic":5017641,"real_price":11.75},{"date_str":"2011-12-05","daily_traffic":4964172,"real_price":11.75},{"date_str":"2011-12-12","daily_traffic":5003525,"real_price":11.8},{"date_str":"2011-12-19","daily_traffic":4484801,"real_price":11.83},{"date_str":"2012-01-09","daily_traffic":4496520,"real_price":12.34},{"date_str":"2012-01-16","daily_traffic":4474938,"real_price":12.32},{"date_str":"2012-01-23","daily_traffic":4520071,"real_price":12.32},{"date_str":"2012-01-30","daily_traffic":4692056,"real_price":12.3},{"date_str":"2012-02-06","daily_traffic":4454576,"real_price":12.3},{"date_str":"2012-02-13","daily_traffic":4303376,"real_price":12.46},{"date_str":"2012-02-20","daily_traffic":4591742,"real_price":12.63},{"date_str":"2012-02-27","daily_traffic":4704102,"real_price":12.65},{"date_str":"2012-03-05","daily_traffic":4619067,"real_price":12.73},{"date_str":"2012-03-12","daily_traffic":4565636,"real_price":12.9},{"date_str":"2012-03-19","daily_traffic":4640241,"real_price":12.88},{"date_str":"2012-03-26","daily_traffic":4733777,"real_price":13.0},{"date_str":"2012-04-02","daily_traffic":3676135,"real_price":13.12},{"date_str":"2012-04-09","daily_traffic":4307625,"real_price":13.02},{"date_str":"2012-04-16","daily_traffic":4585110,"real_price":12.91},{"date_str":"2012-04-23","daily_traffic":4582265,"real_price":12.63},{"date_str":"2012-04-30","daily_traffic":4311555,"real_price":12.54},{"date_str":"2012-05-07","daily_traffic":4527163,"real_price":12.42},{"date_str":"2012-05-14","daily_traffic":4080203,"real_price":12.37},{"date_str":"2012-05-21","daily_traffic":4578721,"real_price":12.45},{"date_str":"2012-05-28","daily_traffic":4343655,"real_price":12.47},{"date_str":"2012-06-04","daily_traffic":3575632,"real_price":12.26},{"date_str":"2012-06-11","daily_traffic":4384288,"real_price":12.13},{"date_str":"2012-06-18","daily_traffic":4231649,"real_price":12.09},{"date_str":"2012-06-25","daily_traffic":4566063,"real_price":12.05},{"date_str":"2012-07-02","daily_traffic":4062596,"real_price":12.31},{"date_str":"2012-07-09","daily_traffic":3909027,"real_price":12.45},{"date_str":"2012-07-16","daily_traffic":3586994,"real_price":12.61},{"date_str":"2012-07-23","daily_traffic":3579110,"real_price":12.59},{"date_str":"2012-07-30","daily_traffic":3930705,"real_price":12.58},{"date_str":"2012-08-06","daily_traffic":4227355,"real_price":12.8},{"date_str":"2012-08-13","daily_traffic":4355271,"real_price":13.08},{"date_str":"2012-08-20","daily_traffic":4426604,"real_price":13.14},{"date_str":"2012-08-27","daily_traffic":4637380,"real_price":13.05},{"date_str":"2012-09-03","daily_traffic":4253690,"real_price":13.15},{"date_str":"2012-09-10","daily_traffic":4446824,"real_price":13.04},{"date_str":"2012-09-17","daily_traffic":4700895,"real_price":12.66},{"date_str":"2012-09-24","daily_traffic":4837312,"real_price":12.72},{"date_str":"2012-10-01","daily_traffic":4749276,"real_price":12.78},{"date_str":"2012-10-08","daily_traffic":4186721,"real_price":12.88},{"date_str":"2012-10-15","daily_traffic":3955909,"real_price":12.51},{"date_str":"2012-10-22","daily_traffic":4263357,"real_price":12.1},{"date_str":"2012-10-29","daily_traffic":4325113,"real_price":12.06},{"date_str":"2012-11-05","daily_traffic":4227116,"real_price":12.08},{"date_str":"2012-11-12","daily_traffic":3217602,"real_price":12.21},{"date_str":"2012-11-19","daily_traffic":3180486,"real_price":12.25},{"date_str":"2012-11-26","daily_traffic":2750252,"real_price":12.13},{"date_str":"2012-12-03","daily_traffic":3100248,"real_price":12.09},{"date_str":"2012-12-10","daily_traffic":3702449,"real_price":12.04},{"date_str":"2012-12-17","daily_traffic":3830558,"real_price":12.04},{"date_str":"2013-01-07","daily_traffic":3551519,"real_price":12.44},{"date_str":"2013-01-14","daily_traffic":3579908,"real_price":12.31},{"date_str":"2013-01-21","daily_traffic":3905986,"real_price":12.39},{"date_str":"2013-01-28","daily_traffic":4060424,"real_price":12.5},{"date_str":"2013-02-04","daily_traffic":4022972,"real_price":12.46},{"date_str":"2013-02-11","daily_traffic":3716060,"real_price":12.59},{"date_str":"2013-02-18","daily_traffic":3851779,"real_price":12.67},{"date_str":"2013-02-25","daily_traffic":3690032,"real_price":12.57},{"date_str":"2013-03-04","daily_traffic":3728094,"real_price":12.35},{"date_str":"2013-03-11","daily_traffic":3901752,"real_price":12.26},{"date_str":"2013-03-18","daily_traffic":3386926,"real_price":12.43},{"date_str":"2013-03-25","daily_traffic":3194926,"real_price":12.57},{"date_str":"2013-04-01","daily_traffic":3680850,"real_price":12.54},{"date_str":"2013-04-08","daily_traffic":3964882,"real_price":12.2},{"date_str":"2013-04-15","daily_traffic":3568384,"real_price":11.96},{"date_str":"2013-04-22","daily_traffic":3780652,"real_price":12.07},{"date_str":"2013-04-29","daily_traffic":4005802,"real_price":11.99},{"date_str":"2013-05-13","daily_traffic":3932334,"real_price":12.1},{"date_str":"2013-05-20","daily_traffic":3531806,"real_price":12.21},{"date_str":"2013-05-27","daily_traffic":4137882,"real_price":12.17},{"date_str":"2013-06-03","daily_traffic":3875188,"real_price":12.15},{"date_str":"2013-06-10","daily_traffic":3610310,"real_price":12.08},{"date_str":"2013-06-17","daily_traffic":3979702,"real_price":12.1},{"date_str":"2013-06-24","daily_traffic":4160342,"real_price":12.04},{"date_str":"2013-07-01","daily_traffic":3803944,"real_price":12.2},{"date_str":"2013-07-08","daily_traffic":3521266,"real_price":12.46},{"date_str":"2013-07-15","daily_traffic":3307513,"real_price":12.56},{"date_str":"2013-07-22","daily_traffic":3362950,"real_price":12.43},{"date_str":"2013-07-29","daily_traffic":3601255,"real_price":12.38},{"date_str":"2013-08-05","daily_traffic":4246796,"real_price":12.38},{"date_str":"2013-08-12","daily_traffic":4496984,"real_price":12.39},{"date_str":"2013-08-19","daily_traffic":4561394,"real_price":12.41},{"date_str":"2013-08-26","daily_traffic":4742744,"real_price":12.54},{"date_str":"2013-09-02","daily_traffic":4603167,"real_price":12.51},{"date_str":"2013-09-09","daily_traffic":4570435,"real_price":12.25},{"date_str":"2013-09-16","daily_traffic":4498554,"real_price":12.04},{"date_str":"2013-09-23","daily_traffic":4340738,"real_price":11.95},{"date_str":"2013-09-30","daily_traffic":4588100,"real_price":11.89},{"date_str":"2013-10-07","daily_traffic":3988069,"real_price":11.88},{"date_str":"2013-10-14","daily_traffic":3804402,"real_price":11.95},{"date_str":"2013-10-21","daily_traffic":4059449,"real_price":11.85},{"date_str":"2013-10-28","daily_traffic":4279652,"real_price":11.75},{"date_str":"2013-11-04","daily_traffic":4168042,"real_price":11.72},{"date_str":"2013-11-11","daily_traffic":4147313,"real_price":11.87},{"date_str":"2013-11-18","daily_traffic":4123050,"real_price":11.93},{"date_str":"2013-11-25","daily_traffic":4081443,"real_price":11.94},{"date_str":"2013-12-09","daily_traffic":4119817,"real_price":11.83},{"date_str":"2013-12-16","daily_traffic":4028752,"real_price":11.78},{"date_str":"2014-01-06","daily_traffic":3746108,"real_price":11.94},{"date_str":"2014-01-13","daily_traffic":3784515,"real_price":11.9},{"date_str":"2014-01-20","daily_traffic":3812011,"real_price":11.91},{"date_str":"2014-01-27","daily_traffic":3067832,"real_price":11.92},{"date_str":"2014-02-03","daily_traffic":3019400,"real_price":11.88},{"date_str":"2014-02-10","daily_traffic":2901862,"real_price":11.96},{"date_str":"2014-02-17","daily_traffic":3028947,"real_price":11.98},{"date_str":"2014-02-24","daily_traffic":3130142,"real_price":12.01},{"date_str":"2014-03-03","daily_traffic":3091168,"real_price":11.93},{"date_str":"2014-03-10","daily_traffic":3077180,"real_price":11.88},{"date_str":"2014-03-17","daily_traffic":2920136,"real_price":11.9},{"date_str":"2014-03-24","daily_traffic":2713076,"real_price":12.03},{"date_str":"2014-03-31","daily_traffic":2856344,"real_price":12.02},{"date_str":"2014-04-07","daily_traffic":2862407,"real_price":12.05},{"date_str":"2014-04-14","daily_traffic":2266047,"real_price":12.15},{"date_str":"2014-04-21","daily_traffic":2540071,"real_price":12.17},{"date_str":"2014-04-28","daily_traffic":2812716,"real_price":12.14},{"date_str":"2014-05-05","daily_traffic":2840669,"real_price":12.0},{"date_str":"2014-05-12","daily_traffic":2623517,"real_price":12.08},{"date_str":"2014-05-19","daily_traffic":2793534,"real_price":12.16},{"date_str":"2014-05-26","daily_traffic":2627732,"real_price":12.2},{"date_str":"2014-06-02","daily_traffic":2675241,"real_price":12.15},{"date_str":"2014-06-16","daily_traffic":2851303,"real_price":12.43},{"date_str":"2014-06-23","daily_traffic":2815889,"real_price":12.45},{"date_str":"2014-06-30","daily_traffic":2564743,"real_price":12.43},{"date_str":"2014-07-07","daily_traffic":2456388,"real_price":12.4},{"date_str":"2014-07-14","daily_traffic":2295821,"real_price":12.24},{"date_str":"2014-07-21","daily_traffic":2258889,"real_price":12.15},{"date_str":"2014-07-28","daily_traffic":2517843,"real_price":12.16},{"date_str":"2014-08-04","daily_traffic":2291128,"real_price":12.05},{"date_str":"2014-08-11","daily_traffic":2374453,"real_price":12.04},{"date_str":"2014-08-18","daily_traffic":2421018,"real_price":12.0},{"date_str":"2014-08-25","daily_traffic":2502407,"real_price":12.07},{"date_str":"2014-09-01","daily_traffic":2446021,"real_price":12.08},{"date_str":"2014-09-08","daily_traffic":2399174,"real_price":12.07},{"date_str":"2014-09-15","daily_traffic":2393662,"real_price":11.96},{"date_str":"2014-09-22","daily_traffic":2395334,"real_price":11.9},{"date_str":"2014-09-29","daily_traffic":2440912,"real_price":11.94},{"date_str":"2014-10-06","daily_traffic":2420819,"real_price":11.85},{"date_str":"2014-10-13","daily_traffic":2305975,"real_price":11.47},{"date_str":"2014-10-20","daily_traffic":2375177,"real_price":11.28},{"date_str":"2014-10-27","daily_traffic":2437329,"real_price":11.37},{"date_str":"2014-11-03","daily_traffic":2030600,"real_price":11.37},{"date_str":"2014-11-10","daily_traffic":1979292,"real_price":11.39},{"date_str":"2014-11-17","daily_traffic":2001018,"real_price":11.24},{"date_str":"2014-11-24","daily_traffic":1944232,"real_price":11.16},{"date_str":"2014-12-01","daily_traffic":1938671,"real_price":10.81},{"date_str":"2014-12-08","daily_traffic":1964877,"real_price":10.56},{"date_str":"2014-12-15","daily_traffic":1981093,"real_price":10.23}];
+
+    const weekdayData = [
+      { weekday_name: 'Monday',    traffic_mean: 11570.3 },
+      { weekday_name: 'Tuesday',   traffic_mean: 11853.4 },
+      { weekday_name: 'Wednesday', traffic_mean: 12005.3 },
+      { weekday_name: 'Thursday',  traffic_mean: 12189.5 },
+      { weekday_name: 'Friday',    traffic_mean: 12348.8 },
+      { weekday_name: 'Saturday',  traffic_mean:  8619.8 },
+      { weekday_name: 'Sunday',    traffic_mean:  7459.1 }
+    ];
+
+    const rainData = [
+      { rain_bin: '0 mm',    traffic_mean: 11091.2, rain_mean_mm:  0.00, n_obs: 33217 },
+      { rain_bin: '0\u20132 mm',  traffic_mean: 11091.4, rain_mean_mm:  0.73, n_obs: 17522 },
+      { rain_bin: '2\u20135 mm',  traffic_mean: 11123.6, rain_mean_mm:  3.24, n_obs:  8022 },
+      { rain_bin: '5\u201310 mm', traffic_mean: 11032.8, rain_mean_mm:  7.12, n_obs:  4884 },
+      { rain_bin: '10+ mm',  traffic_mean: 10848.7, rain_mean_mm: 19.35, n_obs:  2774 }
+    ];
+
+    const siteData = [
+      { road_name: '\u00c5boulevard',         lat: 55.6834, lon: 12.5559, avg_daily_traffic: 40389, station_distance_km: 1.25 },
+      { road_name: 'Torvegade',          lat: 55.6702, lon: 12.5950, avg_daily_traffic: 27821, station_distance_km: 2.35 },
+      { road_name: 'Tuborgvej',          lat: 55.7183, lon: 12.5399, avg_daily_traffic: 26766, station_distance_km: 4.02 },
+      { road_name: 'Englandsvej',        lat: 55.6398, lon: 12.5976, avg_daily_traffic: 24583, station_distance_km: 3.94 },
+      { road_name: 'Vejlands All\u00e9',      lat: 55.6415, lon: 12.5654, avg_daily_traffic: 21278, station_distance_km: 5.18 },
+      { road_name: 'Vigerslev All\u00e9',     lat: 55.6617, lon: 12.5180, avg_daily_traffic: 20137, station_distance_km: 4.57 },
+      { road_name: 'Kalvebod Brygge',    lat: 55.6677, lon: 12.5709, avg_daily_traffic: 34102, station_distance_km: 2.25 },
+      { road_name: 'Roskildevej',        lat: 55.6727, lon: 12.4785, avg_daily_traffic: 36916, station_distance_km: 6.23 },
+      { road_name: '\u00d8restads Boulevard', lat: 55.6374, lon: 12.5824, avg_daily_traffic:  8463, station_distance_km: 4.74 },
+      { road_name: 'S\u00f8lvgade',           lat: 55.6867, lon: 12.5811, avg_daily_traffic: 13528, station_distance_km: 0.45 }
+    ];
+
+    const font    = { family: 'DM Sans', size: 11 };
+    const gridCol = 'rgba(0,0,0,0.07)';
+    Chart.defaults.font = font;
+
+    /* Figure 1 — dual axis */
+    new Chart(document.getElementById('trafficGasChart'), {
+      type: 'line',
+      data: {
+        labels: weekData.map(d => d.date_str),
+        datasets: [
+          {
+            label: 'Weekly traffic count (all stations)',
+            data: weekData.map(d => d.daily_traffic),
+            borderColor: '#1a1916',
+            backgroundColor: 'rgba(26,25,22,0.06)',
+            fill: true,
+            pointRadius: 0, borderWidth: 1.5, tension: 0.25,
+            yAxisID: 'yTraffic'
+          },
+          {
+            label: 'Real gasoline price (DKK/L)',
+            data: weekData.map(d => d.real_price),
+            borderColor: '#9a9589',
+            pointRadius: 0, borderWidth: 1.5,
+            borderDash: [5, 4], tension: 0.25,
+            yAxisID: 'yPrice'
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: { legend: { position: 'top', labels: { font, boxWidth: 16, padding: 14 } } },
+        scales: {
+          x: { ticks: { font, maxTicksLimit: 8 }, grid: { display: false }, border: { color: '#ccc' } },
+          yTraffic: {
+            type: 'linear', position: 'left',
+            title: { display: true, text: 'Weekly traffic count', font, color: '#6e6b64' },
+            ticks: { font, callback: v => (v/1e6).toFixed(1) + 'M' },
+            grid: { color: gridCol }, border: { color: '#ccc' }
+          },
+          yPrice: {
+            type: 'linear', position: 'right',
+            title: { display: true, text: 'Real price (DKK/L)', font, color: '#6e6b64' },
+            ticks: { font, callback: v => v.toFixed(2) },
+            grid: { drawOnChartArea: false }, border: { color: '#ccc' },
+            min: 9.5, max: 14
+          }
+        }
+      }
+    });
+
+    /* Figure 2 */
+    new Chart(document.getElementById('weekdayChart'), {
+      type: 'bar',
+      data: {
+        labels: weekdayData.map(d => d.weekday_name),
+        datasets: [{ data: weekdayData.map(d => d.traffic_mean),
+          backgroundColor: weekdayData.map((_,i) => i < 5 ? '#1a1916' : '#9a9589'),
+          borderRadius: 3, maxBarThickness: 44 }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { font }, grid: { display: false }, border: { color: '#ccc' } },
+          y: { ticks: { font }, grid: { color: gridCol }, border: { color: '#ccc' } }
+        }
+      }
+    });
+
+    /* Figure 3 */
+    new Chart(document.getElementById('rainChart'), {
+      type: 'bar',
+      data: {
+        labels: rainData.map(d => d.rain_bin),
+        datasets: [{ data: rainData.map(d => d.traffic_mean),
+          backgroundColor: ['#1a1916','#3d3a34','#605c55','#8a8479','#b8b3a8'],
+          borderRadius: 3, maxBarThickness: 52 }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { afterLabel: ctx => {
+            const r = rainData[ctx.dataIndex];
+            return 'Mean rain: ' + r.rain_mean_mm + ' mm  |  N\u00a0=\u00a0' + r.n_obs.toLocaleString();
+          }}}
+        },
+        scales: {
+          x: { ticks: { font }, grid: { display: false }, border: { color: '#ccc' } },
+          y: { ticks: { font }, grid: { color: gridCol }, border: { color: '#ccc' }, min: 10400 }
+        }
+      }
+    });
+
+    /* Figure 4 */
+    const map = L.map('siteMap', { scrollWheelZoom: false }).setView([55.676, 12.56], 11);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>'
+    }).addTo(map);
+    const tv = siteData.map(d => d.avg_daily_traffic);
+    const minT = Math.min(...tv), maxT = Math.max(...tv);
+    siteData.forEach(d => {
+      const r = 6 + ((d.avg_daily_traffic - minT) / (maxT - minT)) * 12;
+      L.circleMarker([d.lat, d.lon], { radius: r, color: '#1a1916', weight: 1.5, fillColor: '#1a1916', fillOpacity: 0.28 })
+        .bindPopup(`<strong style="font-family:DM Sans,sans-serif">${d.road_name}</strong><br>
+          <span style="font-family:DM Sans,sans-serif;font-size:0.78rem">
+          Avg. daily traffic: ${Math.round(d.avg_daily_traffic).toLocaleString()}<br>
+          Station distance: ${d.station_distance_km}\u00a0km</span>`)
+        .addTo(map);
+    });
+  </script>
+</body>
+</html>
