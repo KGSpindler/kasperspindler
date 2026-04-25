@@ -5,7 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Job Posting Semantic Analysis - Student vs Non-student</title>
 <meta name="description" content="Interactive semantic analysis dashboard comparing Danish student-targeted job postings with non-student postings across sectors, clichés, and framing." />
-<meta name="keywords" content="job posting analysis, semantic analysis, Danish labour market, student jobs, recruitment language, dashboard" />
+<meta name="keywords" content="job posting analysis, semantic analysis, Danish labour market, student jobs, recruitment language, dashboard, jobopslag, semantisk analyse, dansk arbejdsmarked, studiejob, rekruttering" />
+<link rel="canonical" href="https://kgspindler.live/dashboards/jobposting_semantic_analysis.html" />
+<link rel="alternate" hreflang="x-default" href="https://kgspindler.live/dashboards/jobposting_semantic_analysis.html" />
+<meta property="og:title" content="Job Posting Semantic Analysis - Student vs Non-student" />
+<meta property="og:description" content="Interactive semantic analysis dashboard comparing Danish student-targeted job postings with non-student postings across sectors, clichés, and framing." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kgspindler.live/dashboards/jobposting_semantic_analysis.html" />
+<meta property="og:site_name" content="Kasper Spindler" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Job Posting Semantic Analysis - Student vs Non-student" />
+<meta name="twitter:description" content="Interactive semantic analysis dashboard comparing Danish student-targeted job postings with non-student postings across sectors, clichés, and framing." />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Job Posting Semantic Analysis - Student vs Non-student",
+  "description": "Interactive semantic analysis dashboard comparing Danish student-targeted job postings with non-student postings across sectors, clichés, and framing.",
+  "author": {
+    "@type": "Person",
+    "name": "Kasper Garm Spindler",
+    "url": "https://kgspindler.live"
+  },
+  "datePublished": "2026-04-25",
+  "publisher": {
+    "@type": "Person",
+    "name": "Kasper Garm Spindler",
+    "url": "https://kgspindler.live"
+  },
+  "url": "https://kgspindler.live/dashboards/jobposting_semantic_analysis.html"
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -117,10 +147,12 @@ footer {
   <a class="nav-back" href="index.html">← Back</a>
 </nav>
 
+<p style="position:absolute;left:-9999px;font-size:0;overflow:hidden;">Et interaktivt dashboard der sammenligner sprogbrugen i danske studiejobopslag med opslag rettet mod ikke-studerende. Analysen kortlægger klichéer, tone og sektormønstre på det danske arbejdsmarked.</p>
+
 <div class="page-header">
   <div class="page-kicker">Dashboard 02 · Danish job posting language</div>
   <h1 class="page-title">Student vs Non-student<br>Job Postings</h1>
-  <p class="page-desc">This dashboard compares student-targeted job postings with the rest of the Danish labour market. The dataset was webscraped from Jobnet and Jobindex, cleaned, and then analysed using DanNet together with manually crafted word groupings to map semantic differences, cliché language, and benefits-versus-requirements framing.</p>
+  <p class="page-desc">This dashboard compares student-targeted postings with the rest of the Danish labour market. I scraped the data from Jobnet and Jobindex, cleaned it, and used DanNet plus my own term groupings to map semantic differences, cliche usage, and benefits-versus-requirements framing.</p>
 </div>
 
 <section class="section" id="sec-semantics">
@@ -150,7 +182,7 @@ footer {
       <h2 class="section-title">Which cliché-heavy recruiting words are most associated with each group?</h2>
     </div>
   </div>
-  <p class="section-sub">This figure is fixed to the total market. It focuses on stock recruitment language and recurring boilerplate expressions after removing broader generic descriptors, so the comparison highlights actual clichés rather than ordinary positive wording.</p>
+  <p class="section-sub">This figure is fixed to the full market. It isolates recurring recruiting buzzwords after broader descriptors are filtered out, so the comparison focuses on actual cliches.</p>
 
   <div class="chart-wrap tall">
     <div class="chart-title" id="clicheChartTitle">Cliché language gap across the full market</div>

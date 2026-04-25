@@ -5,7 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Do Higher Gasoline Prices Reduce Road Traffic in Copenhagen?</title>
   <meta name="description" content="Empirical analysis of whether higher gasoline prices are linked to reduced road traffic in Copenhagen using fixed traffic counters and robustness checks." />
-  <meta name="keywords" content="gasoline prices, road traffic, Copenhagen, elasticity, empirical analysis, economics, Kasper Spindler" />
+  <meta name="keywords" content="gasoline prices, road traffic, Copenhagen, elasticity, empirical analysis, economics, Kasper Spindler, benzinpriser, vejtrafik, København, trafikdata, økonomi, empirisk analyse" />
+  <link rel="canonical" href="https://kgspindler.live/research/traffic_gasoline_analysis.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kgspindler.live/research/traffic_gasoline_analysis.html" />
+  <meta property="og:title" content="Do Higher Gasoline Prices Reduce Road Traffic in Copenhagen?" />
+  <meta property="og:description" content="Empirical analysis of whether higher gasoline prices are linked to reduced road traffic in Copenhagen using fixed traffic counters and robustness checks." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://kgspindler.live/research/traffic_gasoline_analysis.html" />
+  <meta property="og:site_name" content="Kasper Spindler" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Do Higher Gasoline Prices Reduce Road Traffic in Copenhagen?" />
+  <meta name="twitter:description" content="Empirical analysis of whether higher gasoline prices are linked to reduced road traffic in Copenhagen using fixed traffic counters and robustness checks." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Do Higher Gasoline Prices Reduce Road Traffic in Copenhagen?",
+    "description": "Empirical analysis of whether higher gasoline prices are linked to reduced road traffic in Copenhagen using fixed traffic counters and robustness checks.",
+    "author": {
+      "@type": "Person",
+      "name": "Kasper Garm Spindler",
+      "url": "https://kgspindler.live"
+    },
+    "datePublished": "2026-04-25",
+    "publisher": {
+      "@type": "Person",
+      "name": "Kasper Garm Spindler",
+      "url": "https://kgspindler.live"
+    },
+    "url": "https://kgspindler.live/research/traffic_gasoline_analysis.html"
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
@@ -207,6 +237,8 @@
     </div>
   </nav>
 
+  <p style="position:absolute;left:-9999px;font-size:0;overflow:hidden;">Denne analyse undersøger sammenhængen mellem benzinpriser og vejtrafik i København ved hjælp af faste trafiktællerdata. Vi tester, om højere benzinpriser fører til færre biler på vejene. Analysen inkluderer robusthedstjek og prisbelastningsestimater.</p>
+
   <div class="page">
     <main class="article">
 
@@ -217,14 +249,14 @@
           <span class="paper-meta-sep">|</span>
           <span>University of Copenhagen</span>
           <span class="paper-meta-sep">|</span>
-          <span>2026</span>
+          <span>April 2026</span>
         </div>
       </header>
 
       <!-- RESULTS -->
       <section class="section" id="results">
         <h2><span class="section-num">1</span> Results</h2>
-        <p>This analysis examines whether oil-fuel price fluctuations are associated with lower road traffic in Copenhagen, by using traffic counting station data from 2011 to 2013. In a model with road fixed effects, weekday controls, local rainfall, and a smooth time trend, the estimated elasticity of traffic with respect to the real gasoline price is about &minus;0.559. This implies that a 1% increase in the real gasoline price decreases the traffic amount by about 0.56%. Alternative specifications with lagged and further smoothed fuel prices suggest that the negative relationship remains present in several robustness checks, although its size depends on how fuel prices are timed and smoothed. The model is therefore somewhat specification sensitive, but the relatively large estimates may in part reflect Copenhagen's strong substitution opportunities, including cycling and public transport.</p>
+        <p>This analysis examines whether fuel price fluctuations are associated with lower road traffic in Copenhagen, using traffic counting station data from 2011 to 2013. In a model with road fixed effects, weekday controls, local rainfall, and a smooth time trend, the estimated elasticity of traffic with respect to the real gasoline price is about &minus;0.559. This implies that a 1% increase in the real gasoline price decreases traffic by about 0.56%. When I test lagged and smoothed fuel prices, the negative relationship is still present in most checks, but the magnitude moves across specifications. So the exact size should be read with caution, even if the overall direction is fairly stable. Part of the larger effect may reflect Copenhagen's strong alternatives to driving, including cycling and public transport.</p>
 
         <div class="table-container" id="table1">
           <div class="table-title">Table 1 &mdash; Regression estimates across model specifications</div>
