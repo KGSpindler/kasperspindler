@@ -95,7 +95,8 @@
       font-size: 0.82rem; color: var(--muted);
       display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
     }
-    .author { font-weight: 600; color: var(--ink); }
+    .author { font-weight: 600; color: var(--ink); text-decoration: none; }
+    .author:hover { opacity: 0.7; }
     .paper-meta-sep { color: var(--faint); }
 
     .section { margin-top: 44px; }
@@ -195,6 +196,7 @@
       <a class="nav-brand" href="index.html">Kasper Spindler</a>
       <div class="nav-links">
         <a class="nav-back" href="research.html">← Back</a>
+        <a href="library_distance_analysis.html">Library Study</a>
         <a href="#results">Results</a>
         <a href="#method">Method</a>
         <a href="#robustness">Robustness</a>
@@ -209,7 +211,7 @@
       <header class="paper-header">
         <h1>Do Higher Gasoline Prices Reduce Road Traffic in Copenhagen?</h1>
         <div class="paper-meta">
-          <span class="author">Kasper Spindler</span>
+          <a class="author" href="index.html">Kasper Spindler</a>
           <span class="paper-meta-sep">|</span>
           <span>University of Copenhagen</span>
           <span class="paper-meta-sep">|</span>
