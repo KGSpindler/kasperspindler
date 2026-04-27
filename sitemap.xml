@@ -25,6 +25,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kgspindler.live/dashboards/academic_overproduction_dashboard.html</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kgspindler.live/research/</loc>
     <lastmod>2026-04-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -46,6 +52,6 @@
     <loc>https://kgspindler.live/Images/headlights.html</loc>
     <lastmod>2026-04-25</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.3</priority>
   </url>
 </urlset>

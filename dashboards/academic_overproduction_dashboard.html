@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elite Overproduction in Academia?</title>
+<meta name="description" content="A simple dashboard on historic changes in the academic job market, comparing graduates, academic job postings and academic career-level postings over time." />
+<meta name="keywords" content="academic labour market dashboard, elite overproduction, academia, Denmark, ph.d. graduates, adjunkt postings, research jobs, Kasper Spindler" />
+<link rel="canonical" href="https://kgspindler.live/dashboards/academic_overproduction_dashboard.html" />
+<link rel="alternate" hreflang="x-default" href="https://kgspindler.live/dashboards/academic_overproduction_dashboard.html" />
+<meta property="og:title" content="Elite Overproduction in Academia?" />
+<meta property="og:description" content="Historic trends in Denmark's academic labour market: graduate output versus research-position openings and career-level composition." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kgspindler.live/dashboards/academic_overproduction_dashboard.html" />
+<meta property="og:site_name" content="Kasper Spindler" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Elite Overproduction in Academia?" />
+<meta name="twitter:description" content="Historic trends in Denmark's academic labour market: graduate output versus research-position openings and career-level composition." />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Elite Overproduction in Academia?",
+  "description": "Historic trends in Denmark's academic labour market: graduate output versus research-position openings and career-level composition.",
+  "author": {
+    "@type": "Person",
+    "name": "Kasper Garm Spindler",
+    "url": "https://kgspindler.live"
+  },
+  "datePublished": "2026-04-27",
+  "publisher": {
+    "@type": "Person",
+    "name": "Kasper Garm Spindler",
+    "url": "https://kgspindler.live"
+  },
+  "url": "https://kgspindler.live/dashboards/academic_overproduction_dashboard.html"
+}
+</script>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0a0a0a;
+  --white: #ffffff;
+  --gray: #f7f7f7;
+  --border: #e4e4e4;
+  --mid: #777;
+  --blue: #2563eb;
+  --red: #dc2626;
+  --green: #059669;
+  --purple: #7c3aed;
+  --orange: #ea580c;
+  --slate: #111827;
+}
+body { font-family: "DM Sans", Arial, sans-serif; background: var(--gray); color: var(--black); }
+.page-shell { width: 100%; max-width: 1440px; margin: 0 auto; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.03); }
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(20px, 4vw, 48px); height: 56px;
+  background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-size: 0.95rem; font-weight: 700; text-decoration: none; color: var(--black); }
+.nav-back {
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; text-decoration: none; color: var(--black);
+}
+.nav-back:hover { opacity: 0.55; }
+
+.page-header {
+  padding: 56px clamp(20px,4vw,48px) 44px;
+  border-bottom: 1px solid var(--border);
+  max-width: 1200px; margin: 0 auto;
+}
+.page-kicker {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--mid); margin-bottom: 10px;
+}
+.page-title {
+  font-size: clamp(2rem,4.4vw,3.35rem);
+  font-weight: 900; line-height: 1.02; letter-spacing: -0.035em;
+  margin-bottom: 14px;
+}
+.page-desc {
+  font-size: 0.95rem; font-weight: 300; color: #444;
+  line-height: 1.8; max-width: 760px;
+}
+.summary-lines { margin-top: 18px; max-width: 810px; display: grid; gap: 6px; }
+.summary-lines p { font-size: 0.86rem; line-height: 1.65; color: #555; font-weight: 300; }
+a { color: inherit; text-underline-offset: 3px; }
+a:hover { opacity: 0.65; }
+
+.section {
+  padding: 50px clamp(20px,4vw,48px);
+  border-bottom: 1px solid var(--border);
+  max-width: 1200px; margin: 0 auto;
+}
+.section-num {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--mid); margin-bottom: 7px;
+}
+.section-title {
+  font-size: 1.45rem; font-weight: 800; letter-spacing: -0.01em;
+  margin-bottom: 22px;
+}
+.chart-wrap {
+  min-height: 360px; position: relative; overflow: hidden;
+  background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 0;
+}
+.chart-wrap.tall { min-height: 430px; }
+.chart-wrap canvas {
+  display: block; width: 100% !important; height: 310px !important; max-height: 310px !important;
+}
+.chart-wrap.tall canvas { height: 380px !important; max-height: 380px !important; }
+.chart-title { font-size: 0.92rem; font-weight: 800; margin-bottom: 12px; }
+.two-col {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 28px; align-items: start;
+}
+
+.level-table-wrap {
+  margin-top: 28px;
+  border-top: 1px solid var(--border);
+  overflow-x: auto;
+}
+.level-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.level-table th,
+.level-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 13px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+.level-table th {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.level-table th span {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.68rem;
+  letter-spacing: normal;
+  text-transform: none;
+  font-weight: 500;
+}
+.level-table td strong { font-weight: 800; }
+.level-table td span { color: #666; font-size: 0.78rem; }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px clamp(20px, 4vw, 48px);
+  display: flex; justify-content: space-between; align-items: center; gap: 14px;
+  font-size: 0.75rem; color: var(--mid);
+  max-width: 1200px; margin: 0 auto; flex-wrap: wrap;
+}
+@media (max-width: 980px) {
+  .two-col { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .page-header { padding-top: 42px; }
+  .section { padding-top: 42px; padding-bottom: 42px; }
+  .chart-wrap canvas, .chart-wrap.tall canvas { height: 330px !important; max-height: 330px !important; }
+}
+</style>
+</head>
+<body>
+<div class="page-shell">
+<nav>
+  <a class="nav-logo" href="../index.html">Kasper Spindler</a>
+  <a class="nav-back" href="index.html">← Back</a>
+</nav>
+
+<header class="page-header">
+  <div class="page-kicker">Dashboard 03 · Academic labour market</div>
+  <h1 class="page-title">Elite Overproduction<br>in Academia?</h1>
+  <p class="page-desc">This dashboard is a simple overview of historic changes in the danish academic jobmarket.</p>
+  <div class="summary-lines">
+    <p>Data covers 2005–2025: education output is measured using Danmarks Statistik's <a href="https://www.statistikbanken.dk/statbank5a/SelectVarVal/Define.asp?Maintable=UDDAKT10&amp;PLanguage=0" target="_blank" rel="noopener">UDDAKT10</a>, specifically completed degrees by education level. Job demand is measured using <a href="https://www.jobindsats.dk/databank/arbejdsmarked/status-pa-arbejdsmarkedet/virksomhedernes-behov-for-arbejdskraft/antal-ledige-stillinger-pa-jobnet/" target="_blank" rel="noopener">Jobindsats / Jobnet's new job postings</a>, grouped by academic and research-position categories. The figures end in 2024 to avoid incomplete 2025 observations; career-level shares use total research-position postings as the denominator.</p>
+  </div>
+</header>
+
+
+<section class="section">
+  <div class="section-num">01 — Education output</div>
+  <h2 class="section-title">Graduates by education length</h2>
+  <div class="chart-wrap tall">
+    <div class="chart-title">Completed degrees by level</div>
+    <canvas id="educationLengthChart"></canvas>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-num">02 — Adjunkt-level research market</div>
+  <h2 class="section-title">Ph.d. degrees compared with adjunkt-level openings</h2>
+  <div class="two-col">
+    <div class="chart-wrap">
+      <div class="chart-title">Ph.d. degrees, adjunkt-level postings and total research-position postings</div>
+      <canvas id="phdCountsChart"></canvas>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-title">Ph.d. degrees per adjunkt-level posting</div>
+      <canvas id="phdRatioChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-num">03 — Academic fields</div>
+  <h2 class="section-title">Field-level pressure over time</h2>
+  <div class="chart-wrap tall">
+    <div class="chart-title">Field-level ph.d. degrees per adjunkt-level posting, 2009–2024</div>
+    <canvas id="fieldRatioChart"></canvas>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-num">04 — Academic job levels</div>
+  <h2 class="section-title">How has the composition of research-position postings changed?</h2>
+  <div class="chart-wrap tall">
+    <div class="chart-title">Career-level postings as a share of all research-position postings</div>
+    <canvas id="careerLevelShareChart"></canvas>
+  </div>
+
+  <div class="level-table-wrap">
+    <table class="level-table">
+      <thead>
+        <tr>
+          <th>Dashboard level</th>
+          <th>English label</th>
+          <th>Danish positions included</th>
+          <th>Interpretation<br><span><a href="https://jobportal.ku.dk/videnskabelige-stillinger/karriere-paa-ku/" target="_blank" rel="noopener">KU level definitions</a></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Under adjunkt level</strong></td>
+          <td>Below Assistant Professor level</td>
+          <td>Ph.d., forskningsassistent, videnskabelig assistent, undervisningsassistent</td>
+          <td><span>Temporary training/support roles before the normal post-ph.d. academic career level.</span></td>
+        </tr>
+        <tr>
+          <td><strong>Adjunkt level</strong></td>
+          <td>Assistant Professor level</td>
+          <td>Postdoc, adjunkt, assistant professor, forsker</td>
+          <td><span>Early post-ph.d. research career positions, corresponding to <a href="https://jobportal.ku.dk/videnskabelige-stillinger/karriere-paa-ku/" target="_blank" rel="noopener">KU's adjunktniveau</a>.</span></td>
+        </tr>
+        <tr>
+          <td><strong>Lektor level</strong></td>
+          <td>Associate Professor level</td>
+          <td>Lektor, associate professor, seniorforsker, seniorrådgiver</td>
+          <td><span>Established academic positions above assistant professor level.</span></td>
+        </tr>
+        <tr>
+          <td><strong>Professor level</strong></td>
+          <td>Professor level</td>
+          <td>Professor</td>
+          <td><span>Senior academic positions at the top of the university career structure.</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <span>Data: <a href="https://www.statistikbanken.dk/statbank5a/SelectVarVal/Define.asp?Maintable=UDDAKT10&amp;PLanguage=0" target="_blank" rel="noopener">Danmarks Statistik UDDAKT10</a> and <a href="https://www.jobindsats.dk/databank/arbejdsmarked/status-pa-arbejdsmarkedet/virksomhedernes-behov-for-arbejdskraft/antal-ledige-stillinger-pa-jobnet/" target="_blank" rel="noopener">Jobindsats / Jobnet</a>.</span>
+</footer>
+</div>
+
+<script>
+const DATA = {"years":[2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"post2008Years":[2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"series":{"academicJobPostings":[9215,14210,18635,19098,14221,12505,12810,15917,21050,22101,26818,27963,31122,30733,32697,32502,38014,39219,35170,33312],"lvuGraduates":[12643,12826,13821,13097,14119,13799,14620,15649,16674,17804,19673,26856,25048,23710,23925,23231,24561,23632,23660,23665],"bachelorGraduates":[10698,10697,11917,12451,13629,14577,14367,15010,16726,17704,18354,20338,18230,18412,18587,18884,19470,18441,19163,18923],"phdGraduates":[1017,924,1076,1179,1228,1458,1595,1655,1922,2170,2214,2229,2243,2093,2099,1901,2044,1934,1898,2254],"adjunktLevelJobs":[496,533,569,509,456,416,413,431,396,363,737,365,541,652,691,566,676,730,550,640],"phdAdjunktRatio":[2.0504032258064515,1.7335834896810507,1.89103690685413,2.3163064833005893,2.692982456140351,3.5048076923076925,3.861985472154964,3.839907192575406,4.853535353535354,5.977961432506887,3.004070556309362,6.1068493150684935,4.146025878003697,3.210122699386503,3.037626628075253,3.3586572438162543,3.0236686390532546,2.649315068493151,3.4509090909090907,3.521875],"researchPostings":[1129,1688,2146,2530,2720,2623,2143,2293,2841,2212,3213,3243,3936,3497,3926,3514,3714,3737,3326,3385]},"fieldRatios":{"Humanities, theology & arts":[0.31026785714285715,0.3142857142857143,0.4907161803713528,0.7168949771689498,1.5783132530120483,1.296,1.7127659574468086,2.227272727272727,2.1358024691358026,4.25531914893617,2.7567567567567566,6.0606060606060606,7.066666666666666,5.833333333333333,5.303030303030303,3.489795918367347,3.5,3.175438596491228,6.035714285714286,3.933333333333333],"Natural, technical & environment":[16.125,5.716216216216216,4.084745762711864,4.140740740740741,4.798319327731092,5.8,6.433333333333334,6.6,12.802469135802468,6.697530864197531,2.106145251396648,5.463054187192118,3.9586466165413534,3.149390243902439,2.3627906976744186,3.397003745318352,3.0654205607476634,2.1858190709046457,2.381924198250729,3.171511627906977],"Social sciences":[9.333333333333334,6.6,2.72,1.8026315789473684,1.125984251968504,1.9885057471264367,2.55,1.7333333333333334,1.8981481481481481,2.552941176470588,6.105263157894737,6.466666666666667,2.644230769230769,2.0660377358490565,1.889908256880734,2.2948717948717947,2.2674418604651163,2.1555555555555554,4.019607843137255,2.7285714285714286],"Health sciences":[62.5,12.473684210526315,11.375,4.1265822784810124,3.015748031496063,5.123595505617978,3.8487394957983194,3.8796296296296298,4.023809523809524,9.681159420289855,7.3522727272727275,7.488095238095238,4.98581560283688,3.5425531914893615,5.899159663865547,3.744186046511628,3.137440758293839,3.82183908045977,5.5234375,4.392265193370166]},"careerLevelShares":{"Under adjunkt level":[18.157661647475642,35.07109004739337,42.77726001863933,47.984189723320156,50.44117647058823,59.893252001524964,45.54363042463836,43.131269079808106,45.82893347412883,43.173598553345386,49.92219109866169,60.931236509404876,60.72154471544715,53.617386331140985,52.87824758023434,54.32555492316449,63.86645126548196,63.44661493176345,65.99518941671678,63.42688330871492],"Adjunkt level":[43.932683790965456,31.575829383886255,26.514445479962724,20.118577075098816,16.76470588235294,15.859702630575676,19.272048530097994,18.796336676842564,13.938753959873285,16.410488245931283,22.938064114534704,11.255010792476103,13.744918699186993,18.644552473548757,17.600611309220582,16.107000569151964,18.20140010770059,19.534385871019534,16.536380036079372,18.906942392909897],"Lektor level":[26.395039858281667,23.75592417061611,22.739981360671017,24.110671936758894,21.470588235294116,16.202821197102555,26.41157256182921,28.30353249018753,29.637451601548747,28.887884267631105,18.051665110488642,18.809744064138144,17.276422764227643,19.816985987989703,21.192052980132452,22.168468981217984,12.762520193861066,12.362857907412362,11.785929043896573,12.821270310192023],"Professor level":[11.514614703277235,9.597156398104266,7.968313140726933,7.786561264822134,11.323529411764707,8.044224170796797,8.772748483434437,9.768861753161797,10.594860964449138,11.528028933092225,9.08807967631497,9.004008633980883,8.25711382113821,7.921075207320561,8.329088130412634,7.398975526465566,5.169628432956381,4.656141289804657,5.682501503307276,4.844903988183161]},"careerLevelCounts":{"Under adjunkt level":[205,592,918,1214,1372,1571,976,989,1302,955,1604,1976,2390,1875,2076,1909,2372,2371,2195,2147],"Adjunkt level":[496,533,569,509,456,416,413,431,396,363,737,365,541,652,691,566,676,730,550,640],"Lektor level":[298,401,488,610,584,425,566,649,842,639,580,610,680,693,832,779,474,462,392,434],"Professor level":[130,162,171,197,308,211,188,224,301,255,292,292,325,277,327,260,192,174,189,164]},"latest":{"lvu_2024":23665,"academic_jobs_2024":33312,"phd_2024":2254,"adjunkt_jobs_2024":640,"phd_adjunkt_ratio_2024":3.521875,"share_adjunkt_2024":1.921229586935639,"research_postings_2024":3385,"share_adjunkt_research_2024":18.906942392909897}};
+
+const fmt = new Intl.NumberFormat('en-US');
+const fmtRatio = (x) => x === null || x === undefined || Number.isNaN(x) ? 'n/a' : x.toFixed(2);
+const fmtPct = (x) => x === null || x === undefined || Number.isNaN(x) ? 'n/a' : x.toFixed(1) + '%';
+
+Chart.defaults.font.family = 'DM Sans, Arial, sans-serif';
+Chart.defaults.color = '#333';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+
+const baseOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  interaction: { mode: 'index', intersect: false },
+  plugins: {
+    legend: { position: 'bottom' },
+    tooltip: {
+      callbacks: {
+        label: function(ctx) {
+          const val = ctx.parsed.y;
+          if (ctx.dataset.percent) return ctx.dataset.label + ': ' + fmtPct(val);
+          if (ctx.dataset.ratio) return ctx.dataset.label + ': ' + fmtRatio(val);
+          return ctx.dataset.label + ': ' + fmt.format(Math.round(val));
+        }
+      }
+    }
+  },
+  scales: {
+    x: { grid: { display: false } },
+    y: { beginAtZero: true, ticks: { callback: v => fmt.format(v) } }
+  }
+};
+
+new Chart(document.getElementById('educationLengthChart'), {
+  type: 'line',
+  data: {
+    labels: DATA.years,
+    datasets: [
+      { label: 'Bachelor graduates', data: DATA.series.bachelorGraduates, borderColor: '#2563eb', backgroundColor: '#2563eb', tension: 0.25, pointRadius: 2, borderWidth: 2, yAxisID: 'y' },
+      { label: 'Master-degree graduates (LVU)', data: DATA.series.lvuGraduates, borderColor: '#dc2626', backgroundColor: '#dc2626', tension: 0.25, pointRadius: 2, borderWidth: 2, yAxisID: 'y' },
+      { label: 'Ph.d. graduates', data: DATA.series.phdGraduates, borderColor: '#059669', backgroundColor: '#059669', tension: 0.25, pointRadius: 2, borderWidth: 2, yAxisID: 'y1' }
+    ]
+  },
+  options: {
+    ...baseOptions,
+    scales: {
+      x: { grid: { display: false } },
+      y: { min: 5000, position: 'left', title: { display: true, text: 'Bachelor and master-degree graduates' }, ticks: { callback: v => fmt.format(v) } },
+      y1: { min: 500, position: 'right', title: { display: true, text: 'Ph.d. graduates' }, ticks: { callback: v => fmt.format(v) }, grid: { drawOnChartArea: false } }
+    }
+  }
+});
+
+new Chart(document.getElementById('phdCountsChart'), {
+  type: 'line',
+  data: {
+    labels: DATA.years,
+    datasets: [
+      { label: 'Ph.d. degrees', data: DATA.series.phdGraduates, borderColor: '#059669', backgroundColor: '#059669', tension: 0.25, pointRadius: 2, borderWidth: 2 },
+      { label: 'Adjunkt-level postings', data: DATA.series.adjunktLevelJobs, borderColor: '#7c3aed', backgroundColor: '#7c3aed', tension: 0.25, pointRadius: 2, borderWidth: 2 },
+      { label: 'Total research-position postings', data: DATA.series.researchPostings, borderColor: '#ea580c', backgroundColor: '#ea580c', tension: 0.25, pointRadius: 2, borderWidth: 2 }
+    ]
+  },
+  options: baseOptions
+});
+
+new Chart(document.getElementById('phdRatioChart'), {
+  type: 'line',
+  data: {
+    labels: DATA.years,
+    datasets: [
+      { label: 'Ph.d. pressure ratio', data: DATA.series.phdAdjunktRatio, borderColor: '#111827', backgroundColor: '#111827', tension: 0.25, pointRadius: 2, borderWidth: 2, ratio: true }
+    ]
+  },
+  options: {
+    ...baseOptions,
+    scales: {
+      x: { grid: { display: false } },
+      y: { beginAtZero: true, ticks: { callback: v => Number(v).toFixed(1) } }
+    }
+  }
+});
+
+const fieldColors = ['#2563eb', '#dc2626', '#059669', '#7c3aed'];
+const fieldNames = Object.keys(DATA.fieldRatios);
+const post2008Start = DATA.years.indexOf(2009);
+
+new Chart(document.getElementById('fieldRatioChart'), {
+  type: 'line',
+  data: {
+    labels: DATA.post2008Years,
+    datasets: fieldNames.map((name, i) => ({
+      label: name,
+      data: DATA.fieldRatios[name].slice(post2008Start),
+      borderColor: fieldColors[i % fieldColors.length],
+      backgroundColor: fieldColors[i % fieldColors.length],
+      tension: 0.25,
+      pointRadius: 2,
+      borderWidth: 2,
+      ratio: true
+    }))
+  },
+  options: {
+    ...baseOptions,
+    scales: {
+      x: { grid: { display: false } },
+      y: { beginAtZero: true, ticks: { callback: v => Number(v).toFixed(1) } }
+    }
+  }
+});
+
+const levelColors = ['#64748b', '#7c3aed', '#059669', '#ea580c'];
+const levelNames = Object.keys(DATA.careerLevelShares);
+
+new Chart(document.getElementById('careerLevelShareChart'), {
+  type: 'line',
+  data: {
+    labels: DATA.years,
+    datasets: levelNames.map((name, i) => ({
+      label: name,
+      data: DATA.careerLevelShares[name],
+      borderColor: levelColors[i % levelColors.length],
+      backgroundColor: levelColors[i % levelColors.length] + '33',
+      tension: 0.25,
+      pointRadius: 1.5,
+      borderWidth: 2,
+      fill: true,
+      stack: 'research-levels',
+      percent: true
+    }))
+  },
+  options: {
+    ...baseOptions,
+    scales: {
+      x: { grid: { display: false } },
+      y: { stacked: true, min: 0, max: 100, title: { display: true, text: 'Share of research-position postings' }, ticks: { callback: v => Number(v).toFixed(0) + '%' } }
+    }
+  }
+});
+</script>
+</body>
+</html>
