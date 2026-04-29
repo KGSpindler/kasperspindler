@@ -611,16 +611,19 @@
     const xMaxCoef = Math.max(...confHigh, 0) + 0.03;
 
     new Chart(document.getElementById('coefCanvas'), {
-      type: 'bar',
+      type: 'scatter',
       data: {
-        labels: regData.map(r => r.model),
         datasets: [{
-          label: 'Coefficient',
-          data: coefs,
-          backgroundColor: coefs.map(c => c < 0 ? 'rgba(26,25,22,0.82)' : 'rgba(180,170,155,0.82)'),
-          borderWidth: 0,
-          barThickness: 12,
-          maxBarThickness: 14
+          label: 'Mean estimate',
+          data: regData.map(r => ({ x: r.coef, y: r.model })),
+          pointStyle: 'line',
+          pointRotation: 90,
+          pointRadius: 8,
+          pointHoverRadius: 9,
+          pointBorderWidth: 2,
+          pointBorderColor: '#1a1916',
+          pointBackgroundColor: '#1a1916',
+          showLine: false
         }]
       },
       options: {
@@ -644,7 +647,9 @@
                border: { color: '#ccc' }
           },
           y: {
-               offset: true,
+            type: 'category',
+            labels: regData.map(r => r.model),
+            offset: true,
                ticks: { font: { family: 'DM Sans', size: 10 }, autoSkip: false, padding: 8 },
                grid: { display: false },
                border: { color: '#ccc' }
