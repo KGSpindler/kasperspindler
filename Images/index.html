@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Photos — Kasper Spindler</title>
+<meta name="description" content="Photographs by Kasper Spindler — curated collections exploring light, urban scenes, and nature around Copenhagen." />
+<meta name="keywords" content="Kasper Spindler photography, Copenhagen photography, nature photography, photo collections" />
+<link rel="canonical" href="https://kgspindler.live/Images/" />
+<meta property="og:title" content="Photos — Kasper Spindler" />
+<meta property="og:description" content="Photographs by Kasper Spindler — curated collections exploring light, urban scenes, and nature around Copenhagen." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://kgspindler.live/Images/" />
+<meta property="og:site_name" content="Kasper Spindler" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="icon" href="../favicon.png" type="image/png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Photos — Kasper Spindler",
+    "description": "Photographs by Kasper Spindler — curated collections exploring light, urban scenes, and nature around Copenhagen.",
+    "url": "https://kgspindler.live/Images/",
+    "publisher": {
+      "@type": "Person",
+      "name": "Kasper Spindler"
+    }
+  }
+  </script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --page: #000;
+    --ink: #fff;
+    --muted: #bdbdbd;
+    --rule: #222;
+    --side: clamp(24px, 6vw, 84px);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--page);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+
+
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; height: auto; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 26px var(--side);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    mix-blend-mode: normal;
+  }
+
+  .nav-back {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-back::before { content: '← '; }
+  .nav-back:hover { color: var(--ink); }
+
+  .nav-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  .nav-wordmark:hover { opacity: 1; }
+
+  .nav-photography {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    margin-left: 12px;
+    color: var(--muted);
+    transition: transform 0.22s ease, opacity 0.22s ease;
+    will-change: transform, opacity;
+  }
+  .nav-photography.hidden {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 0 var(--side);
+    padding-top: clamp(100px, 14vw, 160px);
+    padding-bottom: clamp(40px, 7vw, 76px);
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 20px;
+  }
+
+  .header-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 8vw, 7.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+  }
+
+  .header-count {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 6px;
+    white-space: nowrap;
+  }
+
+  /* ── COLLECTIONS GRID ── */
+  .collections {
+    padding: 0 var(--side);
+    padding-bottom: clamp(80px, 14vw, 180px);
+  }
+
+  .collection-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .collection-card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .collection-card:nth-child(odd) {
+    border-right: 1px solid var(--rule);
+  }
+
+  /* The image placeholder / cover area */
+  .card-cover {
+    position: relative;
+    width: 100%;
+    padding-top: 72%;
+    background: #0b0b0b;
+    overflow: hidden;
+  }
+
+  .card-cover-inner {
+    position: absolute;
+    inset: 0;
+    background: #111;
+    overflow: hidden;
+  }
+
+  .card-cover-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    filter: brightness(0.82);
+    transition: transform 0.7s cubic-bezier(.2,.7,.2,1), filter 0.5s ease;
+    will-change: transform;
+  }
+
+  .collection-card:hover .card-cover-inner img {
+    transform: scale(1.04);
+    filter: brightness(0.72);
+  }
+
+  /* Overlay text on image */
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(16px, 4vw, 32px);
+    background: linear-gradient(to top, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.08) 50%, transparent 100%);
+    pointer-events: none;
+    transition: background 0.4s ease;
+  }
+
+  .collection-card:hover .card-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.18) 60%, rgba(0,0,0,0.06) 100%);
+  }
+
+  .card-kicker {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 8px;
+    transition: color 0.3s;
+  }
+
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 3.2rem);
+    font-weight: 700;
+    font-style: italic;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Meta below the image */
+  .card-meta {
+    padding: clamp(14px, 2.5vw, 22px) clamp(16px, 4vw, 32px);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .card-desc {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #ccc;
+    line-height: 1.5;
+    max-width: 280px;
+  }
+
+  .card-arrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: color 0.2s, transform 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .collection-card:hover .card-arrow {
+    color: var(--ink);
+    transform: translateX(4px);
+  }
+
+  /* ── PLACEHOLDER / COMING SOON ── */
+  .card-placeholder .card-cover-inner {
+    background: #0b0b0b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-placeholder .card-cover-inner::after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  .card-placeholder .card-overlay {
+    background: none;
+    justify-content: flex-end;
+  }
+  .card-placeholder .card-kicker {
+    color: rgba(255,255,255,0.5);
+  }
+
+  .card-placeholder .card-name {
+    color: rgba(255,255,255,0.18);
+    font-style: normal;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 2vw, 1.8rem);
+    letter-spacing: 0.04em;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 40px var(--side) 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-link {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .footer-link::before { content: '← '; }
+  .footer-link:hover { color: var(--ink); }
+
+  .footer-sig {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  /* ── ENTER ANIMATION ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .header-label  { animation: fadeUp 0.6s ease both; animation-delay: 0.05s; }
+  .header-title  { animation: fadeUp 0.7s ease both; animation-delay: 0.15s; }
+  .header-count  { animation: fadeUp 0.6s ease both; animation-delay: 0.22s; }
+  .collection-row { animation: fadeUp 0.7s ease both; }
+  .collection-row:nth-child(1) { animation-delay: 0.28s; }
+  .collection-row:nth-child(2) { animation-delay: 0.38s; }
+  .collection-row:nth-child(3) { animation-delay: 0.46s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .collection-row {
+      grid-template-columns: 1fr;
+    }
+
+    .collection-card:nth-child(odd) {
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    header {
+      grid-template-columns: 1fr;
+    }
+
+    .header-count {
+      padding-bottom: 0;
+    }
+
+    footer {
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-back" href="../index.html">Back</a>
+  <span class="nav-photography">Photography</span>
+  <a class="nav-wordmark" href="../index.html">KGS</a>
+</nav>
+
+<header>
+  <p class="header-count">1 collection</p>
+</header>
+
+
+<main>
+  <div class="collections">
+
+    <!-- ROW 1: headlights + placeholder -->
+    <div class="collection-row">
+
+      <a class="collection-card" href="headlights.html" aria-label="View headlights collection">
+        <div class="card-cover">
+          <div class="card-cover-inner">
+            <img src="headlights-hero-deer.jpg"
+                 alt="Deer in dark forest — cover image for headlights collection"
+                 loading="eager" />
+          </div>
+          <div class="card-overlay">
+            <span class="card-kicker">2024</span>
+            <span class="card-name">headlights</span>
+          </div>
+        </div>
+        <div class="card-meta">
+          <p class="card-desc">Deer 👍</p>
+          <span class="card-arrow">View →</span>
+        </div>
+      </a>
+
+      <!-- Placeholder for next collection -->
+      <div class="collection-card card-placeholder" aria-hidden="true">
+        <div class="card-cover">
+          <div class="card-cover-inner"></div>
+          <div class="card-overlay">
+            <span class="card-kicker">Coming soon</span>
+            <span class="card-name">Next collection</span>
+          </div>
+        </div>
+        <div class="card-meta">
+          <p class="card-desc" style="color: #ccc;">Work in progress.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <a class="footer-link" href="../index.html">Back to site</a>
+  <span class="footer-sig">Kasper Garm Spindler</span>
+</footer>
+
+<script>
+// Hide `.nav-photography` when scrolling down, show when scrolling up
+;(function(){
+  var lastScroll = 0;
+  var el = document.querySelector('.nav-photography');
+  if (!el) return;
+  window.addEventListener('scroll', function(){
+    var st = window.scrollY || window.pageYOffset;
+    if (st > lastScroll && st > 40) {
+      el.classList.add('hidden');
+    } else if (st < lastScroll) {
+      el.classList.remove('hidden');
+    }
+    lastScroll = st <= 0 ? 0 : st;
+  }, {passive:true});
+})();
+</script>
+
+</body>
+</html>

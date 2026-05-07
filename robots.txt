@@ -1,8 +1,7 @@
 # Robots policy for kgspindler.live
 User-agent: *
 Allow: /
-Disallow: /Images/headlights.html
-Disallow: /Images/headlights
-Disallow: /Images/headlights-*.jpg
+# Images folder should be disallowed per request
+Disallow: /Images/
 
 Sitemap: https://kgspindler.live/sitemap.xml
