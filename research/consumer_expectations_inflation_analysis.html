@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crystal Ball or Rear-View Mirror? Danish Consumer Expectations</title>
+  <meta name="description" content="Short economic portfolio analysis of Danish consumer expectations and inflation." />
+  <meta name="keywords" content="consumer expectations, inflation, Denmark, economics, Kasper Spindler, Statistics Denmark" />
+  <meta property="og:title" content="Crystal Ball or Rear-View Mirror? Danish Consumer Expectations" />
+  <meta property="og:description" content="Short economic portfolio analysis of Danish consumer expectations and inflation." />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Kasper Spindler" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Crystal Ball or Rear-View Mirror? Danish Consumer Expectations" />
+  <meta name="twitter:description" content="Short economic portfolio analysis of Danish consumer expectations and inflation." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="icon" href="../favicon.png" type="image/png">
+
+  <style>
+    :root {
+      --bg:    #f6f4ef;
+      --page:  #fdfcf9;
+      --ink:   #1a1916;
+      --muted: #6e6b64;
+      --faint: #b8b3a8;
+      --rule:  #dbd6cd;
+      --soft:  #f0ece4;
+      --white: #ffffff;
+      --grid:  rgba(0,0,0,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "EB Garamond", Georgia, serif;
+      line-height: 1.72;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(253,252,249,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+      font-family: "DM Sans", sans-serif;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 72px; height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand { font-size: 0.82rem; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .nav-links  { display: flex; gap: 24px; }
+    .nav-links a {
+      font-size: 0.76rem; font-weight: 500;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-back {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-back:hover { opacity: 0.55; }
+
+    .page {
+      max-width: 900px; margin: 0 auto;
+      background: var(--page);
+      min-height: 100vh;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 2px 24px rgba(0,0,0,0.04);
+    }
+    .article { padding: 0 72px 88px; }
+
+    .paper-header {
+      padding: 56px 0 36px;
+      border-bottom: 2px solid var(--ink);
+    }
+    h1 {
+      font-family: "EB Garamond", Georgia, serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+      font-weight: 500; line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 18px; max-width: 700px;
+    }
+    .paper-meta {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.82rem; color: var(--muted);
+      display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+    }
+    .author { font-weight: 600; color: var(--ink); text-decoration: none; }
+    .author:hover { opacity: 0.7; }
+    .paper-meta-sep { color: var(--faint); }
+
+    .section { margin-top: 44px; }
+
+    h2 {
+      font-family: "EB Garamond", Georgia, serif;
+      font-size: 1.3rem; font-weight: 600;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 18px;
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .section-num {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    p { font-size: 1.06rem; margin-bottom: 16px; }
+    p:last-child { margin-bottom: 0; }
+    .text-slot a { color: var(--ink); text-decoration: underline; }
+    .text-slot a:hover { opacity: 0.7; }
+
+    .text-slot { min-height: 18px; }
+    .method-box-slot {
+      margin-top: 18px;
+      border: 1px solid transparent;
+      min-height: 1px;
+    }
+
+    figure.paper-figure { margin-top: 40px; }
+    .fig-header { margin-bottom: 10px; }
+    .fig-label {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 3px;
+    }
+    .fig-title {
+      font-family: "EB Garamond", Georgia, serif;
+      font-size: 1.08rem; font-weight: 600;
+    }
+    .chart-frame {
+      border: 1px solid var(--rule);
+      background: var(--white);
+      padding: 20px 20px 16px;
+      position: relative;
+    }
+    .chart-frame.square-chart-frame {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .chart-frame canvas { width: 100% !important; height: 320px !important; display: block; }
+    .chart-frame.square-chart-frame canvas { height: auto !important; aspect-ratio: 1 / 1; }
+
+    .chart-error {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.78rem;
+      color: var(--muted);
+      min-height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px dashed var(--rule);
+      background: var(--page);
+      padding: 18px;
+    }
+
+    .chart-meta {
+      margin-top: 10px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.74rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.8rem;
+      color: var(--ink);
+    }
+    .stats-table th,
+    .stats-table td {
+      border-bottom: 1px solid var(--rule);
+      padding: 9px 8px;
+      text-align: left;
+    }
+    .stats-table th {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .mini-chart-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .mini-chart-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .mini-chart-card {
+      border: 1px solid var(--rule);
+      background: var(--white);
+      padding: 14px 14px 12px;
+    }
+    .mini-chart-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .mini-chart-card canvas { width: 100% !important; height: 220px !important; display: block; }
+
+    .page-footer {
+      border-top: 1px solid var(--rule);
+      padding: 24px 72px;
+      margin-top: 44px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .page-footer a { color: var(--ink); text-decoration: underline; }
+    .page-footer a:hover { opacity: 0.7; }
+
+    @media (max-width: 760px) {
+      .article { padding: 0 22px 64px; }
+      .nav-inner { padding: 0 22px; }
+      .page-footer { padding: 20px 22px; }
+      .chart-frame { padding: 16px 14px 12px; }
+      .chart-frame canvas { height: 300px !important; }
+      .mini-chart-grid { grid-template-columns: 1fr; }
+      .mini-chart-grid-3 { grid-template-columns: 1fr; }
+      .mini-chart-card canvas { height: 220px !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="../index.html">Kasper Spindler</a>
+      <div class="nav-links">
+        <a class="nav-back" href="index.html">← Back</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page">
+    <main class="article">
+
+      <header class="paper-header">
+        <h1>Crystal Ball or Rear-View Mirror? Danish Consumer Expectations</h1>
+        <div class="paper-meta">
+          <a class="author" href="../index.html">Kasper Spindler</a>
+          <span class="paper-meta-sep">|</span>
+          <span>University of Copenhagen</span>
+          <span class="paper-meta-sep">|</span>
+          <span>May 2026</span>
+        </div>
+      </header>
+
+      <section class="section" id="motivation">
+        <h2><span class="section-num">1</span> Introduction</h2>
+        <div class="text-slot"><p>In macroeconomic theory from the 1960s and 1970s, inflation expectations play a central role (Friedman 1968). In adaptive expectations models, agents form expectations about future inflation partly from past inflation. This matters because expectations can influence wage-setting, price-setting, consumption decisions, and therefore the inflation process itself. Central banks also monitor inflation expectations because well-anchored expectations can make inflation easier to stabilise.</p>
+          <p>In this analysis, I use Statistics Denmark’s consumer survey on perceived and expected price developments to study two questions. First, do Danish consumers form expectations adaptively, by linking expected future price developments to recently perceived price increases? Second, are Danish consumers future-predicting prophets and wizards, or do their expectations have limited forecasting power?</p>
+          <p>The results suggest a clear “rear-view mirror” pattern. Actual year-over-year CPI inflation is strongly associated with consumers’ perceived price increases, meaning that consumers do register periods of high inflation. Perceived price increases are also positively related to expected future price developments, suggesting some degree of adaptive expectation formation. However, these expectations are a weak and unstable predictor of future inflation. Across several forward-looking horizons, the correlation between expected price developments and later CPI inflation is small, and the relationship remains unclear even when major shock periods such as the financial crisis and the 2021–2023 inflation surge are excluded. Overall, Danish consumers appear better at recognising inflation after it has happened than predicting where inflation is going.</p></div>
+      </section>
+
+      <section class="section" id="method">
+        <h2><span class="section-num">2</span> Method</h2>
+        <div class="text-slot"><p>This analysis combines Danish consumer survey data with official inflation data from Statistics Denmark between 2001 and 2026. Consumer perceptions and expectations are taken from the FORV1 survey, which asks households how they perceive recent price developments and how they expect prices to develop over the next 12 months. Actual inflation is measured using CPI data from Statistics Denmark and converted into year-over-year inflation rates. The dataset therefore allows a comparison between actual inflation, perceived past price developments, and expected future price developments.</p>
+          <p>The consumer survey variables are balance indicators, not actual percentage inflation rates. The survey variables are measured on a scale from minus 100 to 100. For perceived past prices, a value of 50 means that consumers on balance report prices as somewhat higher than one year earlier, while −50 means that prices are perceived as roughly unchanged. For expected prices, 50 means that consumers expect prices to rise at about the same pace as currently, while −50 means that they expect prices to remain unchanged. Higher values therefore indicate stronger perceived or expected price pressure, but they should not be interpreted as exact inflation forecasts. Further information can be found <a href="https://www.dst.dk/Site/Dst/SingleFiles/GetArchiveFile.aspx?fi=9522514719018&fo=0&ext=kvaldel" target="_blank" rel="noopener noreferrer">here</a>.</p>
+          <p>The strategy is descriptive as I compare actual inflation with perceived inflation to test whether consumers recognise inflation after it occurs. I then compare perceived price developments with expected price developments to assess whether expectations appear adaptive. Finally, I compare expected price developments with future inflation at different horizons to evaluate whether consumer expectations contain predictive information.</p></div>
+        <div class="method-box-slot"><!-- Optional method box goes here --></div>
+      </section>
+
+      <section class="section" id="results">
+        <h2><span class="section-num">3</span> Results</h2>
+
+        <div class="text-slot">
+          <p>Figure 1 shows that Danish inflation is usually quite stable, but with clear extreme periods around the financial crisis and the Corona/inflation shock. Figure 2 then shows that consumers do realise when inflation has risen: actual year-to-year inflation is clearly connected with perceived price development. Figure 3 shows a positive relationship between perceived recent price development and expected future price development. Consumers who report stronger recent price increases also tend to expect stronger future price pressure. However, this should be interpreted cautiously because the two survey scales are not directly identical: a value of 0 in perceived inflation means that prices are “a little higher”, while a value of 0 in expected inflation means that prices are expected to “increase more slowly than now.” The figure is therefore best understood as evidence of a positive correlation, rather than a precise measure of adaptive expectations.</p>
+          <p>However, Figure 4 shows the main result: consumers are not future-predicting prophets and wizards. Expected price development has no clear or stable relationship with actual future inflation across the different lags. Even when the extreme shock periods are removed, the relationship is still weak. Overall, Danish consumers seem much better at noticing inflation after it has happened than predicting where inflation is going.</p>
+        </div>
+
+        <figure class="paper-figure">
+          <div class="fig-header">
+            <div class="fig-label">Figure 1</div>
+            <div class="fig-title">Actual Inflation Over Time</div>
+          </div>
+          <div class="chart-frame">
+            <canvas id="cpiInflationTimelineChart"></canvas>
+            <div class="chart-meta">Note: Shaded areas mark the financial crisis (2007-10 to 2009-01) and the inflation shock (2021-2023).</div>
+          </div>
+          <div class="text-slot"><!-- Figure 1 explanation goes here --></div>
+        </figure>
+
+        <figure class="paper-figure">
+          <div class="fig-header">
+            <div class="fig-label">Figure 2</div>
+            <div class="fig-title">Rear-View Mirror: Perceived Inflation vs. Actual Inflation</div>
+          </div>
+          <div class="chart-frame">
+            <canvas id="backMirrorScatter"></canvas>
+            <div class="chart-meta" id="backMirrorStats"></div>
+          </div>
+          <div class="text-slot"><!-- Figure 2 explanation goes here --></div>
+        </figure>
+
+        <figure class="paper-figure">
+          <div class="fig-header">
+            <div class="fig-label">Figure 3</div>
+            <div class="fig-title">Perceived Price Development vs. Expected Price Development</div>
+          </div>
+          <div class="chart-frame square-chart-frame">
+            <canvas id="perceivedExpectedPerfectScatter"></canvas>
+            <div class="chart-meta" id="perceivedExpectedPerfectStats"></div>
+          </div>
+          <div class="text-slot"><!-- Figure 3b explanation goes here --></div>
+        </figure>
+
+        <figure class="paper-figure">
+          <div class="fig-header">
+            <div class="fig-label">Figure 4a</div>
+            <div class="fig-title">How far does consumer's crystal ball reach?</div>
+          </div>
+          <div class="mini-chart-grid">
+            <div class="mini-chart-card">
+              <div class="mini-chart-title">t+1 month</div>
+              <canvas id="horizonChart1"></canvas>
+              <div class="chart-meta" id="horizonStats1"></div>
+            </div>
+            <div class="mini-chart-card">
+              <div class="mini-chart-title">t+3 months</div>
+              <canvas id="horizonChart3"></canvas>
+              <div class="chart-meta" id="horizonStats3"></div>
+            </div>
+            <div class="mini-chart-card">
+              <div class="mini-chart-title">t+6 months</div>
+              <canvas id="horizonChart6"></canvas>
+              <div class="chart-meta" id="horizonStats6"></div>
+            </div>
+            <div class="mini-chart-card">
+              <div class="mini-chart-title">t+12 months</div>
+              <canvas id="horizonChart12"></canvas>
+              <div class="chart-meta" id="horizonStats12"></div>
+            </div>
+          </div>
+          <div class="text-slot"><!-- Figure 4a explanation goes here --></div>
+        </figure>
+
+        <figure class="paper-figure">
+          <div class="fig-header">
+            <div class="fig-label">Figure 4b</div>
+            <div class="fig-title">Robustness: Crystal Ball Without the Financial Crisis and 2021-2023</div>
+          </div>
+          <div class="mini-chart-grid">
+            <div class="mini-chart-card">
+              <div class="mini-chart-title">t+1 month</div>
+              <canvas id="robustHorizonChart1"></canvas>
+              <div class="chart-meta" id="robustHorizonStats1"></div>
+            </div>
+            <div class="mini-chart-card">
+              <div class="mini-chart-title">t+3 months</div>
+              <canvas id="robustHorizonChart3"></canvas>
+              <div class="chart-meta" id="robustHorizonStats3"></div>
+            </div>
+            <div class="mini-chart-card">
+              <div class="mini-chart-title">t+6 months</div>
+              <canvas id="robustHorizonChart6"></canvas>
+              <div class="chart-meta" id="robustHorizonStats6"></div>
+            </div>
+            <div class="mini-chart-card">
+              <div class="mini-chart-title">t+12 months</div>
+              <canvas id="robustHorizonChart12"></canvas>
+              <div class="chart-meta" id="robustHorizonStats12"></div>
+            </div>
+          </div>
+          <div class="chart-meta">Excluded periods: the financial crisis (2008-2009) and the inflation shock (2021-2023).</div>
+          <div class="text-slot"><!-- Figure 4b explanation goes here --></div>
+        </figure>
+
+        <figure class="paper-figure">
+          <div class="fig-header">
+            <div class="fig-label">Figure 4c</div>
+            <div class="fig-title">Comparison of Relationship Strength</div>
+          </div>
+          <div class="chart-frame">
+            <table class="stats-table" id="comparisonStatsTable">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Correlation (r)</th>
+                  <th>Regression Slope</th>
+                  <th>n</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <div class="chart-meta">Note: The robustness model excludes 2008-2009 (financial crisis) and 2021-2023 (inflation shock).</div>
+          </div>
+          <div class="text-slot"><!-- Figure 4c explanation goes here --></div>
+        </figure>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      Data sources: Statistics Denmark FORV1, PRIS01, PRIS04, DNRENTM.<br>
+    </footer>
+  </div>
+
+  <script>
+    const analysisData = [{"date":"1992-04-01","cpi_inflation_yoy":null,"price_past_perceived":-26.0,"price_expect_next":-17.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1992-05-01","cpi_inflation_yoy":null,"price_past_perceived":-25.0,"price_expect_next":-20.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1992-06-01","cpi_inflation_yoy":null,"price_past_perceived":-26.0,"price_expect_next":-11.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1992-07-01","cpi_inflation_yoy":null,"price_past_perceived":null,"price_expect_next":null,"cpi_inflation_yoy_t_plus_12":null},{"date":"1992-08-01","cpi_inflation_yoy":null,"price_past_perceived":-25.0,"price_expect_next":-15.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1992-09-01","cpi_inflation_yoy":null,"price_past_perceived":-30.0,"price_expect_next":-19.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1992-10-01","cpi_inflation_yoy":null,"price_past_perceived":-40.0,"price_expect_next":-27.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1992-11-01","cpi_inflation_yoy":null,"price_past_perceived":-37.0,"price_expect_next":-24.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1992-12-01","cpi_inflation_yoy":null,"price_past_perceived":-37.0,"price_expect_next":-25.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-01-01","cpi_inflation_yoy":null,"price_past_perceived":-41.0,"price_expect_next":-32.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-02-01","cpi_inflation_yoy":null,"price_past_perceived":-38.0,"price_expect_next":-25.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-03-01","cpi_inflation_yoy":null,"price_past_perceived":-39.0,"price_expect_next":-24.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-04-01","cpi_inflation_yoy":null,"price_past_perceived":-40.0,"price_expect_next":-28.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-05-01","cpi_inflation_yoy":null,"price_past_perceived":-42.0,"price_expect_next":-27.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-06-01","cpi_inflation_yoy":null,"price_past_perceived":-40.0,"price_expect_next":-26.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-07-01","cpi_inflation_yoy":null,"price_past_perceived":null,"price_expect_next":null,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-08-01","cpi_inflation_yoy":null,"price_past_perceived":-50.0,"price_expect_next":-29.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-09-01","cpi_inflation_yoy":null,"price_past_perceived":-50.0,"price_expect_next":-25.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-10-01","cpi_inflation_yoy":null,"price_past_perceived":-46.0,"price_expect_next":-28.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-11-01","cpi_inflation_yoy":null,"price_past_perceived":-42.0,"price_expect_next":-24.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1993-12-01","cpi_inflation_yoy":null,"price_past_perceived":-40.0,"price_expect_next":-20.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-01-01","cpi_inflation_yoy":null,"price_past_perceived":-42.0,"price_expect_next":-23.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-02-01","cpi_inflation_yoy":null,"price_past_perceived":-43.0,"price_expect_next":-24.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-03-01","cpi_inflation_yoy":null,"price_past_perceived":-42.0,"price_expect_next":-25.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-04-01","cpi_inflation_yoy":null,"price_past_perceived":-39.0,"price_expect_next":-24.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-05-01","cpi_inflation_yoy":null,"price_past_perceived":-40.0,"price_expect_next":-22.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-06-01","cpi_inflation_yoy":null,"price_past_perceived":-34.0,"price_expect_next":-18.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-07-01","cpi_inflation_yoy":null,"price_past_perceived":null,"price_expect_next":null,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-08-01","cpi_inflation_yoy":null,"price_past_perceived":-37.0,"price_expect_next":-19.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-09-01","cpi_inflation_yoy":null,"price_past_perceived":-34.0,"price_expect_next":-15.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-10-01","cpi_inflation_yoy":null,"price_past_perceived":-35.0,"price_expect_next":-17.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-11-01","cpi_inflation_yoy":null,"price_past_perceived":-34.0,"price_expect_next":-19.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1994-12-01","cpi_inflation_yoy":null,"price_past_perceived":-34.0,"price_expect_next":-18.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-01-01","cpi_inflation_yoy":null,"price_past_perceived":-34.0,"price_expect_next":-16.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-02-01","cpi_inflation_yoy":null,"price_past_perceived":-33.0,"price_expect_next":-12.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-03-01","cpi_inflation_yoy":null,"price_past_perceived":-33.0,"price_expect_next":-17.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-04-01","cpi_inflation_yoy":null,"price_past_perceived":-29.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-05-01","cpi_inflation_yoy":null,"price_past_perceived":-29.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-06-01","cpi_inflation_yoy":null,"price_past_perceived":-29.0,"price_expect_next":-12.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-07-01","cpi_inflation_yoy":null,"price_past_perceived":null,"price_expect_next":null,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-08-01","cpi_inflation_yoy":null,"price_past_perceived":-33.0,"price_expect_next":-19.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-09-01","cpi_inflation_yoy":null,"price_past_perceived":-36.0,"price_expect_next":-22.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-10-01","cpi_inflation_yoy":null,"price_past_perceived":-35.0,"price_expect_next":-22.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-11-01","cpi_inflation_yoy":null,"price_past_perceived":-35.0,"price_expect_next":-20.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1995-12-01","cpi_inflation_yoy":null,"price_past_perceived":-34.0,"price_expect_next":-19.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-01-01","cpi_inflation_yoy":null,"price_past_perceived":-37.0,"price_expect_next":-23.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-02-01","cpi_inflation_yoy":null,"price_past_perceived":-35.0,"price_expect_next":-21.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-03-01","cpi_inflation_yoy":null,"price_past_perceived":-34.0,"price_expect_next":-20.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-04-01","cpi_inflation_yoy":null,"price_past_perceived":-33.0,"price_expect_next":-20.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-05-01","cpi_inflation_yoy":null,"price_past_perceived":-30.0,"price_expect_next":-17.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-06-01","cpi_inflation_yoy":null,"price_past_perceived":-32.0,"price_expect_next":-19.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-07-01","cpi_inflation_yoy":null,"price_past_perceived":-37.0,"price_expect_next":-19.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-08-01","cpi_inflation_yoy":null,"price_past_perceived":-30.0,"price_expect_next":-20.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-09-01","cpi_inflation_yoy":null,"price_past_perceived":-30.0,"price_expect_next":-17.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-10-01","cpi_inflation_yoy":null,"price_past_perceived":-32.0,"price_expect_next":-19.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-11-01","cpi_inflation_yoy":null,"price_past_perceived":-30.0,"price_expect_next":-19.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1996-12-01","cpi_inflation_yoy":null,"price_past_perceived":-30.0,"price_expect_next":-18.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-01-01","cpi_inflation_yoy":null,"price_past_perceived":-35.0,"price_expect_next":-22.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-02-01","cpi_inflation_yoy":null,"price_past_perceived":-30.0,"price_expect_next":-18.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-03-01","cpi_inflation_yoy":null,"price_past_perceived":-30.0,"price_expect_next":-19.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-04-01","cpi_inflation_yoy":null,"price_past_perceived":-29.0,"price_expect_next":-17.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-05-01","cpi_inflation_yoy":null,"price_past_perceived":-28.0,"price_expect_next":-12.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-06-01","cpi_inflation_yoy":null,"price_past_perceived":-25.0,"price_expect_next":-13.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-07-01","cpi_inflation_yoy":null,"price_past_perceived":-25.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-08-01","cpi_inflation_yoy":null,"price_past_perceived":-24.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-09-01","cpi_inflation_yoy":null,"price_past_perceived":-25.0,"price_expect_next":-16.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-10-01","cpi_inflation_yoy":null,"price_past_perceived":-26.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-11-01","cpi_inflation_yoy":null,"price_past_perceived":-25.0,"price_expect_next":-16.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1997-12-01","cpi_inflation_yoy":null,"price_past_perceived":-23.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-01-01","cpi_inflation_yoy":null,"price_past_perceived":-24.0,"price_expect_next":-15.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-02-01","cpi_inflation_yoy":null,"price_past_perceived":-23.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-03-01","cpi_inflation_yoy":null,"price_past_perceived":-23.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-04-01","cpi_inflation_yoy":null,"price_past_perceived":-22.0,"price_expect_next":-11.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-05-01","cpi_inflation_yoy":null,"price_past_perceived":-27.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-06-01","cpi_inflation_yoy":null,"price_past_perceived":-23.0,"price_expect_next":-12.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-07-01","cpi_inflation_yoy":null,"price_past_perceived":-25.0,"price_expect_next":-11.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-08-01","cpi_inflation_yoy":null,"price_past_perceived":-26.0,"price_expect_next":-15.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-09-01","cpi_inflation_yoy":null,"price_past_perceived":-29.0,"price_expect_next":-20.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-10-01","cpi_inflation_yoy":null,"price_past_perceived":-28.0,"price_expect_next":-15.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-11-01","cpi_inflation_yoy":null,"price_past_perceived":-31.0,"price_expect_next":-18.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1998-12-01","cpi_inflation_yoy":null,"price_past_perceived":-29.0,"price_expect_next":-18.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-01-01","cpi_inflation_yoy":null,"price_past_perceived":-28.0,"price_expect_next":-15.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-02-01","cpi_inflation_yoy":null,"price_past_perceived":-24.0,"price_expect_next":-12.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-03-01","cpi_inflation_yoy":null,"price_past_perceived":-29.0,"price_expect_next":-18.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-04-01","cpi_inflation_yoy":null,"price_past_perceived":-26.0,"price_expect_next":-17.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-05-01","cpi_inflation_yoy":null,"price_past_perceived":-23.0,"price_expect_next":-15.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-06-01","cpi_inflation_yoy":null,"price_past_perceived":-21.0,"price_expect_next":-15.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-07-01","cpi_inflation_yoy":null,"price_past_perceived":-20.0,"price_expect_next":-13.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-08-01","cpi_inflation_yoy":null,"price_past_perceived":-19.0,"price_expect_next":-11.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-09-01","cpi_inflation_yoy":null,"price_past_perceived":-18.0,"price_expect_next":-13.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-10-01","cpi_inflation_yoy":null,"price_past_perceived":-18.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-11-01","cpi_inflation_yoy":null,"price_past_perceived":-23.0,"price_expect_next":-13.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"1999-12-01","cpi_inflation_yoy":null,"price_past_perceived":-21.0,"price_expect_next":-4.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-01-01","cpi_inflation_yoy":null,"price_past_perceived":-16.0,"price_expect_next":-6.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-02-01","cpi_inflation_yoy":null,"price_past_perceived":-17.0,"price_expect_next":-9.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-03-01","cpi_inflation_yoy":null,"price_past_perceived":-9.0,"price_expect_next":-7.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-04-01","cpi_inflation_yoy":null,"price_past_perceived":-14.0,"price_expect_next":-8.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-05-01","cpi_inflation_yoy":null,"price_past_perceived":-10.0,"price_expect_next":-12.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-06-01","cpi_inflation_yoy":null,"price_past_perceived":-6.0,"price_expect_next":-7.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-07-01","cpi_inflation_yoy":null,"price_past_perceived":-2.0,"price_expect_next":-11.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-08-01","cpi_inflation_yoy":null,"price_past_perceived":-13.0,"price_expect_next":-16.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-09-01","cpi_inflation_yoy":null,"price_past_perceived":-14.0,"price_expect_next":-2.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-10-01","cpi_inflation_yoy":null,"price_past_perceived":-13.0,"price_expect_next":-2.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-11-01","cpi_inflation_yoy":null,"price_past_perceived":-5.0,"price_expect_next":1.0,"cpi_inflation_yoy_t_plus_12":null},{"date":"2000-12-01","cpi_inflation_yoy":null,"price_past_perceived":-8.0,"price_expect_next":-11.0,"cpi_inflation_yoy_t_plus_12":2.1749408983},{"date":"2001-01-01","cpi_inflation_yoy":null,"price_past_perceived":-13.0,"price_expect_next":-12.0,"cpi_inflation_yoy_t_plus_12":2.4617326811},{"date":"2001-02-01","cpi_inflation_yoy":null,"price_past_perceived":-12.0,"price_expect_next":-11.0,"cpi_inflation_yoy_t_plus_12":2.4600438734},{"date":"2001-03-01","cpi_inflation_yoy":null,"price_past_perceived":-15.0,"price_expect_next":-10.0,"cpi_inflation_yoy_t_plus_12":2.5720966485},{"date":"2001-04-01","cpi_inflation_yoy":null,"price_past_perceived":-14.0,"price_expect_next":-11.0,"cpi_inflation_yoy_t_plus_12":2.4507522879},{"date":"2001-05-01","cpi_inflation_yoy":null,"price_past_perceived":-7.0,"price_expect_next":-7.0,"cpi_inflation_yoy_t_plus_12":2.0849420849},{"date":"2001-06-01","cpi_inflation_yoy":null,"price_past_perceived":-8.0,"price_expect_next":-7.0,"cpi_inflation_yoy_t_plus_12":2.2108843537},{"date":"2001-07-01","cpi_inflation_yoy":null,"price_past_perceived":-10.0,"price_expect_next":-12.0,"cpi_inflation_yoy_t_plus_12":2.2797766749},{"date":"2001-08-01","cpi_inflation_yoy":null,"price_past_perceived":-15.0,"price_expect_next":-13.0,"cpi_inflation_yoy_t_plus_12":2.3728287841},{"date":"2001-09-01","cpi_inflation_yoy":null,"price_past_perceived":-8.0,"price_expect_next":-5.0,"cpi_inflation_yoy_t_plus_12":2.4386479395},{"date":"2001-10-01","cpi_inflation_yoy":null,"price_past_perceived":-19.0,"price_expect_next":-12.0,"cpi_inflation_yoy_t_plus_12":2.5909932141},{"date":"2001-11-01","cpi_inflation_yoy":null,"price_past_perceived":-20.0,"price_expect_next":-14.0,"cpi_inflation_yoy_t_plus_12":2.7507340442},{"date":"2001-12-01","cpi_inflation_yoy":2.1749408983,"price_past_perceived":-21.0,"price_expect_next":-18.0,"cpi_inflation_yoy_t_plus_12":2.5451180009},{"date":"2002-01-01","cpi_inflation_yoy":2.4617326811,"price_past_perceived":-17.0,"price_expect_next":17.0,"cpi_inflation_yoy_t_plus_12":2.572000616},{"date":"2002-02-01","cpi_inflation_yoy":2.4600438734,"price_past_perceived":-17.0,"price_expect_next":18.0,"cpi_inflation_yoy_t_plus_12":2.85976449},{"date":"2002-03-01","cpi_inflation_yoy":2.5720966485,"price_past_perceived":-11.0,"price_expect_next":26.0,"cpi_inflation_yoy_t_plus_12":2.8875379939},{"date":"2002-04-01","cpi_inflation_yoy":2.4507522879,"price_past_perceived":-14.0,"price_expect_next":20.0,"cpi_inflation_yoy_t_plus_12":2.4678274035},{"date":"2002-05-01","cpi_inflation_yoy":2.0849420849,"price_past_perceived":-13.0,"price_expect_next":21.0,"cpi_inflation_yoy_t_plus_12":2.208774584},{"date":"2002-06-01","cpi_inflation_yoy":2.2108843537,"price_past_perceived":-13.0,"price_expect_next":17.0,"cpi_inflation_yoy_t_plus_12":2.1630615641},{"date":"2002-07-01","cpi_inflation_yoy":2.2797766749,"price_past_perceived":-13.0,"price_expect_next":22.0,"cpi_inflation_yoy_t_plus_12":1.8498862775},{"date":"2002-08-01","cpi_inflation_yoy":2.3728287841,"price_past_perceived":-11.0,"price_expect_next":25.0,"cpi_inflation_yoy_t_plus_12":1.6967126193},{"date":"2002-09-01","cpi_inflation_yoy":2.4386479395,"price_past_perceived":-16.0,"price_expect_next":22.0,"cpi_inflation_yoy_t_plus_12":1.8683139973},{"date":"2002-10-01","cpi_inflation_yoy":2.5909932141,"price_past_perceived":-13.0,"price_expect_next":20.0,"cpi_inflation_yoy_t_plus_12":1.3830426939},{"date":"2002-11-01","cpi_inflation_yoy":2.7507340442,"price_past_perceived":-17.0,"price_expect_next":9.0,"cpi_inflation_yoy_t_plus_12":1.5641449842},{"date":"2002-12-01","cpi_inflation_yoy":2.5451180009,"price_past_perceived":-19.0,"price_expect_next":8.0,"cpi_inflation_yoy_t_plus_12":1.4440433213},{"date":"2003-01-01","cpi_inflation_yoy":2.572000616,"price_past_perceived":-18.0,"price_expect_next":10.0,"cpi_inflation_yoy_t_plus_12":1.2012012012},{"date":"2003-02-01","cpi_inflation_yoy":2.85976449,"price_past_perceived":-16.0,"price_expect_next":17.0,"cpi_inflation_yoy_t_plus_12":0.9217960155},{"date":"2003-03-01","cpi_inflation_yoy":2.8875379939,"price_past_perceived":-20.0,"price_expect_next":18.0,"cpi_inflation_yoy_t_plus_12":0.7237813885},{"date":"2003-04-01","cpi_inflation_yoy":2.4678274035,"price_past_perceived":-15.0,"price_expect_next":15.0,"cpi_inflation_yoy_t_plus_12":0.8274231678},{"date":"2003-05-01","cpi_inflation_yoy":2.208774584,"price_past_perceived":-20.0,"price_expect_next":8.0,"cpi_inflation_yoy_t_plus_12":1.3321492007},{"date":"2003-06-01","cpi_inflation_yoy":2.1630615641,"price_past_perceived":-21.0,"price_expect_next":3.0,"cpi_inflation_yoy_t_plus_12":1.1400651466},{"date":"2003-07-01","cpi_inflation_yoy":1.8498862775,"price_past_perceived":-26.0,"price_expect_next":3.0,"cpi_inflation_yoy_t_plus_12":1.369659074},{"date":"2003-08-01","cpi_inflation_yoy":1.6967126193,"price_past_perceived":-22.0,"price_expect_next":-1.0,"cpi_inflation_yoy_t_plus_12":1.1768210934},{"date":"2003-09-01","cpi_inflation_yoy":1.8683139973,"price_past_perceived":-22.0,"price_expect_next":-3.0,"cpi_inflation_yoy_t_plus_12":1.0945126461},{"date":"2003-10-01","cpi_inflation_yoy":1.3830426939,"price_past_perceived":-28.0,"price_expect_next":-6.0,"cpi_inflation_yoy_t_plus_12":1.7052194543},{"date":"2003-11-01","cpi_inflation_yoy":1.5641449842,"price_past_perceived":-25.0,"price_expect_next":5.0,"cpi_inflation_yoy_t_plus_12":1.2883163039},{"date":"2003-12-01","cpi_inflation_yoy":1.4440433213,"price_past_perceived":-27.0,"price_expect_next":-2.0,"cpi_inflation_yoy_t_plus_12":1.2158956109},{"date":"2004-01-01","cpi_inflation_yoy":1.2012012012,"price_past_perceived":-30.0,"price_expect_next":-4.0,"cpi_inflation_yoy_t_plus_12":1.0385756677},{"date":"2004-02-01","cpi_inflation_yoy":0.9217960155,"price_past_perceived":-24.0,"price_expect_next":1.0,"cpi_inflation_yoy_t_plus_12":1.2669416618},{"date":"2004-03-01","cpi_inflation_yoy":0.7237813885,"price_past_perceived":-24.0,"price_expect_next":3.0,"cpi_inflation_yoy_t_plus_12":1.437160874},{"date":"2004-04-01","cpi_inflation_yoy":0.8274231678,"price_past_perceived":-29.0,"price_expect_next":-5.0,"cpi_inflation_yoy_t_plus_12":1.8317702227},{"date":"2004-05-01","cpi_inflation_yoy":1.3321492007,"price_past_perceived":-28.0,"price_expect_next":-10.0,"cpi_inflation_yoy_t_plus_12":1.4314928425},{"date":"2004-06-01","cpi_inflation_yoy":1.1400651466,"price_past_perceived":-27.0,"price_expect_next":-5.0,"cpi_inflation_yoy_t_plus_12":1.785975699},{"date":"2004-07-01","cpi_inflation_yoy":1.369659074,"price_past_perceived":-30.0,"price_expect_next":-6.0,"cpi_inflation_yoy_t_plus_12":1.9826699956},{"date":"2004-08-01","cpi_inflation_yoy":1.1768210934,"price_past_perceived":-30.0,"price_expect_next":-7.0,"cpi_inflation_yoy_t_plus_12":2.296819788},{"date":"2004-09-01","cpi_inflation_yoy":1.0945126461,"price_past_perceived":-31.0,"price_expect_next":-7.0,"cpi_inflation_yoy_t_plus_12":2.4140453548},{"date":"2004-10-01","cpi_inflation_yoy":1.7052194543,"price_past_perceived":-29.0,"price_expect_next":-3.0,"cpi_inflation_yoy_t_plus_12":1.982796326},{"date":"2004-11-01","cpi_inflation_yoy":1.2883163039,"price_past_perceived":-33.0,"price_expect_next":-8.0,"cpi_inflation_yoy_t_plus_12":1.9736842105},{"date":"2004-12-01","cpi_inflation_yoy":1.2158956109,"price_past_perceived":-30.0,"price_expect_next":-8.0,"cpi_inflation_yoy_t_plus_12":2.2560796953},{"date":"2005-01-01","cpi_inflation_yoy":1.0385756677,"price_past_perceived":-32.1,"price_expect_next":-7.4,"cpi_inflation_yoy_t_plus_12":2.1292217327},{"date":"2005-02-01","cpi_inflation_yoy":1.2669416618,"price_past_perceived":-35.7,"price_expect_next":-16.8,"cpi_inflation_yoy_t_plus_12":2.1093977306},{"date":"2005-03-01","cpi_inflation_yoy":1.437160874,"price_past_perceived":-34.5,"price_expect_next":-6.9,"cpi_inflation_yoy_t_plus_12":1.8360560937},{"date":"2005-04-01","cpi_inflation_yoy":1.8317702227,"price_past_perceived":-26.9,"price_expect_next":-5.5,"cpi_inflation_yoy_t_plus_12":1.8563822133},{"date":"2005-05-01","cpi_inflation_yoy":1.4314928425,"price_past_perceived":-27.0,"price_expect_next":-13.6,"cpi_inflation_yoy_t_plus_12":2.0449308756},{"date":"2005-06-01","cpi_inflation_yoy":1.785975699,"price_past_perceived":-31.7,"price_expect_next":-15.2,"cpi_inflation_yoy_t_plus_12":2.1429598734},{"date":"2005-07-01","cpi_inflation_yoy":1.9826699956,"price_past_perceived":-29.7,"price_expect_next":-7.6,"cpi_inflation_yoy_t_plus_12":2.0305299539},{"date":"2005-08-01","cpi_inflation_yoy":2.296819788,"price_past_perceived":-21.7,"price_expect_next":-6.7,"cpi_inflation_yoy_t_plus_12":1.9717904433},{"date":"2005-09-01","cpi_inflation_yoy":2.4140453548,"price_past_perceived":-19.4,"price_expect_next":9.0,"cpi_inflation_yoy_t_plus_12":1.5571428571},{"date":"2005-10-01","cpi_inflation_yoy":1.982796326,"price_past_perceived":-24.4,"price_expect_next":-10.1,"cpi_inflation_yoy_t_plus_12":1.5439599714},{"date":"2005-11-01","cpi_inflation_yoy":1.9736842105,"price_past_perceived":-24.3,"price_expect_next":1.7,"cpi_inflation_yoy_t_plus_12":1.7777777778},{"date":"2005-12-01","cpi_inflation_yoy":2.2560796953,"price_past_perceived":-26.1,"price_expect_next":1.6,"cpi_inflation_yoy_t_plus_12":1.7191977077},{"date":"2006-01-01","cpi_inflation_yoy":2.1292217327,"price_past_perceived":-26.9,"price_expect_next":2.3,"cpi_inflation_yoy_t_plus_12":1.8116462976},{"date":"2006-02-01","cpi_inflation_yoy":2.1093977306,"price_past_perceived":-26.1,"price_expect_next":5.5,"cpi_inflation_yoy_t_plus_12":1.9091038609},{"date":"2006-03-01","cpi_inflation_yoy":1.8360560937,"price_past_perceived":-29.2,"price_expect_next":1.3,"cpi_inflation_yoy_t_plus_12":1.973310619},{"date":"2006-04-01","cpi_inflation_yoy":1.8563822133,"price_past_perceived":-24.2,"price_expect_next":-0.9,"cpi_inflation_yoy_t_plus_12":1.709522464},{"date":"2006-05-01","cpi_inflation_yoy":2.0449308756,"price_past_perceived":-25.4,"price_expect_next":-5.1,"cpi_inflation_yoy_t_plus_12":1.7640417725},{"date":"2006-06-01","cpi_inflation_yoy":2.1429598734,"price_past_perceived":-24.8,"price_expect_next":-0.7,"cpi_inflation_yoy_t_plus_12":1.3939735286},{"date":"2006-07-01","cpi_inflation_yoy":2.0305299539,"price_past_perceived":-22.0,"price_expect_next":4.3,"cpi_inflation_yoy_t_plus_12":1.1997177135},{"date":"2006-08-01","cpi_inflation_yoy":1.9717904433,"price_past_perceived":-21.1,"price_expect_next":4.8,"cpi_inflation_yoy_t_plus_12":1.0162314749},{"date":"2006-09-01","cpi_inflation_yoy":1.5571428571,"price_past_perceived":-22.3,"price_expect_next":9.5,"cpi_inflation_yoy_t_plus_12":1.28006752},{"date":"2006-10-01","cpi_inflation_yoy":1.5439599714,"price_past_perceived":-27.3,"price_expect_next":-4.3,"cpi_inflation_yoy_t_plus_12":1.703505561},{"date":"2006-11-01","cpi_inflation_yoy":1.7777777778,"price_past_perceived":-24.2,"price_expect_next":1.0,"cpi_inflation_yoy_t_plus_12":2.4228764615},{"date":"2006-12-01","cpi_inflation_yoy":1.7191977077,"price_past_perceived":-26.8,"price_expect_next":3.4,"cpi_inflation_yoy_t_plus_12":2.3661971831},{"date":"2007-01-01","cpi_inflation_yoy":1.8116462976,"price_past_perceived":-25.7,"price_expect_next":1.1,"cpi_inflation_yoy_t_plus_12":2.9374382149},{"date":"2007-02-01","cpi_inflation_yoy":1.9091038609,"price_past_perceived":-23.8,"price_expect_next":6.4,"cpi_inflation_yoy_t_plus_12":3.0756326017},{"date":"2007-03-01","cpi_inflation_yoy":1.973310619,"price_past_perceived":-22.0,"price_expect_next":1.3,"cpi_inflation_yoy_t_plus_12":3.1045524154},{"date":"2007-04-01","cpi_inflation_yoy":1.709522464,"price_past_perceived":-19.5,"price_expect_next":5.2,"cpi_inflation_yoy_t_plus_12":3.2365606334},{"date":"2007-05-01","cpi_inflation_yoy":1.7640417725,"price_past_perceived":-18.6,"price_expect_next":2.1,"cpi_inflation_yoy_t_plus_12":3.3975870198},{"date":"2007-06-01","cpi_inflation_yoy":1.3939735286,"price_past_perceived":-17.5,"price_expect_next":-0.3,"cpi_inflation_yoy_t_plus_12":3.84668796},{"date":"2007-07-01","cpi_inflation_yoy":1.1997177135,"price_past_perceived":-18.7,"price_expect_next":8.9,"cpi_inflation_yoy_t_plus_12":4.0167364017},{"date":"2007-08-01","cpi_inflation_yoy":1.0162314749,"price_past_perceived":-16.8,"price_expect_next":7.7,"cpi_inflation_yoy_t_plus_12":4.3733407852},{"date":"2007-09-01","cpi_inflation_yoy":1.28006752,"price_past_perceived":-14.3,"price_expect_next":26.3,"cpi_inflation_yoy_t_plus_12":4.1527777778},{"date":"2007-10-01","cpi_inflation_yoy":1.703505561,"price_past_perceived":-10.8,"price_expect_next":15.4,"cpi_inflation_yoy_t_plus_12":3.6544850498},{"date":"2007-11-01","cpi_inflation_yoy":2.4228764615,"price_past_perceived":-6.9,"price_expect_next":19.1,"cpi_inflation_yoy_t_plus_12":2.7231467474},{"date":"2007-12-01","cpi_inflation_yoy":2.3661971831,"price_past_perceived":2.8,"price_expect_next":23.0,"cpi_inflation_yoy_t_plus_12":2.4078150798},{"date":"2008-01-01","cpi_inflation_yoy":2.9374382149,"price_past_perceived":18.7,"price_expect_next":29.1,"cpi_inflation_yoy_t_plus_12":1.7697900947},{"date":"2008-02-01","cpi_inflation_yoy":3.0756326017,"price_past_perceived":24.2,"price_expect_next":14.3,"cpi_inflation_yoy_t_plus_12":1.8852570189},{"date":"2008-03-01","cpi_inflation_yoy":3.1045524154,"price_past_perceived":32.0,"price_expect_next":22.4,"cpi_inflation_yoy_t_plus_12":1.7283283824},{"date":"2008-04-01","cpi_inflation_yoy":3.2365606334,"price_past_perceived":34.1,"price_expect_next":17.2,"cpi_inflation_yoy_t_plus_12":1.3051668461},{"date":"2008-05-01","cpi_inflation_yoy":3.3975870198,"price_past_perceived":39.1,"price_expect_next":16.6,"cpi_inflation_yoy_t_plus_12":1.3009656652},{"date":"2008-06-01","cpi_inflation_yoy":3.84668796,"price_past_perceived":53.4,"price_expect_next":27.6,"cpi_inflation_yoy_t_plus_12":1.2302754747},{"date":"2008-07-01","cpi_inflation_yoy":4.0167364017,"price_past_perceived":55.0,"price_expect_next":15.6,"cpi_inflation_yoy_t_plus_12":0.9922231161},{"date":"2008-08-01","cpi_inflation_yoy":4.3733407852,"price_past_perceived":52.4,"price_expect_next":6.5,"cpi_inflation_yoy_t_plus_12":1.0709504685},{"date":"2008-09-01","cpi_inflation_yoy":4.1527777778,"price_past_perceived":44.6,"price_expect_next":8.0,"cpi_inflation_yoy_t_plus_12":0.8401120149},{"date":"2008-10-01","cpi_inflation_yoy":3.6544850498,"price_past_perceived":42.1,"price_expect_next":-4.1,"cpi_inflation_yoy_t_plus_12":1.0283119658},{"date":"2008-11-01","cpi_inflation_yoy":2.7231467474,"price_past_perceived":31.2,"price_expect_next":-13.7,"cpi_inflation_yoy_t_plus_12":1.2853126255},{"date":"2008-12-01","cpi_inflation_yoy":2.4078150798,"price_past_perceived":8.1,"price_expect_next":-35.5,"cpi_inflation_yoy_t_plus_12":1.4375923687},{"date":"2009-01-01","cpi_inflation_yoy":1.7697900947,"price_past_perceived":-8.4,"price_expect_next":-38.1,"cpi_inflation_yoy_t_plus_12":2.0086276624},{"date":"2009-02-01","cpi_inflation_yoy":1.8852570189,"price_past_perceived":-15.6,"price_expect_next":-41.6,"cpi_inflation_yoy_t_plus_12":1.9568690096},{"date":"2009-03-01","cpi_inflation_yoy":1.7283283824,"price_past_perceived":-16.6,"price_expect_next":-31.5,"cpi_inflation_yoy_t_plus_12":2.2564374834},{"date":"2009-04-01","cpi_inflation_yoy":1.3051668461,"price_past_perceived":-17.9,"price_expect_next":-33.2,"cpi_inflation_yoy_t_plus_12":2.483729579},{"date":"2009-05-01","cpi_inflation_yoy":1.3009656652,"price_past_perceived":-16.2,"price_expect_next":-25.8,"cpi_inflation_yoy_t_plus_12":2.1448431087},{"date":"2009-06-01","cpi_inflation_yoy":1.2302754747,"price_past_perceived":-19.1,"price_expect_next":-24.5,"cpi_inflation_yoy_t_plus_12":1.7701453104},{"date":"2009-07-01","cpi_inflation_yoy":0.9922231161,"price_past_perceived":-11.6,"price_expect_next":-36.6,"cpi_inflation_yoy_t_plus_12":2.2570366437},{"date":"2009-08-01","cpi_inflation_yoy":1.0709504685,"price_past_perceived":-14.7,"price_expect_next":-25.5,"cpi_inflation_yoy_t_plus_12":2.3708609272},{"date":"2009-09-01","cpi_inflation_yoy":0.8401120149,"price_past_perceived":-20.8,"price_expect_next":-23.2,"cpi_inflation_yoy_t_plus_12":2.5919069029},{"date":"2009-10-01","cpi_inflation_yoy":1.0283119658,"price_past_perceived":-24.7,"price_expect_next":-26.0,"cpi_inflation_yoy_t_plus_12":2.4454725711},{"date":"2009-11-01","cpi_inflation_yoy":1.2853126255,"price_past_perceived":-25.1,"price_expect_next":-23.1,"cpi_inflation_yoy_t_plus_12":2.5115664243},{"date":"2009-12-01","cpi_inflation_yoy":1.4375923687,"price_past_perceived":-21.9,"price_expect_next":-25.0,"cpi_inflation_yoy_t_plus_12":2.8476821192},{"date":"2010-01-01","cpi_inflation_yoy":2.0086276624,"price_past_perceived":-21.4,"price_expect_next":-19.6,"cpi_inflation_yoy_t_plus_12":2.6694859257},{"date":"2010-02-01","cpi_inflation_yoy":1.9568690096,"price_past_perceived":-24.2,"price_expect_next":-15.5,"cpi_inflation_yoy_t_plus_12":2.6896461679},{"date":"2010-03-01","cpi_inflation_yoy":2.2564374834,"price_past_perceived":-15.8,"price_expect_next":-8.8,"cpi_inflation_yoy_t_plus_12":2.6609553479},{"date":"2010-04-01","cpi_inflation_yoy":2.483729579,"price_past_perceived":-19.8,"price_expect_next":-9.9,"cpi_inflation_yoy_t_plus_12":2.9419388284},{"date":"2010-05-01","cpi_inflation_yoy":2.1448431087,"price_past_perceived":-20.0,"price_expect_next":-7.7,"cpi_inflation_yoy_t_plus_12":3.0848995463},{"date":"2010-06-01","cpi_inflation_yoy":1.7701453104,"price_past_perceived":-19.8,"price_expect_next":-8.8,"cpi_inflation_yoy_t_plus_12":3.0114226376},{"date":"2010-07-01","cpi_inflation_yoy":2.2570366437,"price_past_perceived":-16.5,"price_expect_next":-5.1,"cpi_inflation_yoy_t_plus_12":2.9732537003},{"date":"2010-08-01","cpi_inflation_yoy":2.3708609272,"price_past_perceived":-10.7,"price_expect_next":3.3,"cpi_inflation_yoy_t_plus_12":2.5617803079},{"date":"2010-09-01","cpi_inflation_yoy":2.5919069029,"price_past_perceived":-11.8,"price_expect_next":2.3,"cpi_inflation_yoy_t_plus_12":2.5264243362},{"date":"2010-10-01","cpi_inflation_yoy":2.4454725711,"price_past_perceived":-7.0,"price_expect_next":10.1,"cpi_inflation_yoy_t_plus_12":2.7870967742},{"date":"2010-11-01","cpi_inflation_yoy":2.5115664243,"price_past_perceived":-5.2,"price_expect_next":12.6,"cpi_inflation_yoy_t_plus_12":2.6176660219},{"date":"2010-12-01","cpi_inflation_yoy":2.8476821192,"price_past_perceived":-2.4,"price_expect_next":12.2,"cpi_inflation_yoy_t_plus_12":2.4855119124},{"date":"2011-01-01","cpi_inflation_yoy":2.6694859257,"price_past_perceived":-0.1,"price_expect_next":14.8,"cpi_inflation_yoy_t_plus_12":2.7802806024},{"date":"2011-02-01","cpi_inflation_yoy":2.6896461679,"price_past_perceived":4.6,"price_expect_next":26.2,"cpi_inflation_yoy_t_plus_12":2.7590591227},{"date":"2011-03-01","cpi_inflation_yoy":2.6609553479,"price_past_perceived":17.8,"price_expect_next":29.6,"cpi_inflation_yoy_t_plus_12":2.7057782273},{"date":"2011-04-01","cpi_inflation_yoy":2.9419388284,"price_past_perceived":19.4,"price_expect_next":19.9,"cpi_inflation_yoy_t_plus_12":2.278735994},{"date":"2011-05-01","cpi_inflation_yoy":3.0848995463,"price_past_perceived":17.6,"price_expect_next":20.5,"cpi_inflation_yoy_t_plus_12":2.1627058971},{"date":"2011-06-01","cpi_inflation_yoy":3.0114226376,"price_past_perceived":14.4,"price_expect_next":15.2,"cpi_inflation_yoy_t_plus_12":2.2177419355},{"date":"2011-07-01","cpi_inflation_yoy":2.9732537003,"price_past_perceived":21.0,"price_expect_next":13.8,"cpi_inflation_yoy_t_plus_12":2.2695750851},{"date":"2011-08-01","cpi_inflation_yoy":2.5617803079,"price_past_perceived":17.3,"price_expect_next":10.3,"cpi_inflation_yoy_t_plus_12":2.661788823},{"date":"2011-09-01","cpi_inflation_yoy":2.5264243362,"price_past_perceived":13.6,"price_expect_next":9.8,"cpi_inflation_yoy_t_plus_12":2.5521750063},{"date":"2011-10-01","cpi_inflation_yoy":2.7870967742,"price_past_perceived":15.6,"price_expect_next":27.4,"cpi_inflation_yoy_t_plus_12":2.3223700728},{"date":"2011-11-01","cpi_inflation_yoy":2.6176660219,"price_past_perceived":23.1,"price_expect_next":26.1,"cpi_inflation_yoy_t_plus_12":2.2870067856},{"date":"2011-12-01","cpi_inflation_yoy":2.4855119124,"price_past_perceived":22.8,"price_expect_next":23.0,"cpi_inflation_yoy_t_plus_12":1.9979894446},{"date":"2012-01-01","cpi_inflation_yoy":2.7802806024,"price_past_perceived":23.4,"price_expect_next":17.2,"cpi_inflation_yoy_t_plus_12":1.2273011897},{"date":"2012-02-01","cpi_inflation_yoy":2.7590591227,"price_past_perceived":26.8,"price_expect_next":16.1,"cpi_inflation_yoy_t_plus_12":1.2373174957},{"date":"2012-03-01","cpi_inflation_yoy":2.7057782273,"price_past_perceived":30.9,"price_expect_next":17.0,"cpi_inflation_yoy_t_plus_12":0.9479256432},{"date":"2012-04-01","cpi_inflation_yoy":2.278735994,"price_past_perceived":28.2,"price_expect_next":12.1,"cpi_inflation_yoy_t_plus_12":0.7508616445},{"date":"2012-05-01","cpi_inflation_yoy":2.1627058971,"price_past_perceived":27.5,"price_expect_next":15.9,"cpi_inflation_yoy_t_plus_12":0.8615384615},{"date":"2012-06-01","cpi_inflation_yoy":2.2177419355,"price_past_perceived":28.0,"price_expect_next":19.4,"cpi_inflation_yoy_t_plus_12":0.8875739645},{"date":"2012-07-01","cpi_inflation_yoy":2.2695750851,"price_past_perceived":32.2,"price_expect_next":14.9,"cpi_inflation_yoy_t_plus_12":0.6534336087},{"date":"2012-08-01","cpi_inflation_yoy":2.661788823,"price_past_perceived":23.4,"price_expect_next":13.4,"cpi_inflation_yoy_t_plus_12":0.3686409437},{"date":"2012-09-01","cpi_inflation_yoy":2.5521750063,"price_past_perceived":25.8,"price_expect_next":15.3,"cpi_inflation_yoy_t_plus_12":0.4535981366},{"date":"2012-10-01","cpi_inflation_yoy":2.3223700728,"price_past_perceived":32.0,"price_expect_next":20.2,"cpi_inflation_yoy_t_plus_12":0.6256900994},{"date":"2012-11-01","cpi_inflation_yoy":2.2870067856,"price_past_perceived":25.7,"price_expect_next":12.1,"cpi_inflation_yoy_t_plus_12":0.5651105651},{"date":"2012-12-01","cpi_inflation_yoy":1.9979894446,"price_past_perceived":22.6,"price_expect_next":10.3,"cpi_inflation_yoy_t_plus_12":0.7638290009},{"date":"2013-01-01","cpi_inflation_yoy":1.2273011897,"price_past_perceived":16.0,"price_expect_next":4.5,"cpi_inflation_yoy_t_plus_12":1.0268464679},{"date":"2013-02-01","cpi_inflation_yoy":1.2373174957,"price_past_perceived":11.5,"price_expect_next":12.6,"cpi_inflation_yoy_t_plus_12":0.4888780249},{"date":"2013-03-01","cpi_inflation_yoy":0.9479256432,"price_past_perceived":10.3,"price_expect_next":15.2,"cpi_inflation_yoy_t_plus_12":0.3780487805},{"date":"2013-04-01","cpi_inflation_yoy":0.7508616445,"price_past_perceived":12.0,"price_expect_next":12.4,"cpi_inflation_yoy_t_plus_12":0.6719609041},{"date":"2013-05-01","cpi_inflation_yoy":0.8615384615,"price_past_perceived":5.5,"price_expect_next":7.3,"cpi_inflation_yoy_t_plus_12":0.5247101891},{"date":"2013-06-01","cpi_inflation_yoy":0.8875739645,"price_past_perceived":4.1,"price_expect_next":10.5,"cpi_inflation_yoy_t_plus_12":0.5987292278},{"date":"2013-07-01","cpi_inflation_yoy":0.6534336087,"price_past_perceived":7.2,"price_expect_next":12.5,"cpi_inflation_yoy_t_plus_12":0.6981871632},{"date":"2013-08-01","cpi_inflation_yoy":0.3686409437,"price_past_perceived":7.5,"price_expect_next":13.1,"cpi_inflation_yoy_t_plus_12":0.514201763},{"date":"2013-09-01","cpi_inflation_yoy":0.4535981366,"price_past_perceived":5.8,"price_expect_next":16.8,"cpi_inflation_yoy_t_plus_12":0.4881620698},{"date":"2013-10-01","cpi_inflation_yoy":0.6256900994,"price_past_perceived":6.2,"price_expect_next":14.0,"cpi_inflation_yoy_t_plus_12":0.475493782},{"date":"2013-11-01","cpi_inflation_yoy":0.5651105651,"price_past_perceived":3.4,"price_expect_next":16.4,"cpi_inflation_yoy_t_plus_12":0.4519912045},{"date":"2013-12-01","cpi_inflation_yoy":0.7638290009,"price_past_perceived":3.0,"price_expect_next":15.7,"cpi_inflation_yoy_t_plus_12":0.3423401394},{"date":"2014-01-01","cpi_inflation_yoy":1.0268464679,"price_past_perceived":-5.7,"price_expect_next":14.5,"cpi_inflation_yoy_t_plus_12":-0.0734753857},{"date":"2014-02-01","cpi_inflation_yoy":0.4888780249,"price_past_perceived":-1.2,"price_expect_next":15.9,"cpi_inflation_yoy_t_plus_12":0.2675747993},{"date":"2014-03-01","cpi_inflation_yoy":0.3780487805,"price_past_perceived":0.1,"price_expect_next":21.7,"cpi_inflation_yoy_t_plus_12":0.5953104119},{"date":"2014-04-01","cpi_inflation_yoy":0.6719609041,"price_past_perceived":-3.0,"price_expect_next":23.5,"cpi_inflation_yoy_t_plus_12":0.5946601942},{"date":"2014-05-01","cpi_inflation_yoy":0.5247101891,"price_past_perceived":-1.5,"price_expect_next":18.3,"cpi_inflation_yoy_t_plus_12":0.6312211702},{"date":"2014-06-01","cpi_inflation_yoy":0.5987292278,"price_past_perceived":1.4,"price_expect_next":22.7,"cpi_inflation_yoy_t_plus_12":0.6194582777},{"date":"2014-07-01","cpi_inflation_yoy":0.6981871632,"price_past_perceived":-3.1,"price_expect_next":17.0,"cpi_inflation_yoy_t_plus_12":0.7055102786},{"date":"2014-08-01","cpi_inflation_yoy":0.514201763,"price_past_perceived":-3.9,"price_expect_next":19.9,"cpi_inflation_yoy_t_plus_12":0.5602923264},{"date":"2014-09-01","cpi_inflation_yoy":0.4881620698,"price_past_perceived":-3.6,"price_expect_next":19.1,"cpi_inflation_yoy_t_plus_12":0.4736458586},{"date":"2014-10-01","cpi_inflation_yoy":0.475493782,"price_past_perceived":-6.0,"price_expect_next":23.2,"cpi_inflation_yoy_t_plus_12":0.3883023905},{"date":"2014-11-01","cpi_inflation_yoy":0.4519912045,"price_past_perceived":-2.1,"price_expect_next":17.8,"cpi_inflation_yoy_t_plus_12":0.3405083303},{"date":"2014-12-01","cpi_inflation_yoy":0.3423401394,"price_past_perceived":-8.2,"price_expect_next":16.3,"cpi_inflation_yoy_t_plus_12":0.4752040941},{"date":"2015-01-01","cpi_inflation_yoy":-0.0734753857,"price_past_perceived":-15.5,"price_expect_next":8.1,"cpi_inflation_yoy_t_plus_12":0.6495098039},{"date":"2015-02-01","cpi_inflation_yoy":0.2675747993,"price_past_perceived":-19.1,"price_expect_next":11.6,"cpi_inflation_yoy_t_plus_12":0.3032508491},{"date":"2015-03-01","cpi_inflation_yoy":0.5953104119,"price_past_perceived":-18.6,"price_expect_next":12.4,"cpi_inflation_yoy_t_plus_12":-0.0724637681},{"date":"2015-04-01","cpi_inflation_yoy":0.5946601942,"price_past_perceived":-11.4,"price_expect_next":17.9,"cpi_inflation_yoy_t_plus_12":-0.0361925443},{"date":"2015-05-01","cpi_inflation_yoy":0.6312211702,"price_past_perceived":-7.8,"price_expect_next":20.8,"cpi_inflation_yoy_t_plus_12":0.1688781665},{"date":"2015-06-01","cpi_inflation_yoy":0.6194582777,"price_past_perceived":-6.1,"price_expect_next":21.5,"cpi_inflation_yoy_t_plus_12":0.3259295027},{"date":"2015-07-01","cpi_inflation_yoy":0.7055102786,"price_past_perceived":-10.2,"price_expect_next":16.0,"cpi_inflation_yoy_t_plus_12":0.2898900833},{"date":"2015-08-01","cpi_inflation_yoy":0.5602923264,"price_past_perceived":-12.0,"price_expect_next":14.5,"cpi_inflation_yoy_t_plus_12":0.2543604651},{"date":"2015-09-01","cpi_inflation_yoy":0.4736458586,"price_past_perceived":-10.9,"price_expect_next":15.8,"cpi_inflation_yoy_t_plus_12":0.0241750272},{"date":"2015-10-01","cpi_inflation_yoy":0.3883023905,"price_past_perceived":-12.5,"price_expect_next":20.0,"cpi_inflation_yoy_t_plus_12":0.2538377856},{"date":"2015-11-01","cpi_inflation_yoy":0.3405083303,"price_past_perceived":-15.3,"price_expect_next":15.4,"cpi_inflation_yoy_t_plus_12":0.4120712641},{"date":"2015-12-01","cpi_inflation_yoy":0.4752040941,"price_past_perceived":-12.5,"price_expect_next":13.4,"cpi_inflation_yoy_t_plus_12":0.5214649527},{"date":"2016-01-01","cpi_inflation_yoy":0.6495098039,"price_past_perceived":-17.1,"price_expect_next":15.0,"cpi_inflation_yoy_t_plus_12":0.8766589553},{"date":"2016-02-01","cpi_inflation_yoy":0.3032508491,"price_past_perceived":-18.8,"price_expect_next":10.3,"cpi_inflation_yoy_t_plus_12":1.0037489418},{"date":"2016-03-01","cpi_inflation_yoy":-0.0724637681,"price_past_perceived":-19.2,"price_expect_next":13.1,"cpi_inflation_yoy_t_plus_12":0.991056321},{"date":"2016-04-01","cpi_inflation_yoy":-0.0361925443,"price_past_perceived":-15.3,"price_expect_next":16.0,"cpi_inflation_yoy_t_plus_12":1.1103065412},{"date":"2016-05-01","cpi_inflation_yoy":0.1688781665,"price_past_perceived":-12.1,"price_expect_next":12.5,"cpi_inflation_yoy_t_plus_12":0.7827552987},{"date":"2016-06-01","cpi_inflation_yoy":0.3259295027,"price_past_perceived":-12.0,"price_expect_next":18.5,"cpi_inflation_yoy_t_plus_12":0.5775478282},{"date":"2016-07-01","cpi_inflation_yoy":0.2898900833,"price_past_perceived":-15.0,"price_expect_next":13.0,"cpi_inflation_yoy_t_plus_12":1.4934361074},{"date":"2016-08-01","cpi_inflation_yoy":0.2543604651,"price_past_perceived":-13.0,"price_expect_next":14.4,"cpi_inflation_yoy_t_plus_12":1.5102090129},{"date":"2016-09-01","cpi_inflation_yoy":0.0241750272,"price_past_perceived":-17.6,"price_expect_next":13.1,"cpi_inflation_yoy_t_plus_12":1.5951661631},{"date":"2016-10-01","cpi_inflation_yoy":0.2538377856,"price_past_perceived":-17.4,"price_expect_next":11.6,"cpi_inflation_yoy_t_plus_12":1.4829997589},{"date":"2016-11-01","cpi_inflation_yoy":0.4120712641,"price_past_perceived":-14.5,"price_expect_next":15.9,"cpi_inflation_yoy_t_plus_12":1.3035606518},{"date":"2016-12-01","cpi_inflation_yoy":0.5214649527,"price_past_perceived":-13.7,"price_expect_next":14.3,"cpi_inflation_yoy_t_plus_12":0.9168777898},{"date":"2017-01-01","cpi_inflation_yoy":0.8766589553,"price_past_perceived":-14.8,"price_expect_next":17.0,"cpi_inflation_yoy_t_plus_12":0.6638503319},{"date":"2017-02-01","cpi_inflation_yoy":1.0037489418,"price_past_perceived":-11.4,"price_expect_next":18.6,"cpi_inflation_yoy_t_plus_12":0.622605364},{"date":"2017-03-01","cpi_inflation_yoy":0.991056321,"price_past_perceived":-12.2,"price_expect_next":19.4,"cpi_inflation_yoy_t_plus_12":0.5505026328},{"date":"2017-04-01","cpi_inflation_yoy":1.1103065412,"price_past_perceived":-11.9,"price_expect_next":20.2,"cpi_inflation_yoy_t_plus_12":0.7997135354},{"date":"2017-05-01","cpi_inflation_yoy":0.7827552987,"price_past_perceived":-8.4,"price_expect_next":22.7,"cpi_inflation_yoy_t_plus_12":1.0514995818},{"date":"2017-06-01","cpi_inflation_yoy":0.5775478282,"price_past_perceived":-9.3,"price_expect_next":20.1,"cpi_inflation_yoy_t_plus_12":1.1245364278},{"date":"2017-07-01","cpi_inflation_yoy":1.4934361074,"price_past_perceived":-10.7,"price_expect_next":17.4,"cpi_inflation_yoy_t_plus_12":1.0917289664},{"date":"2017-08-01","cpi_inflation_yoy":1.5102090129,"price_past_perceived":-6.6,"price_expect_next":20.7,"cpi_inflation_yoy_t_plus_12":0.9640561771},{"date":"2017-09-01","cpi_inflation_yoy":1.5951661631,"price_past_perceived":-8.3,"price_expect_next":18.0,"cpi_inflation_yoy_t_plus_12":0.6423218746},{"date":"2017-10-01","cpi_inflation_yoy":1.4829997589,"price_past_perceived":-4.2,"price_expect_next":20.0,"cpi_inflation_yoy_t_plus_12":0.8197695141},{"date":"2017-11-01","cpi_inflation_yoy":1.3035606518,"price_past_perceived":-3.2,"price_expect_next":25.4,"cpi_inflation_yoy_t_plus_12":0.7863695937},{"date":"2017-12-01","cpi_inflation_yoy":0.9168777898,"price_past_perceived":-6.8,"price_expect_next":22.8,"cpi_inflation_yoy_t_plus_12":0.7770472206},{"date":"2018-01-01","cpi_inflation_yoy":0.6638503319,"price_past_perceived":-0.6,"price_expect_next":21.7,"cpi_inflation_yoy_t_plus_12":1.2949640288},{"date":"2018-02-01","cpi_inflation_yoy":0.622605364,"price_past_perceived":-7.3,"price_expect_next":16.7,"cpi_inflation_yoy_t_plus_12":1.0471204188},{"date":"2018-03-01","cpi_inflation_yoy":0.5505026328,"price_past_perceived":-8.4,"price_expect_next":23.2,"cpi_inflation_yoy_t_plus_12":1.166388955},{"date":"2018-04-01","cpi_inflation_yoy":0.7997135354,"price_past_perceived":-5.3,"price_expect_next":23.6,"cpi_inflation_yoy_t_plus_12":0.9117821196},{"date":"2018-05-01","cpi_inflation_yoy":1.0514995818,"price_past_perceived":-8.1,"price_expect_next":24.7,"cpi_inflation_yoy_t_plus_12":0.7331204919},{"date":"2018-06-01","cpi_inflation_yoy":1.1245364278,"price_past_perceived":-6.0,"price_expect_next":24.0,"cpi_inflation_yoy_t_plus_12":0.5323553768},{"date":"2018-07-01","cpi_inflation_yoy":1.0917289664,"price_past_perceived":-6.7,"price_expect_next":25.9,"cpi_inflation_yoy_t_plus_12":0.3169386078},{"date":"2018-08-01","cpi_inflation_yoy":0.9640561771,"price_past_perceived":-7.3,"price_expect_next":29.1,"cpi_inflation_yoy_t_plus_12":0.4125898857},{"date":"2018-09-01","cpi_inflation_yoy":0.6423218746,"price_past_perceived":-3.4,"price_expect_next":26.1,"cpi_inflation_yoy_t_plus_12":0.4727573573},{"date":"2018-10-01","cpi_inflation_yoy":0.8197695141,"price_past_perceived":-6.5,"price_expect_next":27.0,"cpi_inflation_yoy_t_plus_12":0.5302851756},{"date":"2018-11-01","cpi_inflation_yoy":0.7863695937,"price_past_perceived":-5.6,"price_expect_next":26.8,"cpi_inflation_yoy_t_plus_12":0.6501950585},{"date":"2018-12-01","cpi_inflation_yoy":0.7770472206,"price_past_perceived":-5.3,"price_expect_next":22.2,"cpi_inflation_yoy_t_plus_12":0.8303677343},{"date":"2019-01-01","cpi_inflation_yoy":1.2949640288,"price_past_perceived":-6.9,"price_expect_next":20.8,"cpi_inflation_yoy_t_plus_12":0.7457386364},{"date":"2019-02-01","cpi_inflation_yoy":1.0471204188,"price_past_perceived":-7.9,"price_expect_next":22.1,"cpi_inflation_yoy_t_plus_12":0.7536504946},{"date":"2019-03-01","cpi_inflation_yoy":1.166388955,"price_past_perceived":-7.1,"price_expect_next":20.3,"cpi_inflation_yoy_t_plus_12":0.3882352941},{"date":"2019-04-01","cpi_inflation_yoy":0.9117821196,"price_past_perceived":-6.2,"price_expect_next":24.1,"cpi_inflation_yoy_t_plus_12":0.0469373387},{"date":"2019-05-01","cpi_inflation_yoy":0.7331204919,"price_past_perceived":-4.0,"price_expect_next":26.5,"cpi_inflation_yoy_t_plus_12":-0.0704308017},{"date":"2019-06-01","cpi_inflation_yoy":0.5323553768,"price_past_perceived":-5.8,"price_expect_next":24.0,"cpi_inflation_yoy_t_plus_12":0.2824193928},{"date":"2019-07-01","cpi_inflation_yoy":0.3169386078,"price_past_perceived":-6.1,"price_expect_next":29.5,"cpi_inflation_yoy_t_plus_12":0.5148607536},{"date":"2019-08-01","cpi_inflation_yoy":0.4125898857,"price_past_perceived":-13.3,"price_expect_next":24.2,"cpi_inflation_yoy_t_plus_12":0.5048133365},{"date":"2019-09-01","cpi_inflation_yoy":0.4727573573,"price_past_perceived":-12.7,"price_expect_next":19.4,"cpi_inflation_yoy_t_plus_12":0.5293494883},{"date":"2019-10-01","cpi_inflation_yoy":0.5302851756,"price_past_perceived":-8.9,"price_expect_next":25.3,"cpi_inflation_yoy_t_plus_12":0.4337123432},{"date":"2019-11-01","cpi_inflation_yoy":0.6501950585,"price_past_perceived":-8.7,"price_expect_next":28.0,"cpi_inflation_yoy_t_plus_12":0.4933051445},{"date":"2019-12-01","cpi_inflation_yoy":0.8303677343,"price_past_perceived":-4.8,"price_expect_next":31.1,"cpi_inflation_yoy_t_plus_12":0.4588235294},{"date":"2020-01-01","cpi_inflation_yoy":0.7457386364,"price_past_perceived":-6.8,"price_expect_next":28.7,"cpi_inflation_yoy_t_plus_12":0.5287275291},{"date":"2020-02-01","cpi_inflation_yoy":0.7536504946,"price_past_perceived":-4.1,"price_expect_next":26.6,"cpi_inflation_yoy_t_plus_12":0.5960729313},{"date":"2020-03-01","cpi_inflation_yoy":0.3882352941,"price_past_perceived":-7.4,"price_expect_next":24.7,"cpi_inflation_yoy_t_plus_12":0.914098207},{"date":"2020-04-01","cpi_inflation_yoy":0.0469373387,"price_past_perceived":-15.2,"price_expect_next":19.1,"cpi_inflation_yoy_t_plus_12":1.4074595355},{"date":"2020-05-01","cpi_inflation_yoy":-0.0704308017,"price_past_perceived":-20.8,"price_expect_next":20.0,"cpi_inflation_yoy_t_plus_12":1.7855045225},{"date":"2020-06-01","cpi_inflation_yoy":0.2824193928,"price_past_perceived":-19.0,"price_expect_next":17.2,"cpi_inflation_yoy_t_plus_12":1.7718845341},{"date":"2020-07-01","cpi_inflation_yoy":0.5148607536,"price_past_perceived":-13.9,"price_expect_next":16.6,"cpi_inflation_yoy_t_plus_12":1.641443539},{"date":"2020-08-01","cpi_inflation_yoy":0.5048133365,"price_past_perceived":-13.1,"price_expect_next":21.1,"cpi_inflation_yoy_t_plus_12":1.7521317603},{"date":"2020-09-01","cpi_inflation_yoy":0.5293494883,"price_past_perceived":-11.8,"price_expect_next":21.2,"cpi_inflation_yoy_t_plus_12":2.2466651065},{"date":"2020-10-01","cpi_inflation_yoy":0.4337123432,"price_past_perceived":-13.8,"price_expect_next":21.3,"cpi_inflation_yoy_t_plus_12":2.9178338002},{"date":"2020-11-01","cpi_inflation_yoy":0.4933051445,"price_past_perceived":-13.5,"price_expect_next":21.8,"cpi_inflation_yoy_t_plus_12":3.4011220196},{"date":"2020-12-01","cpi_inflation_yoy":0.4588235294,"price_past_perceived":-14.4,"price_expect_next":24.2,"cpi_inflation_yoy_t_plus_12":3.1034078932},{"date":"2021-01-01","cpi_inflation_yoy":0.5287275291,"price_past_perceived":-18.9,"price_expect_next":18.9,"cpi_inflation_yoy_t_plus_12":4.3595137915},{"date":"2021-02-01","cpi_inflation_yoy":0.5960729313,"price_past_perceived":-19.2,"price_expect_next":24.6,"cpi_inflation_yoy_t_plus_12":4.7751829906},{"date":"2021-03-01","cpi_inflation_yoy":0.914098207,"price_past_perceived":-14.9,"price_expect_next":28.4,"cpi_inflation_yoy_t_plus_12":5.4000696783},{"date":"2021-04-01","cpi_inflation_yoy":1.4074595355,"price_past_perceived":-12.0,"price_expect_next":31.4,"cpi_inflation_yoy_t_plus_12":6.685172334},{"date":"2021-05-01","cpi_inflation_yoy":1.7855045225,"price_past_perceived":-5.7,"price_expect_next":28.1,"cpi_inflation_yoy_t_plus_12":7.4206578188},{"date":"2021-06-01","cpi_inflation_yoy":1.7718845341,"price_past_perceived":2.5,"price_expect_next":29.6,"cpi_inflation_yoy_t_plus_12":8.1978554134},{"date":"2021-07-01","cpi_inflation_yoy":1.641443539,"price_past_perceived":4.3,"price_expect_next":28.7,"cpi_inflation_yoy_t_plus_12":8.6702554118},{"date":"2021-08-01","cpi_inflation_yoy":1.7521317603,"price_past_perceived":2.4,"price_expect_next":26.8,"cpi_inflation_yoy_t_plus_12":8.9312363678},{"date":"2021-09-01","cpi_inflation_yoy":2.2466651065,"price_past_perceived":9.1,"price_expect_next":26.7,"cpi_inflation_yoy_t_plus_12":10.0022888533},{"date":"2021-10-01","cpi_inflation_yoy":2.9178338002,"price_past_perceived":14.8,"price_expect_next":37.0,"cpi_inflation_yoy_t_plus_12":10.1950555682},{"date":"2021-11-01","cpi_inflation_yoy":3.4011220196,"price_past_perceived":24.7,"price_expect_next":43.4,"cpi_inflation_yoy_t_plus_12":8.8617610489},{"date":"2021-12-01","cpi_inflation_yoy":3.1034078932,"price_past_perceived":27.7,"price_expect_next":36.1,"cpi_inflation_yoy_t_plus_12":8.711949114},{"date":"2022-01-01","cpi_inflation_yoy":4.3595137915,"price_past_perceived":28.0,"price_expect_next":35.4,"cpi_inflation_yoy_t_plus_12":7.6828312241},{"date":"2022-02-01","cpi_inflation_yoy":4.7751829906,"price_past_perceived":36.0,"price_expect_next":32.9,"cpi_inflation_yoy_t_plus_12":7.5959192726},{"date":"2022-03-01","cpi_inflation_yoy":5.4000696783,"price_past_perceived":41.5,"price_expect_next":57.6,"cpi_inflation_yoy_t_plus_12":6.776112825},{"date":"2022-04-01","cpi_inflation_yoy":6.685172334,"price_past_perceived":50.8,"price_expect_next":42.4,"cpi_inflation_yoy_t_plus_12":5.3013876843},{"date":"2022-05-01","cpi_inflation_yoy":7.4206578188,"price_past_perceived":54.4,"price_expect_next":37.6,"cpi_inflation_yoy_t_plus_12":2.9437043404},{"date":"2022-06-01","cpi_inflation_yoy":8.1978554134,"price_past_perceived":63.6,"price_expect_next":28.2,"cpi_inflation_yoy_t_plus_12":2.4403239557},{"date":"2022-07-01","cpi_inflation_yoy":8.6702554118,"price_past_perceived":66.7,"price_expect_next":22.5,"cpi_inflation_yoy_t_plus_12":3.1829679595},{"date":"2022-08-01","cpi_inflation_yoy":8.9312363678,"price_past_perceived":71.2,"price_expect_next":0.8,"cpi_inflation_yoy_t_plus_12":2.4343977237},{"date":"2022-09-01","cpi_inflation_yoy":10.0022888533,"price_past_perceived":73.3,"price_expect_next":17.8,"cpi_inflation_yoy_t_plus_12":0.8739076155},{"date":"2022-10-01","cpi_inflation_yoy":10.1950555682,"price_past_perceived":70.9,"price_expect_next":18.9,"cpi_inflation_yoy_t_plus_12":0.0308737265},{"date":"2022-11-01","cpi_inflation_yoy":8.8617610489,"price_past_perceived":72.6,"price_expect_next":6.4,"cpi_inflation_yoy_t_plus_12":0.5710725781},{"date":"2022-12-01","cpi_inflation_yoy":8.711949114,"price_past_perceived":70.8,"price_expect_next":-0.9,"cpi_inflation_yoy_t_plus_12":0.7418242608},{"date":"2023-01-01","cpi_inflation_yoy":7.6828312241,"price_past_perceived":62.6,"price_expect_next":-11.0,"cpi_inflation_yoy_t_plus_12":1.1960478419},{"date":"2023-02-01","cpi_inflation_yoy":7.5959192726,"price_past_perceived":63.1,"price_expect_next":-8.0,"cpi_inflation_yoy_t_plus_12":0.8141811811},{"date":"2023-03-01","cpi_inflation_yoy":6.776112825,"price_past_perceived":61.0,"price_expect_next":-8.5,"cpi_inflation_yoy_t_plus_12":0.9390155815},{"date":"2023-04-01","cpi_inflation_yoy":5.3013876843,"price_past_perceived":57.4,"price_expect_next":-11.5,"cpi_inflation_yoy_t_plus_12":0.7412745805},{"date":"2023-05-01","cpi_inflation_yoy":2.9437043404,"price_past_perceived":51.2,"price_expect_next":-19.3,"cpi_inflation_yoy_t_plus_12":2.1289918597},{"date":"2023-06-01","cpi_inflation_yoy":2.4403239557,"price_past_perceived":46.2,"price_expect_next":-17.3,"cpi_inflation_yoy_t_plus_12":1.8308540518},{"date":"2023-07-01","cpi_inflation_yoy":3.1829679595,"price_past_perceived":45.4,"price_expect_next":-12.7,"cpi_inflation_yoy_t_plus_12":1.113381001},{"date":"2023-08-01","cpi_inflation_yoy":2.4343977237,"price_past_perceived":37.7,"price_expect_next":-12.1,"cpi_inflation_yoy_t_plus_12":1.3991769547},{"date":"2023-09-01","cpi_inflation_yoy":0.8739076155,"price_past_perceived":34.6,"price_expect_next":-3.2,"cpi_inflation_yoy_t_plus_12":1.2891914191},{"date":"2023-10-01","cpi_inflation_yoy":0.0308737265,"price_past_perceived":28.1,"price_expect_next":-0.8,"cpi_inflation_yoy_t_plus_12":1.6152263374},{"date":"2023-11-01","cpi_inflation_yoy":0.5710725781,"price_past_perceived":27.4,"price_expect_next":-1.3,"cpi_inflation_yoy_t_plus_12":1.6518686764},{"date":"2023-12-01","cpi_inflation_yoy":0.7418242608,"price_past_perceived":23.1,"price_expect_next":-2.5,"cpi_inflation_yoy_t_plus_12":1.8564613151},{"date":"2024-01-01","cpi_inflation_yoy":1.1960478419,"price_past_perceived":22.8,"price_expect_next":2.8,"cpi_inflation_yoy_t_plus_12":1.4902363823},{"date":"2024-02-01","cpi_inflation_yoy":0.8141811811,"price_past_perceived":15.7,"price_expect_next":2.4,"cpi_inflation_yoy_t_plus_12":2.0445716622},{"date":"2024-03-01","cpi_inflation_yoy":0.9390155815,"price_past_perceived":15.9,"price_expect_next":7.4,"cpi_inflation_yoy_t_plus_12":1.543651605},{"date":"2024-04-01","cpi_inflation_yoy":0.7412745805,"price_past_perceived":22.0,"price_expect_next":9.9,"cpi_inflation_yoy_t_plus_12":1.5738375064},{"date":"2024-05-01","cpi_inflation_yoy":2.1289918597,"price_past_perceived":20.2,"price_expect_next":12.6,"cpi_inflation_yoy_t_plus_12":1.6145514},{"date":"2024-06-01","cpi_inflation_yoy":1.8308540518,"price_past_perceived":22.8,"price_expect_next":10.5,"cpi_inflation_yoy_t_plus_12":1.8387986515},{"date":"2024-07-01","cpi_inflation_yoy":1.113381001,"price_past_perceived":25.9,"price_expect_next":18.1,"cpi_inflation_yoy_t_plus_12":2.2022426508},{"date":"2024-08-01","cpi_inflation_yoy":1.3991769547,"price_past_perceived":24.9,"price_expect_next":16.7,"cpi_inflation_yoy_t_plus_12":1.9886363636},{"date":"2024-09-01","cpi_inflation_yoy":1.2891914191,"price_past_perceived":29.1,"price_expect_next":19.7,"cpi_inflation_yoy_t_plus_12":2.2400977497},{"date":"2024-10-01","cpi_inflation_yoy":1.6152263374,"price_past_perceived":28.0,"price_expect_next":21.0,"cpi_inflation_yoy_t_plus_12":2.146400729},{"date":"2024-11-01","cpi_inflation_yoy":1.6518686764,"price_past_perceived":27.4,"price_expect_next":23.2,"cpi_inflation_yoy_t_plus_12":2.0617509649},{"date":"2024-12-01","cpi_inflation_yoy":1.8564613151,"price_past_perceived":31.6,"price_expect_next":29.6,"cpi_inflation_yoy_t_plus_12":1.9244476123},{"date":"2025-01-01","cpi_inflation_yoy":1.4902363823,"price_past_perceived":32.8,"price_expect_next":29.2,"cpi_inflation_yoy_t_plus_12":0.7898734177},{"date":"2025-02-01","cpi_inflation_yoy":2.0445716622,"price_past_perceived":33.3,"price_expect_next":37.0,"cpi_inflation_yoy_t_plus_12":0.721298337},{"date":"2025-03-01","cpi_inflation_yoy":1.543651605,"price_past_perceived":37.8,"price_expect_next":42.8,"cpi_inflation_yoy_t_plus_12":1.1778918756},{"date":"2025-04-01","cpi_inflation_yoy":1.5738375064,"price_past_perceived":36.3,"price_expect_next":40.5,"cpi_inflation_yoy_t_plus_12":null},{"date":"2025-05-01","cpi_inflation_yoy":1.6145514,"price_past_perceived":44.0,"price_expect_next":40.8,"cpi_inflation_yoy_t_plus_12":null},{"date":"2025-06-01","cpi_inflation_yoy":1.8387986515,"price_past_perceived":47.3,"price_expect_next":36.7,"cpi_inflation_yoy_t_plus_12":null},{"date":"2025-07-01","cpi_inflation_yoy":2.2022426508,"price_past_perceived":52.6,"price_expect_next":36.1,"cpi_inflation_yoy_t_plus_12":null},{"date":"2025-08-01","cpi_inflation_yoy":1.9886363636,"price_past_perceived":51.8,"price_expect_next":35.4,"cpi_inflation_yoy_t_plus_12":null},{"date":"2025-09-01","cpi_inflation_yoy":2.2400977497,"price_past_perceived":58.1,"price_expect_next":29.6,"cpi_inflation_yoy_t_plus_12":null},{"date":"2025-10-01","cpi_inflation_yoy":2.146400729,"price_past_perceived":56.3,"price_expect_next":29.6,"cpi_inflation_yoy_t_plus_12":null},{"date":"2025-11-01","cpi_inflation_yoy":2.0617509649,"price_past_perceived":55.3,"price_expect_next":30.8,"cpi_inflation_yoy_t_plus_12":null},{"date":"2025-12-01","cpi_inflation_yoy":1.9244476123,"price_past_perceived":50.8,"price_expect_next":26.1,"cpi_inflation_yoy_t_plus_12":null},{"date":"2026-01-01","cpi_inflation_yoy":0.7898734177,"price_past_perceived":44.5,"price_expect_next":18.1,"cpi_inflation_yoy_t_plus_12":null},{"date":"2026-02-01","cpi_inflation_yoy":0.721298337,"price_past_perceived":33.2,"price_expect_next":11.9,"cpi_inflation_yoy_t_plus_12":null},{"date":"2026-03-01","cpi_inflation_yoy":1.1778918756,"price_past_perceived":29.4,"price_expect_next":23.5,"cpi_inflation_yoy_t_plus_12":null},{"date":"2026-04-01","cpi_inflation_yoy":null,"price_past_perceived":36.8,"price_expect_next":43.7,"cpi_inflation_yoy_t_plus_12":null}];
+
+    const font = { family: 'DM Sans', size: 11 };
+    const gridCol = 'rgba(0,0,0,0.07)';
+    const ink = '#1a1916';
+    const muted = '#6e6b64';
+    const secondary = '#9a9589';
+
+    Chart.defaults.font = font;
+    Chart.defaults.color = muted;
+
+    // Add shifted inflation variables for multiple horizons (t+1, t+3, t+6 months)
+    // and backward/lagged variables (t-1, t-3, t-6, t-12) for perceived-past analyses.
+    analysisData.forEach((row, idx) => {
+      const next1 = idx + 1 < analysisData.length ? analysisData[idx + 1]['cpi_inflation_yoy'] : null;
+      const next3 = idx + 3 < analysisData.length ? analysisData[idx + 3]['cpi_inflation_yoy'] : null;
+      const next6 = idx + 6 < analysisData.length ? analysisData[idx + 6]['cpi_inflation_yoy'] : null;
+      row['cpi_inflation_yoy_t_plus_1'] = next1;
+      row['cpi_inflation_yoy_t_plus_3'] = next3;
+      row['cpi_inflation_yoy_t_plus_6'] = next6;
+
+      const prev1 = idx - 1 >= 0 ? analysisData[idx - 1]['cpi_inflation_yoy'] : null;
+      const prev3 = idx - 3 >= 0 ? analysisData[idx - 3]['cpi_inflation_yoy'] : null;
+      const prev6 = idx - 6 >= 0 ? analysisData[idx - 6]['cpi_inflation_yoy'] : null;
+      const prev12 = idx - 12 >= 0 ? analysisData[idx - 12]['cpi_inflation_yoy'] : null;
+      row['cpi_inflation_yoy_t_minus_1'] = prev1;
+      row['cpi_inflation_yoy_t_minus_3'] = prev3;
+      row['cpi_inflation_yoy_t_minus_6'] = prev6;
+      row['cpi_inflation_yoy_t_minus_12'] = prev12;
+    });
+
+    // Variable mapping. Preferred variable names follow merged_analysis_dataset.csv.
+    // Aliases are included so the page can still work if later dataset versions rename columns slightly.
+    const columns = analysisData.length ? Object.keys(analysisData[0]) : [];
+    const pickVariable = (candidates) => candidates.find(name => columns.includes(name)) || null;
+    const vars = {
+      date: pickVariable(['date', 'dato', 'month', 'time', 'period']),
+      cpiInflation: pickVariable(['cpi_inflation_yoy', 'inflation_yoy', 'cpi_yoy', 'inflation', 'pris_inflation_yoy']),
+      pricePast: pickVariable(['price_past_perceived', 'past_price_perceived', 'price_past', 'perceived_inflation', 'opfattet_prisudvikling']),
+      priceExpect: pickVariable(['price_expect_next', 'expected_price_next', 'price_expectation_next', 'inflation_expectations', 'forventet_prisudvikling']),
+      cpiFuture1: pickVariable(['cpi_inflation_yoy_t_plus_1']),
+      cpiFuture3: pickVariable(['cpi_inflation_yoy_t_plus_3']),
+      cpiFuture6: pickVariable(['cpi_inflation_yoy_t_plus_6']),
+      cpiFuture12: pickVariable(['cpi_inflation_yoy_t_plus_12', 'inflation_yoy_t_plus_12', 'cpi_yoy_t_plus_12', 'future_inflation_12m']),
+      cpiPast1: pickVariable(['cpi_inflation_yoy_t_minus_1']),
+      cpiPast3: pickVariable(['cpi_inflation_yoy_t_minus_3']),
+      cpiPast6: pickVariable(['cpi_inflation_yoy_t_minus_6']),
+      cpiPast12: pickVariable(['cpi_inflation_yoy_t_minus_12'])
+    };
+
+    const toNumber = (value) => {
+      if (value === null || value === undefined || value === '') return null;
+      const n = Number(value);
+      return Number.isFinite(n) ? n : null;
+    };
+
+    const formatMonth = (dateValue) => {
+      if (!dateValue) return '';
+      const s = String(dateValue);
+      return s.length >= 7 ? s.slice(0, 7) : s;
+    };
+
+    const sortedRows = [...analysisData].sort((a, b) => String(a[vars.date] || '').localeCompare(String(b[vars.date] || '')));
+
+    function filterRowsWithValues(rows, keys) {
+      return rows.filter(row => keys.every(key => toNumber(row[vars[key]]) !== null));
+    }
+
+    function showChartError(canvasId, missingVars) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const frame = canvas.closest('.chart-frame') || canvas.closest('.mini-chart-card');
+      canvas.style.display = 'none';
+      const msg = document.createElement('div');
+      msg.className = 'chart-error';
+      msg.textContent = 'This figure cannot be shown because the following variable is missing from the dataset: ' + missingVars.join(', ') + '.';
+      frame.appendChild(msg);
+    }
+
+    function hasVariables(canvasId, requiredKeys) {
+      const missing = requiredKeys.filter(key => !vars[key]);
+      if (missing.length > 0) {
+        showChartError(canvasId, missing);
+        return false;
+      }
+      return true;
+    }
+
+    function zScores(rows, field) {
+      const values = rows.map(row => toNumber(row[field])).filter(v => v !== null);
+      if (values.length < 2) return rows.map(() => null);
+      const mean = values.reduce((a, b) => a + b, 0) / values.length;
+      const variance = values.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / (values.length - 1);
+      const sd = Math.sqrt(variance);
+      if (!Number.isFinite(sd) || sd === 0) return rows.map(() => null);
+      return rows.map(row => {
+        const v = toNumber(row[field]);
+        return v === null ? null : (v - mean) / sd;
+      });
+    }
+
+    function linearRegression(points) {
+      const n = points.length;
+      if (n < 2) return null;
+      const meanX = points.reduce((s, p) => s + p.x, 0) / n;
+      const meanY = points.reduce((s, p) => s + p.y, 0) / n;
+      const ssXX = points.reduce((s, p) => s + Math.pow(p.x - meanX, 2), 0);
+      const ssXY = points.reduce((s, p) => s + (p.x - meanX) * (p.y - meanY), 0);
+      if (ssXX === 0) return null;
+      const slope = ssXY / ssXX;
+      const intercept = meanY - slope * meanX;
+      const xValues = points.map(p => p.x);
+      const minX = Math.min(...xValues);
+      const maxX = Math.max(...xValues);
+      return {
+        slope,
+        intercept,
+        line: [
+          { x: minX, y: intercept + slope * minX },
+          { x: maxX, y: intercept + slope * maxX }
+        ]
+      };
+    }
+
+    function correlation(points) {
+      const n = points.length;
+      if (n < 2) return null;
+      const meanX = points.reduce((s, p) => s + p.x, 0) / n;
+      const meanY = points.reduce((s, p) => s + p.y, 0) / n;
+      const cov = points.reduce((s, p) => s + (p.x - meanX) * (p.y - meanY), 0);
+      const varX = points.reduce((s, p) => s + Math.pow(p.x - meanX, 2), 0);
+      const varY = points.reduce((s, p) => s + Math.pow(p.y - meanY, 2), 0);
+      if (varX === 0 || varY === 0) return null;
+      return cov / Math.sqrt(varX * varY);
+    }
+
+    function fmt(value, digits = 3) {
+      return value === null || value === undefined || !Number.isFinite(value) ? 'n/a' : Number(value).toFixed(digits);
+    }
+
+    function niceStep(rawStep) {
+      if (!Number.isFinite(rawStep) || rawStep <= 0) return 1;
+      const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
+      const normalized = rawStep / magnitude;
+      let niceNormalized;
+      if (normalized <= 1) {
+        niceNormalized = 1;
+      } else if (normalized <= 2) {
+        niceNormalized = 2;
+      } else if (normalized <= 5) {
+        niceNormalized = 5;
+      } else {
+        niceNormalized = 10;
+      }
+      return niceNormalized * magnitude;
+    }
+
+    function axisBounds(values, targetTicks = 6) {
+      if (!values.length) return { min: undefined, max: undefined };
+      const minValue = Math.min(...values);
+      const maxValue = Math.max(...values);
+      if (!Number.isFinite(minValue) || !Number.isFinite(maxValue)) return { min: undefined, max: undefined };
+
+      if (minValue === maxValue) {
+        const base = Math.max(Math.abs(minValue), 1);
+        const step = niceStep(base / targetTicks);
+        return {
+          min: Math.floor((minValue - step) / step) * step,
+          max: Math.ceil((maxValue + step) / step) * step
+        };
+      }
+
+      const spread = maxValue - minValue;
+      const step = niceStep(spread / targetTicks);
+      return {
+        min: Math.floor(minValue / step) * step,
+        max: Math.ceil(maxValue / step) * step
+      };
+    }
+
+    function createLineChart(canvasId, rows, specs, yTitle, small = false, dualAxis = false) {
+      if (!hasVariables(canvasId, ['date', ...specs.map(s => s.key)])) return;
+      const filteredRows = filterRowsWithValues(rows, specs.map(s => s.key));
+      if (filteredRows.length < 2) {
+        showChartError(canvasId, ['too few valid observations']);
+        return;
+      }
+
+      const labels = filteredRows.map(row => formatMonth(row[vars.date]));
+      const datasets = specs.map(spec => ({
+        label: spec.label,
+        data: filteredRows.map(row => toNumber(row[vars[spec.key]])),
+        borderColor: spec.color,
+        backgroundColor: spec.fill ? spec.fill : 'transparent',
+        fill: Boolean(spec.fill),
+        pointRadius: 0,
+        borderWidth: small ? 1.25 : 1.5,
+        borderDash: spec.dash || [],
+        yAxisID: dualAxis ? (spec.axis || 'yLeft') : 'y',
+        tension: 0.25,
+        spanGaps: false
+      }));
+
+      new Chart(document.getElementById(canvasId), {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: { legend: { position: 'top', labels: { font, boxWidth: 16, padding: small ? 8 : 14 } } },
+          scales: {
+            x: {
+              title: { display: !small, text: 'Date', font, color: muted },
+              ticks: { font, maxTicksLimit: small ? 5 : 8 },
+              grid: { display: false },
+              border: { color: '#ccc' }
+            },
+            y: {
+              title: { display: !small, text: yTitle, font, color: muted },
+              ticks: { font },
+              grid: { color: gridCol },
+              border: { color: '#ccc' },
+              display: !dualAxis
+            },
+            yLeft: {
+              display: dualAxis,
+              position: 'left',
+              title: { display: dualAxis && !small, text: specs.find(s => (s.axis || 'yLeft') === 'yLeft')?.axisTitle || yTitle, font, color: muted },
+              ticks: { font },
+              grid: { color: gridCol },
+              border: { color: '#ccc' }
+            },
+            yRight: {
+              display: dualAxis,
+              position: 'right',
+              title: { display: dualAxis && !small, text: specs.find(s => (s.axis || 'yLeft') === 'yRight')?.axisTitle || yTitle, font, color: muted },
+              ticks: { font },
+              grid: { drawOnChartArea: false },
+              border: { color: '#ccc' }
+            }
+          }
+        }
+      });
+    }
+
+    function createInflationTimelineChart(canvasId, rows, small = false) {
+      if (!hasVariables(canvasId, ['date', 'cpiInflation'])) return;
+      const filteredRows = filterRowsWithValues(rows, ['cpiInflation']);
+      if (filteredRows.length < 2) {
+        showChartError(canvasId, ['too few valid observations']);
+        return;
+      }
+
+      const labels = filteredRows.map(row => formatMonth(row[vars.date]));
+      const data = filteredRows.map(row => toNumber(row[vars.cpiInflation]));
+
+      const shockPlugin = {
+        id: 'shockBand',
+        beforeDatasetsDraw(chart) {
+          const { ctx, chartArea, scales } = chart;
+          if (!chartArea || !scales?.x) return;
+
+          const drawBand = (startYm, endYm, color) => {
+            const startIndex = labels.findIndex(v => v >= startYm);
+            const endIndex = labels.findIndex(v => v > endYm) - 1;
+            const finalEndIndex = endIndex >= 0 ? endIndex : labels.length - 1;
+            if (startIndex < 0 || finalEndIndex < startIndex) return;
+            const xStart = scales.x.getPixelForValue(startIndex);
+            const xEnd = scales.x.getPixelForValue(finalEndIndex);
+            ctx.save();
+            ctx.fillStyle = color;
+            ctx.fillRect(xStart, chartArea.top, xEnd - xStart, chartArea.bottom - chartArea.top);
+            ctx.restore();
+          };
+
+          drawBand('2007-10', '2009-01', 'rgba(110,107,100,0.13)');
+          drawBand('2021-01', '2023-12', 'rgba(154,149,137,0.14)');
+        }
+      };
+
+      new Chart(document.getElementById(canvasId), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Actual inflation, year-over-year',
+              data,
+              borderColor: ink,
+              backgroundColor: 'rgba(26,25,22,0.05)',
+              fill: true,
+              pointRadius: 0,
+              borderWidth: small ? 1.25 : 1.6,
+              tension: 0.2,
+              spanGaps: false
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: { legend: { position: 'top', labels: { font, boxWidth: 16, padding: small ? 8 : 14 } } },
+          scales: {
+            x: {
+              title: { display: !small, text: 'Date', font, color: muted },
+              ticks: { font, maxTicksLimit: small ? 5 : 8 },
+              grid: { display: false },
+              border: { color: '#ccc' }
+            },
+            y: {
+              title: { display: !small, text: 'Actual inflation (%)', font, color: muted },
+              ticks: { font },
+              grid: { color: gridCol },
+              border: { color: '#ccc' }
+            }
+          }
+        },
+        plugins: [shockPlugin]
+      });
+    }
+
+    function createZLineChart(canvasId, rows, small = false) {
+      if (!hasVariables(canvasId, ['date', 'priceExpect', 'cpiFuture12'])) return;
+      const filteredRows = filterRowsWithValues(rows, ['priceExpect', 'cpiFuture12']);
+      if (filteredRows.length < 2) {
+        showChartError(canvasId, ['too few valid observations']);
+        return;
+      }
+
+      const labels = filteredRows.map(row => formatMonth(row[vars.date]));
+      const expectZ = zScores(filteredRows, vars.priceExpect);
+      const futureZ = zScores(filteredRows, vars.cpiFuture12);
+
+      new Chart(document.getElementById(canvasId), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Expected price development, z-score',
+              data: expectZ,
+              borderColor: ink,
+              backgroundColor: 'rgba(26,25,22,0.05)',
+              fill: true,
+              pointRadius: 0,
+              borderWidth: small ? 1.25 : 1.5,
+              tension: 0.25,
+              spanGaps: false
+            },
+            {
+              label: 'Actual inflation 12 months later, z-score',
+              data: futureZ,
+              borderColor: secondary,
+              pointRadius: 0,
+              borderWidth: small ? 1.25 : 1.5,
+              borderDash: [5, 4],
+              tension: 0.25,
+              spanGaps: false
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: { legend: { position: 'top', labels: { font, boxWidth: 16, padding: small ? 8 : 14 } } },
+          scales: {
+            x: {
+              title: { display: !small, text: 'Date', font, color: muted },
+              ticks: { font, maxTicksLimit: small ? 5 : 8 },
+              grid: { display: false },
+              border: { color: '#ccc' }
+            },
+            y: {
+              title: { display: !small, text: 'z-score', font, color: muted },
+              ticks: { font },
+              grid: { color: gridCol },
+              border: { color: '#ccc' }
+            }
+          }
+        }
+      });
+    }
+
+    function createScatterChart(canvasId, rows, xKey, yKey, xTitle, yTitle, pointLabel, small = false, statsElementId = null, axisLimits = null) {
+      if (!hasVariables(canvasId, [xKey, yKey])) return;
+      const canvas = document.getElementById(canvasId);
+      if (!canvas || !canvas.getContext) {
+        showChartError(canvasId, ['canvas element not found']);
+        return;
+      }
+      const context = canvas.getContext('2d');
+      if (!context) {
+        showChartError(canvasId, ['chart context unavailable']);
+        return;
+      }
+      const points = rows.map(row => ({
+        x: toNumber(row[vars[xKey]]),
+        y: toNumber(row[vars[yKey]])
+      })).filter(p => p.x !== null && p.y !== null);
+
+      if (points.length < 2) {
+        showChartError(canvasId, ['too few valid observations']);
+        return;
+      }
+
+      const regressionLine = linearRegression(points);
+      if (!regressionLine) {
+        showChartError(canvasId, ['regression line could not be estimated']);
+        return;
+      }
+
+      const r = correlation(points);
+      const stats = {
+        r,
+        n: points.length,
+        slope: regressionLine.slope
+      };
+
+      const xValues = points.map(p => p.x);
+      const yValues = points.map(p => p.y);
+      
+      // For small charts, use tight bounds with minimal margin; for large charts, use nice rounding
+      let xBounds, yBounds;
+      if (small) {
+        xBounds = axisLimits?.x || { min: -50, max: 65 };
+        yBounds = axisLimits?.y || { min: -1, max: 11 };
+      } else {
+        xBounds = axisBounds(xValues);
+        yBounds = axisBounds(yValues);
+      }
+
+      if (statsElementId) {
+        const el = document.getElementById(statsElementId);
+        if (el) {
+          el.textContent = `Correlation (r): ${fmt(stats.r)} | Coefficient: ${fmt(stats.slope)} | n: ${stats.n} | R^2: ${fmt(Math.pow(stats.r, 2))}`;
+        }
+      }
+
+      new Chart(context, {
+        type: 'scatter',
+        data: {
+          datasets: [
+            {
+              label: pointLabel,
+              data: points,
+              backgroundColor: 'rgba(26,25,22,0.36)',
+              borderColor: 'rgba(26,25,22,0.50)',
+              borderWidth: 0.5,
+              pointRadius: small ? 2.2 : 2.7,
+              pointHoverRadius: small ? 3.4 : 4
+            },
+            {
+              type: 'line',
+              label: 'Regression line',
+              data: regressionLine.line,
+              borderColor: ink,
+              backgroundColor: 'transparent',
+              pointRadius: 0,
+              borderWidth: 1.5,
+              showLine: true
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          parsing: false,
+          plugins: {
+            legend: {
+              display: !small,
+              position: 'top',
+              labels: { font, boxWidth: 16, padding: small ? 8 : 14 }
+            }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: xTitle, font: small ? { ...font, size: 10 } : font, color: muted },
+              ticks: { font, maxTicksLimit: small ? 10 : 8, stepSize: small ? 20 : undefined },
+              min: xBounds.min,
+              max: xBounds.max,
+              grid: { color: gridCol },
+              border: { color: '#ccc' }
+            },
+            y: {
+              title: { display: true, text: yTitle, font: small ? { ...font, size: 10 } : font, color: muted },
+              ticks: { font, maxTicksLimit: small ? 10 : 8, stepSize: small ? 2 : undefined },
+              min: yBounds.min,
+              max: yBounds.max,
+              grid: { color: gridCol },
+              border: { color: '#ccc' }
+            }
+          }
+        }
+      });
+
+      return stats;
+    }
+
+    function createSquareScatterChart(canvasId, rows, xKey, yKey, xTitle, yTitle, pointLabel, statsElementId = null) {
+      if (!hasVariables(canvasId, [xKey, yKey])) return;
+      const canvas = document.getElementById(canvasId);
+      if (!canvas || !canvas.getContext) {
+        showChartError(canvasId, ['canvas element not found']);
+        return;
+      }
+      const context = canvas.getContext('2d');
+      if (!context) {
+        showChartError(canvasId, ['chart context unavailable']);
+        return;
+      }
+      const points = rows.map(row => ({
+        x: toNumber(row[vars[xKey]]),
+        y: toNumber(row[vars[yKey]])
+      })).filter(p => p.x !== null && p.y !== null);
+
+      if (points.length < 2) {
+        showChartError(canvasId, ['too few valid observations']);
+        return;
+      }
+
+      const xValues = points.map(p => p.x);
+      const yValues = points.map(p => p.y);
+      const combinedValues = xValues.concat(yValues);
+      const minValue = Math.min(...combinedValues);
+      const maxValue = Math.max(...combinedValues);
+      const bounds = {
+        min: Math.floor(minValue / 10) * 10,
+        max: Math.ceil(maxValue / 10) * 10
+      };
+
+      const regressionLine = linearRegression(points);
+      const r = correlation(points);
+      const stats = {
+        r,
+        n: points.length,
+        slope: regressionLine ? regressionLine.slope : null
+      };
+
+      if (statsElementId) {
+        const el = document.getElementById(statsElementId);
+        if (el) {
+          el.textContent = `Correlation (r): ${fmt(stats.r)} | Coefficient: ${fmt(stats.slope)} | n: ${stats.n} | R^2: ${fmt(Math.pow(stats.r, 2))}`;
+        }
+      }
+
+      new Chart(context, {
+        type: 'scatter',
+        data: {
+          datasets: [
+            {
+              label: pointLabel,
+              data: points,
+              backgroundColor: 'rgba(26,25,22,0.36)',
+              borderColor: 'rgba(26,25,22,0.50)',
+              borderWidth: 0.5,
+              pointRadius: 2.7,
+              pointHoverRadius: 4
+            },
+            {
+              type: 'line',
+              label: 'Regression line',
+              data: regressionLine ? regressionLine.line : [],
+              borderColor: secondary,
+              backgroundColor: 'transparent',
+              pointRadius: 0,
+              borderWidth: 1.5,
+              showLine: true
+            },
+            {
+              type: 'line',
+              label: 'Perfect prediction line',
+              data: [
+                { x: bounds.min, y: bounds.min },
+                { x: bounds.max, y: bounds.max }
+              ],
+              borderColor: ink,
+              backgroundColor: 'transparent',
+              pointRadius: 0,
+              borderWidth: 1.5,
+              showLine: true
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: true,
+          aspectRatio: 1,
+          parsing: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              labels: { font, boxWidth: 16, padding: 14 }
+            }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: xTitle, font, color: muted },
+              ticks: { font, stepSize: 10 },
+              min: bounds.min,
+              max: bounds.max,
+              grid: { color: gridCol },
+              border: { color: '#ccc' }
+            },
+            y: {
+              title: { display: true, text: yTitle, font, color: muted },
+              ticks: { font, stepSize: 10 },
+              min: bounds.min,
+              max: bounds.max,
+              grid: { color: gridCol },
+              border: { color: '#ccc' }
+            }
+          }
+        }
+      });
+
+      return stats;
+    }
+
+    function isInInflationShockPeriod(row) {
+      if (!vars.date || !row[vars.date]) return false;
+      const ym = String(row[vars.date]).slice(0, 7);
+      return ym >= '2021-01' && ym <= '2023-12';
+    }
+
+    function isInFinancialCrisisPeriod(row) {
+      if (!vars.date || !row[vars.date]) return false;
+      const ym = String(row[vars.date]).slice(0, 7);
+      return ym >= '2008-01' && ym <= '2009-12';
+    }
+
+    const noShockRows = sortedRows.filter(row => !isInInflationShockPeriod(row));
+    const robustRows = sortedRows.filter(row => !isInInflationShockPeriod(row) && !isInFinancialCrisisPeriod(row));
+
+    createInflationTimelineChart('cpiInflationTimelineChart', sortedRows);
+
+    const backMirrorStats = createScatterChart(
+      'backMirrorScatter',
+      sortedRows,
+      'cpiInflation',
+      'pricePast',
+      'Actual inflation, year-over-year (%)',
+      'Perceived price development over the last 12 months',
+      'Observations',
+      false,
+      'backMirrorStats'
+    );
+
+    const perceivedExpectedPerfectStats = createSquareScatterChart(
+      'perceivedExpectedPerfectScatter',
+      sortedRows,
+      'pricePast',
+      'priceExpect',
+      'Perceived price development over the last 12 months',
+      'Expected price development next 12 months',
+      'Observations',
+      'perceivedExpectedPerfectStats'
+    );
+
+    // Create 4 mini scatter charts for perceived past vs lagged actual inflation (t-1, t-3, t-6, t-12)
+    const pastHorizonStats1 = createScatterChart(
+      'pastHorizonChart1',
+      sortedRows,
+      'pricePast',
+      'cpiPast1',
+      'Perceived price development over the last 12 months',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'pastHorizonStats1'
+    );
+
+    const pastHorizonStats3 = createScatterChart(
+      'pastHorizonChart3',
+      sortedRows,
+      'pricePast',
+      'cpiPast3',
+      'Perceived price development over the last 12 months',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'pastHorizonStats3'
+    );
+
+    const pastHorizonStats6 = createScatterChart(
+      'pastHorizonChart6',
+      sortedRows,
+      'pricePast',
+      'cpiPast6',
+      'Perceived price development over the last 12 months',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'pastHorizonStats6'
+    );
+
+    const pastHorizonStats12 = createScatterChart(
+      'pastHorizonChart12',
+      sortedRows,
+      'pricePast',
+      'cpiPast12',
+      'Perceived price development over the last 12 months',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'pastHorizonStats12'
+    );
+
+
+    // Create 4 mini scatter charts for Figure 3: Horizons of consumer expectations
+    const horizonStats1 = createScatterChart(
+      'horizonChart1',
+      sortedRows,
+      'priceExpect',
+      'cpiFuture1',
+      'Consumer expected price development',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'horizonStats1'
+    );
+
+    const horizonStats3 = createScatterChart(
+      'horizonChart3',
+      sortedRows,
+      'priceExpect',
+      'cpiFuture3',
+      'Consumer expected price development',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'horizonStats3'
+    );
+
+    const horizonStats6 = createScatterChart(
+      'horizonChart6',
+      sortedRows,
+      'priceExpect',
+      'cpiFuture6',
+      'Consumer expected price development',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'horizonStats6'
+    );
+
+    const horizonStats12 = createScatterChart(
+      'horizonChart12',
+      sortedRows,
+      'priceExpect',
+      'cpiFuture12',
+      'Consumer expected price development',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'horizonStats12'
+    );
+
+    const robustHorizonStats1 = createScatterChart(
+      'robustHorizonChart1',
+      robustRows,
+      'priceExpect',
+      'cpiFuture1',
+      'Consumer expected price development',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'robustHorizonStats1',
+      { x: { min: -30, max: 50 }, y: { min: -1, max: 5 } }
+    );
+
+    const robustHorizonStats3 = createScatterChart(
+      'robustHorizonChart3',
+      robustRows,
+      'priceExpect',
+      'cpiFuture3',
+      'Consumer expected price development',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'robustHorizonStats3',
+      { x: { min: -30, max: 50 }, y: { min: -1, max: 5 } }
+    );
+
+    const robustHorizonStats6 = createScatterChart(
+      'robustHorizonChart6',
+      robustRows,
+      'priceExpect',
+      'cpiFuture6',
+      'Consumer expected price development',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'robustHorizonStats6',
+      { x: { min: -30, max: 50 }, y: { min: -1, max: 5 } }
+    );
+
+    const robustHorizonStats12 = createScatterChart(
+      'robustHorizonChart12',
+      robustRows,
+      'priceExpect',
+      'cpiFuture12',
+      'Consumer expected price development',
+      'Actual inflation (%)',
+      'Observations',
+      true,
+      'robustHorizonStats12',
+      { x: { min: -30, max: 50 }, y: { min: -1, max: 5 } }
+    );
+
+    const comparisonRows = [
+      { name: 'Rear-View Mirror', stats: backMirrorStats },
+      { name: 'Perceived vs. Expected (perfect vs. actual)', stats: perceivedExpectedPerfectStats },
+      { name: 'Expected vs. Actual (t+1 month)', stats: horizonStats1 },
+      { name: 'Expected vs. Actual (t+3 months)', stats: horizonStats3 },
+      { name: 'Expected vs. Actual (t+6 months)', stats: horizonStats6 },
+      { name: 'Expected vs. Actual (t+12 months)', stats: horizonStats12 },
+      { name: 'Robust (t+1 month)', stats: robustHorizonStats1 },
+      { name: 'Robust (t+3 months)', stats: robustHorizonStats3 },
+      { name: 'Robust (t+6 months)', stats: robustHorizonStats6 },
+      { name: 'Robust (t+12 months)', stats: robustHorizonStats12 }
+    ];
+
+    const tableBody = document.querySelector('#comparisonStatsTable tbody');
+    if (tableBody) {
+      comparisonRows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.name}</td>
+          <td>${fmt(row.stats?.r)}</td>
+          <td>${fmt(row.stats?.slope)}</td>
+          <td>${row.stats?.n ?? 'n/a'}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+  </script>
+</body>
+</html>
